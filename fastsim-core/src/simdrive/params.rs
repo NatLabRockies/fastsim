@@ -18,6 +18,10 @@ pub struct SimParams {
     #[serde(default = "SimParams::def_ach_speed_solver_gain")]
     /// Newton method gain for setting achieved speed
     pub ach_speed_solver_gain: f64,
+    #[serde(default = "SimParams::def_ach_speed_max_depth")]
+    /// Maximum number of nested solves for achieved speed within a single time
+    /// step when the trace cannot be achieved.
+    pub ach_speed_max_depth: u32,
     // TODO: plumb this up to actually do something
     /// When implemented, this will set the tolerance on how much trace miss
     /// is allowed
@@ -57,6 +61,9 @@ impl SimParams {
     fn def_ach_speed_solver_gain() -> f64 {
         Self::default().ach_speed_solver_gain
     }
+    fn def_ach_speed_max_depth() -> u32 {
+        Self::default().ach_speed_max_depth
+    }
     fn def_trace_miss_tol() -> TraceMissTolerance {
         Self::default().trace_miss_tol
     }
@@ -80,6 +87,7 @@ impl Default for SimParams {
             ach_speed_max_iter: 3,
             ach_speed_tol: 1.0e-3 * uc::R,
             ach_speed_solver_gain: 0.9,
+            ach_speed_max_depth: 100,
             trace_miss_tol: Default::default(),
             trace_miss_opts: Default::default(),
             trace_miss_correct_max_steps: 6,
