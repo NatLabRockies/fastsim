@@ -646,12 +646,27 @@ impl SimDrive {
     /// Sets achieved speed based on known current max power
     /// # Arguments
     /// - `cyc_speed`: prescribed speed
+    /// - `cyc_dist`: prescribed cumulative distance
     /// - `dt`: simulation time step size
     pub fn set_ach_speed(
         &mut self,
         cyc_speed: si::Velocity,
         cyc_dist: si::Length,
         dt: si::Time,
+    ) -> anyhow::Result<()> {
+        self.set_ach_speed_at_depth(cyc_speed, cyc_dist, dt, 1)
+    }
+
+    /// Implementation of [Self::set_ach_speed] that tracks how many nested
+    /// solves have happened within the current time step. `depth` is 1 on the
+    /// initial call and increases by one for each re-solve. `depth` is bounded by
+    /// `sim_params.ach_speed_max_depth`.
+    fn set_ach_speed_at_depth(
+        &mut self,
+        cyc_speed: si::Velocity,
+        cyc_dist: si::Length,
+        dt: si::Time,
+        depth: u32,
     ) -> anyhow::Result<()> {
         self.veh.state.cyc_met.update(
             self.veh.state.pwr_tractive.get_fresh(|| format_dbg!())?
@@ -769,8 +784,17 @@ impl SimDrive {
         // Rerun again to ensure we have updated achieved speed and state
         self.set_pwr_prop_for_speed(speed_ach_floored, speed_prev, dt)
             .with_context(|| format_dbg!())?;
-        self.set_ach_speed(speed_ach, cyc_dist, dt)
-            .with_context(|| anyhow!(format_dbg!()))?;
+        ensure!(
+            depth < self.sim_params.ach_speed_max_depth,
+            "{}\n`set_ach_speed` reached sim_params.ach_speed_max_depth = {} nested solves with solved speed {:?}, pwr_tractive {:?}, pwr_prop_fwd_max {:?}, and grade {:?}",
+            format_dbg!(),
+            depth,
+            speed_ach_floored,
+            self.veh.state.pwr_tractive.get_fresh(|| format_dbg!())?,
+            step_info.pwr_prop_fwd_max,
+            step_info.grade_curr,
+        );
+        self.set_ach_speed_at_depth(speed_ach, cyc_dist, dt, depth + 1)?;
 
         match self.sim_params.trace_miss_opts {
             TraceMissOptions::Allow => {
@@ -927,6 +951,64 @@ impl SetCumulative for SimDrive {
 mod tests {
     use super::*;
     use crate::vehicle::vehicle_model::tests::*;
+
+    /// Short cycle no vehicle can follow: 74 mph from a standstill on a
+    /// 29.5% grade. `set_ach_speed` has to re-solve on the very first step,
+    /// which exercises the `ach_speed_max_depth` guard.
+    fn infeasible_grade_cycle() -> Cycle {
+        let n = 30;
+        let mut cyc = Cycle {
+            name: String::from("infeasible grade"),
+            init_elev: None,
+            time: (0..n).map(|t| t as f64 * uc::S).collect(),
+            speed: vec![33.08 * uc::MPS; n],
+            dist: vec![],
+            grade: vec![0.295 * uc::R; n],
+            elev: vec![],
+            pwr_max_chrg: vec![],
+            grade_interp: Default::default(),
+            elev_interp: Default::default(),
+            temp_amb_air: Default::default(),
+            pwr_solar_load: Default::default(),
+        };
+        cyc.init().unwrap();
+        cyc
+    }
+
+    #[test]
+    #[cfg(feature = "resources")]
+    fn test_ach_speed_max_depth_errors_instead_of_recursing() {
+        // With the cap at 1 the first re-solve is refused, so the failure must
+        // surface as an error that names the parameter.
+        let veh = Vehicle::from_resource("2012_Ford_Fusion.yaml", false).unwrap();
+        let sim_params = SimParams {
+            ach_speed_max_depth: 1,
+            ..Default::default()
+        };
+        let mut sd = SimDrive::new(veh, infeasible_grade_cycle(), Some(sim_params));
+        let err = sd.run().expect_err("infeasible cycle must not succeed");
+        let msg = format!("{err:#}");
+        assert!(
+            msg.contains("ach_speed_max_depth"),
+            "expected the depth-limit error to surface, got:\n{msg}"
+        );
+
+        // With the default cap the same cycle still fails, but for the usual
+        // reason (trace miss), so the cap does not interfere with the normal
+        // error path.
+        let veh = Vehicle::from_resource("2012_Ford_Fusion.yaml", false).unwrap();
+        let mut sd = SimDrive::new(veh, infeasible_grade_cycle(), Default::default());
+        let err = sd.run().expect_err("infeasible cycle must not succeed");
+        let msg = format!("{err:#}");
+        assert!(
+            !msg.contains("ach_speed_max_depth"),
+            "default cap must not be reached on this cycle, got:\n{msg}"
+        );
+        assert!(
+            msg.contains("failed to meet speed trace"),
+            "expected a trace-miss error, got:\n{msg}"
+        );
+    }
 
     #[test]
     #[cfg(feature = "resources")]
