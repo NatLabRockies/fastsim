@@ -6,6 +6,71 @@ use super::*;
 #[cfg(feature = "pyo3")]
 use crate::pyo3::*;
 
+#[derive(Clone, Debug, Serialize, PartialEq, IsVariant, TryInto)]
+/// Determines what [ElectricMachine] state variables to use in calculating efficiency
+pub enum EMEfficiency {
+    /// Efficiency is constant
+    Constant(#[serde(serialize_with = "serialize_nested")] Interp0D<f64>),
+    /// Efficiency = f(output power / max output power)
+    PwrOutFrac(#[serde(serialize_with = "serialize_nested")] Interp1D<f64, strategy::Linear>),
+}
+
+impl<'de> Deserialize<'de> for EMEfficiency {
+    /// Accepts the current, externally-tagged shape (`{Constant: ...}` /
+    /// `{PwrOutFrac: {...}}`) as well as the shape used by the old, now-removed
+    /// `eff_interp_achieved` field: a bare, untagged [`InterpolatorEnum`], with the
+    /// variant inferred from its own shape (see [`ElectricMachine::eff_interp`]).
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        #[derive(Deserialize)]
+        enum Tagged {
+            Constant(Interp0D<f64>),
+            PwrOutFrac(Interp1D<f64, strategy::Linear>),
+        }
+
+        #[derive(Deserialize)]
+        #[serde(untagged)]
+        enum Repr {
+            Tagged(Tagged),
+            Legacy(InterpolatorEnum<f64>),
+        }
+
+        Ok(match Repr::deserialize(deserializer)? {
+            Repr::Tagged(Tagged::Constant(interp)) => Self::Constant(interp),
+            Repr::Tagged(Tagged::PwrOutFrac(interp)) => Self::PwrOutFrac(interp),
+            Repr::Legacy(InterpolatorEnumBase::Interp0D(interp)) => Self::Constant(interp),
+            Repr::Legacy(InterpolatorEnumBase::Interp1D(interp)) => {
+                let strategy::enums::Strategy1DEnum::Linear(strategy) = interp.strategy else {
+                    return Err(serde::de::Error::custom(
+                        "legacy `EMEfficiency` data only supports the `Linear` strategy",
+                    ));
+                };
+                Self::PwrOutFrac(
+                    Interp1D::new(
+                        interp.data.grid[0].clone(),
+                        interp.data.values.clone(),
+                        strategy,
+                        interp.extrapolate,
+                    )
+                    .map_err(serde::de::Error::custom)?,
+                )
+            }
+            Repr::Legacy(_) => {
+                return Err(serde::de::Error::custom(
+                    "`EMEfficiency` only supports 0-D (`Constant`) or 1-D (`PwrOutFrac`) interpolator data",
+                ))
+            }
+        })
+    }
+}
+
+impl_efficiency_enum!(EMEfficiency {
+    Constant,
+    PwrOutFrac,
+});
+
 #[serde_api]
 #[derive(Deserialize, Serialize, Debug, Clone, PartialEq, StateMethods, SetCumulative)]
 #[non_exhaustive]
@@ -14,17 +79,18 @@ use crate::pyo3::*;
 /// Struct for modeling electric machines.  This lumps performance and efficiency of motor and power
 /// electronics.
 pub struct ElectricMachine {
-    /// Efficiency interpolator corresponding to achieved output power
-    ///
-    /// Note that the Extrapolate field of this variable is changed in [Self::get_pwr_in_req]
-    #[serde(serialize_with = "serialize_nested")]
-    pub eff_interp_achieved: InterpolatorEnum<f64>,
-    /// Efficiency interpolator corresponding to max input power
-    /// If `None`, will be set during [Self::init].
-    ///
-    /// Note that the Extrapolate field of this variable is changed in [Self::set_curr_pwr_prop_out_max]
-    #[serde(serialize_with = "serialize_nested")]
-    pub eff_interp_at_max_input: Option<InterpolatorEnum<f64>>,
+    /// Efficiency map
+    #[serde(alias = "eff_interp_achieved")]
+    pub eff_interp: EMEfficiency,
+    /// Legacy field from before `eff_interp_achieved`/`eff_interp_at_max_input` were
+    /// merged into `eff_interp`. `eff_interp_at_max_input` was always fully derived
+    /// from `eff_interp_achieved` and is now recomputed on the fly in
+    /// [`Self::set_curr_pwr_prop_out_max`], so it is safe to discard; this field
+    /// exists only so old files containing it still deserialize under
+    /// `deny_unknown_fields`.
+    #[serde(rename = "eff_interp_at_max_input", default, skip_serializing)]
+    #[allow(dead_code)]
+    pub(crate) _eff_interp_at_max_input_legacy: Option<serde::de::IgnoredAny>,
     /// Electrical input power fraction array at which efficiencies are evaluated.
     /// Calculated during runtime if not provided.
     // /// this will disappear and instead be in eff_interp_bwd
@@ -101,16 +167,15 @@ impl ElectricMachine {
 
 impl ElectricMachine {
     pub fn new(
-        eff_interp_achieved: InterpolatorEnum<f64>,
-        eff_interp_at_max_input: Option<InterpolatorEnum<f64>>,
+        eff_interp: EMEfficiency,
         pwr_out_max: si::Power,
         specific_pwr: Option<si::SpecificPower>,
         mass: Option<si::Mass>,
         save_interval: Option<usize>,
     ) -> anyhow::Result<Self> {
         let mut em = ElectricMachine {
-            eff_interp_achieved,
-            eff_interp_at_max_input,
+            eff_interp,
+            _eff_interp_at_max_input_legacy: None,
             pwr_out_max,
             specific_pwr,
             mass,
@@ -161,75 +226,43 @@ impl Powertrain for ElectricMachine {
             stringify!(ElectricMachine::get_curr_pwr_prop_out_max)
         );
 
-        // ensuring Extrapolate is Clamp in preparation for calculating eff_pos
-
-        self.eff_interp_at_max_input
-            .as_mut()
-            .with_context(|| {
-                "eff_interp_bwd is None, which should never be the case at this point."
-            })?
-            .set_extrapolate(Extrapolate::Clamp)?;
-
         let raw_tractive_lookup_ratio = (*pwr_in_fwd_lim / self.pwr_out_max).get::<si::ratio>();
         let raw_regen_lookup_ratio = (*pwr_in_bwd_lim / self.pwr_out_max).get::<si::ratio>();
+
         self.state.eff_fwd_at_max_input.update(
             uc::R
-                * self
-                    .eff_interp_at_max_input
-                    .as_ref()
-                    .map(|interpolator| {
-                        interpolator
-                            .interpolate(&[abs_checked_x_val(
-                                raw_tractive_lookup_ratio,
-                                match interpolator {
-                                    InterpolatorEnum::Interp1D(interp) => interp.data.grid[0]
-                                        .as_slice()
-                                        .ok_or_else(|| anyhow!(format_dbg!()))?,
-                                    _ => bail!("Only `InterpolatorEnum::Interp1D` is allowed."),
-                                },
-                            )?])
-                            .map_err(|e| anyhow!(e))
-                    })
-                    .ok_or(anyhow!(
-                        "eff_interp_bwd is None, which should never be the case at this point."
-                    ))?
-                    .with_context(|| {
-                        anyhow!(
-                            "{}\n failed to calculate {}",
-                            format_dbg!(),
-                            stringify!(eff_pos)
-                        )
-                    })?,
+                * match &self.eff_interp {
+                    EMEfficiency::Constant(interp) => interp.interpolate(&[])?,
+                    EMEfficiency::PwrOutFrac(interp) => {
+                        let x_in = abs_checked_x_val(
+                            raw_tractive_lookup_ratio,
+                            interp.data.grid[0]
+                                .as_slice()
+                                .ok_or_else(|| anyhow!(format_dbg!()))?,
+                        )?;
+                        interp
+                            .ratio_inverse(Extrapolate::Clamp)
+                            .interpolate(&[x_in])?
+                    }
+                },
             || format_dbg!(),
         )?;
         self.state.eff_at_max_regen.update(
             uc::R
-                * self
-                    .eff_interp_at_max_input
-                    .as_ref()
-                    .map(|interpolator| {
-                        interpolator
-                            .interpolate(&[abs_checked_x_val(
-                                raw_regen_lookup_ratio,
-                                match interpolator {
-                                    InterpolatorEnum::Interp1D(interp) => interp.data.grid[0]
-                                        .as_slice()
-                                        .ok_or_else(|| anyhow!(format_dbg!()))?,
-                                    _ => bail!("Only `InterpolatorEnum::Interp1D` is allowed."),
-                                },
-                            )?])
-                            .map_err(|e| anyhow!(e))
-                    })
-                    .ok_or(anyhow!(
-                        "eff_interp_bwd is None, which should never be the case at this point."
-                    ))?
-                    .with_context(|| {
-                        anyhow!(
-                            "{}\n failed to calculate {}",
-                            format_dbg!(),
-                            stringify!(eff_neg)
-                        )
-                    })?,
+                * match &self.eff_interp {
+                    EMEfficiency::Constant(interp) => interp.interpolate(&[])?,
+                    EMEfficiency::PwrOutFrac(interp) => {
+                        let x_in = abs_checked_x_val(
+                            raw_regen_lookup_ratio,
+                            interp.data.grid[0]
+                                .as_slice()
+                                .ok_or_else(|| anyhow!(format_dbg!()))?,
+                        )?;
+                        interp
+                            .ratio_inverse(Extrapolate::Clamp)
+                            .interpolate(&[x_in])?
+                    }
+                },
             || format_dbg!(),
         )?;
 
@@ -349,42 +382,32 @@ impl Powertrain for ElectricMachine {
                 .pwr_mech_fwd_out_max
                 .get_fresh(|| format_dbg!())?;
 
-        // ensuring eff_interp_fwd has Extrapolate set to Error before calculating self.state.eff
-        self.eff_interp_achieved
-            .set_extrapolate(Extrapolate::Error)?;
+        // ensuring eff_interp has Extrapolate set to Error before calculating self.state.eff
+        self.eff_interp.set_extrapolate(Extrapolate::Error)?;
 
         let raw_lookup_pwr_ratio = (pwr_out_req / self.pwr_out_max).get::<si::ratio>();
         let calculated_eff = uc::R
-            * match &self.eff_interp_achieved {
-                InterpolatorEnum::Interp1D(interp) => interp
-                    .interpolate(&[{
-                        let pwr = |pwr_uncorrected: f64| -> anyhow::Result<f64> {
-                            Ok({
-                                if interp.data.grid[0]
-                                    .first()
-                                    .with_context(|| anyhow!(format_dbg!()))?
-                                    >= &0.
-                                {
-                                    pwr_uncorrected.max(0.)
-                                } else {
-                                    pwr_uncorrected
-                                }
-                            })
-                        };
-                        pwr(raw_lookup_pwr_ratio)?
-                    }])
-                    .map_err(|e| {
+            * match &self.eff_interp {
+                EMEfficiency::Constant(interp) => interp.interpolate(&[])?,
+                EMEfficiency::PwrOutFrac(interp) => {
+                    // not needed during negative traction because friction braking is
+                    // still included, so clamp to 0 rather than querying at negative x
+                    let x_out = if interp.data.grid[0]
+                        .first()
+                        .with_context(|| anyhow!(format_dbg!()))?
+                        >= &0.
+                    {
+                        raw_lookup_pwr_ratio.max(0.)
+                    } else {
+                        raw_lookup_pwr_ratio
+                    };
+                    interp.interpolate(&[x_out]).map_err(|e| {
                         anyhow!(
                             "failed to calculate efficiency at line {} with originating error [{}]",
                             format_dbg!(),
                             e
                         )
-                    })?,
-                _ => {
-                    return Err(Error::InitError(format_dbg!(
-                        "Only 1-D interpolators are supported"
-                    ))
-                    .into())
+                    })?
                 }
             };
         let eff_value = if is_max_output {
@@ -457,41 +480,25 @@ impl Init for ElectricMachine {
         let _ = self
             .mass()
             .map_err(|err| Error::InitError(format_dbg!(err)))?;
-        let _ = check_interp_frac_data(match &mut self.eff_interp_achieved  {
-                InterpolatorEnum::Interp1D(interp) => interp.data.grid[0].as_slice().ok_or(Error::Other("Cannot convert to slice".to_string()))?, _ => {
-            return Err(Error::InitError(format_dbg!(
-                "Only 1-D interpolators are supported"
-            )))
-        }}, InterpRange::Either)
-            .map_err(|err|
+        if let EMEfficiency::PwrOutFrac(interp) = &self.eff_interp {
+            let _ = check_interp_frac_data(
+                interp
+                    .data
+                    .grid[0]
+                    .as_slice()
+                    .ok_or(Error::Other("Cannot convert to slice".to_string()))?,
+                InterpRange::Either,
+            )
+            .map_err(|err| {
                 Error::InitError(format!(
                     "{}\nInvalid values for `ElectricMachine::pwr_out_frac_interp`; must range from [-1..1] or [0..1].",
                     format_dbg!(err)
-                )
-             ))?;
+                ))
+            })?;
+        }
         self.state
             .init()
             .map_err(|err| Error::InitError(format_dbg!(err)))?;
-        // sets eff_interp_at_max_input to eff_interp_achieved, remapped from output-
-        // to input-power ratio (x_in = x_out / eff). Interpolating 1/eff linearly
-        // against x_in, rather than eff itself, makes this an exact inverse of
-        // eff_interp_achieved between nodes (not just at them), since eff linear in
-        // x_out implies 1/eff linear in x_in.
-        let eff_interp_at_max_input = match &self.eff_interp_achieved {
-            InterpolatorEnum::Interp1D(interp) => InterpolatorEnum::new_1d(
-                interp.data.grid[0]
-                    .iter()
-                    .zip(&interp.data.values)
-                    .map(|(x, y)| x / y)
-                    .collect(),
-                interp.data.values.clone(),
-                strategy::ValuesTransform::reciprocal(Box::new(interp.strategy.clone())),
-                interp.extrapolate,
-            ),
-            _ => unimplemented!(),
-        }
-        .map_err(|e| Error::NinterpError(e.to_string()))?;
-        self.eff_interp_at_max_input = Some(eff_interp_at_max_input);
         Ok(())
     }
 }
@@ -589,8 +596,8 @@ impl TryFrom<EMBuilder> for ElectricMachine {
     type Error = anyhow::Error;
     fn try_from(em_builder: EMBuilder) -> anyhow::Result<ElectricMachine> {
         let mut em = ElectricMachine {
-            eff_interp_achieved: em_builder.eff_interp_achieved.clone(),
-            eff_interp_at_max_input: None,
+            eff_interp: em_builder.eff_interp.clone(),
+            _eff_interp_at_max_input_legacy: None,
             pwr_out_max: em_builder.pwr_out_max,
             specific_pwr: None,
             mass: None,
@@ -605,46 +612,26 @@ impl TryFrom<EMBuilder> for ElectricMachine {
 }
 
 impl ElectricMachine {
-    /// Returns max value of `eff_interp_fwd`
+    /// Returns max value of `eff_interp`
     pub fn get_eff_fwd_max(&self) -> anyhow::Result<&f64> {
         // since efficiency is all f64 between 0 and 1, NEG_INFINITY is safe
-        self.eff_interp_achieved.max()
+        self.eff_interp.max()
     }
 
-    /// Returns max value of `eff_interp_bwd`
-    pub fn get_eff_max_bwd(&self) -> anyhow::Result<&f64> {
-        self.eff_interp_at_max_input
-            .as_ref()
-            .with_context(|| "eff_interp_bwd should be Some by this point.")?
-            .max()
-    }
-
-    /// Scales eff_interp_fwd and eff_interp_bwd by ratio of new `eff_max` per current calculated max
+    /// Scales eff_interp by ratio of new `eff_max` per current calculated max
     pub fn set_eff_fwd_max(&mut self, eff_max: f64) -> anyhow::Result<()> {
         if (0.0..=1.0).contains(&eff_max) {
-            let old_max_fwd = *self.get_eff_fwd_max()?;
-            let old_max_bwd = *self.get_eff_max_bwd()?;
-            match &mut self.eff_interp_achieved {
-                InterpolatorEnum::Interp1D(interp) => {
+            let old_max = *self.get_eff_fwd_max()?;
+            match &mut self.eff_interp {
+                EMEfficiency::Constant(interp) => interp.0 = eff_max,
+                EMEfficiency::PwrOutFrac(interp) => {
                     interp.data.values = interp
                         .data
                         .values
                         .iter()
-                        .map(|x| x * eff_max / old_max_fwd)
+                        .map(|x| x * eff_max / old_max)
                         .collect::<Array1<_>>();
                 }
-                _ => bail!("{}\n", "Only `InterpolatorEnum::Interp1D` is allowed."),
-            }
-            match &mut self.eff_interp_at_max_input {
-                Some(InterpolatorEnum::Interp1D(interp)) => {
-                    interp.data.values = interp
-                        .data
-                        .values
-                        .iter()
-                        .map(|x| x * eff_max / old_max_bwd)
-                        .collect::<Array1<_>>();
-                }
-                _ => bail!("{}\n", "Only `InterpolatorEnum::Interp1D` is allowed. eff_interp_bwd should be Some by this point."),
             }
             Ok(())
         } else {
@@ -655,171 +642,69 @@ impl ElectricMachine {
         }
     }
 
-    /// Returns min value of `eff_interp_fwd`
+    /// Returns min value of `eff_interp`
     pub fn get_eff_min_fwd(&self) -> anyhow::Result<&f64> {
-        self.eff_interp_achieved.min()
+        self.eff_interp.min()
     }
 
-    /// Returns min value of `eff_interp_at_max_input`
-    pub fn get_eff_min_at_max_input(&self) -> anyhow::Result<&f64> {
-        self.eff_interp_at_max_input
-            .as_ref()
-            .context("eff_interp_bwd should be Some by this point")?
-            .min()
-    }
-
-    /// Max value of `eff_interp_fwd` minus min value of `eff_interp_fwd`.
+    /// Max value of `eff_interp` minus min value of `eff_interp`.
     pub fn get_eff_fwd_range(&self) -> anyhow::Result<f64> {
         Ok(self.get_eff_fwd_max()? - self.get_eff_min_fwd()?)
     }
 
-    /// Max value of `eff_interp_bwd` minus min value of `eff_interp_bwd`.
-    pub fn get_eff_range_bwd(&self) -> anyhow::Result<f64> {
-        Ok(self.get_eff_max_bwd()? - self.get_eff_min_at_max_input()?)
-    }
-
-    /// Scales values of `eff_interp_fwd.f_x` and `eff_interp_bwd.f_x` without changing max such that max - min
+    /// Scales values of `eff_interp` without changing max such that max - min
     /// is equal to new range.  Will change max if needed to ensure no values are
     /// less than zero.
     pub fn set_eff_fwd_range(&mut self, eff_range: f64) -> anyhow::Result<()> {
-        let eff_max_fwd = self.get_eff_fwd_max()?.to_owned();
-        let eff_max_bwd = self.get_eff_max_bwd()?.to_owned();
+        let eff_max = self.get_eff_fwd_max()?.to_owned();
         if eff_range == 0.0 {
-            let f_x_fwd = vec![
-                eff_max_fwd;
-                match &self.eff_interp_achieved {
-                    InterpolatorEnum::Interp1D(interp) => interp.data.values.len(),
-                    _ => {
-                        return Err(Error::InitError(format_dbg!(
-                            "Only 1-D interpolators are supported"
-                        ))
-                        .into());
-                    }
-                }
-            ];
-            match &mut self.eff_interp_achieved {
-                InterpolatorEnum::Interp1D(interp) => interp.data.values = Array::from_vec(f_x_fwd),
-                _ => {
-                    return Err(Error::InitError(format_dbg!(
-                        "Only 1-D interpolators are supported"
-                    ))
-                    .into());
-                }
-            };
-            let f_x_bwd = vec![
-                eff_max_bwd;
-                match &self.eff_interp_at_max_input {
-                    Some(interp) => {
-                        match interp {
-                            InterpolatorEnum::Interp1D(interp) => interp.data.values.len(),
-                            _ => {
-                                return Err(Error::InitError(format_dbg!(
-                                    "Only 1-D interpolators are supported"
-                                ))
-                                .into());
-                            }
-                        }
-                    }
-                    None => bail!("eff_interp_bwd should be Some by this point."),
-                }
-            ];
-            self.eff_interp_at_max_input
-                .as_mut()
-                .map(|interpolator| match interpolator {
-                    InterpolatorEnum::Interp1D(interp) => {
-                        interp.data.values = Array::from_vec(f_x_bwd);
-                        Ok(())
-                    }
-                    _ => Err(Error::InitError(format_dbg!(
-                        "Only 1-D interpolators are supported"
-                    ))),
-                })
-                .transpose()?;
-            Ok(())
-        } else if (0.0..=1.0).contains(&eff_range) {
-            let old_min = self.get_eff_min_fwd()?;
-            let old_range = self.get_eff_fwd_max()? - old_min;
-            if old_range == 0.0 {
-                return Err(anyhow!(
-                    "`eff_range` is already zero so it cannot be modified."
-                ));
+            if let EMEfficiency::PwrOutFrac(interp) = &mut self.eff_interp {
+                let f_x = vec![eff_max; interp.data.values.len()];
+                interp.data.values = Array::from_vec(f_x);
             }
-            match &mut self.eff_interp_achieved {
-                InterpolatorEnum::Interp1D(interp) => {
-                    interp.data.values = interp
-                        .data
-                        .values
-                        .iter()
-                        .map(|x| eff_max_fwd + (x - eff_max_fwd) * eff_range / old_range)
-                        .collect();
-                    interp.validate()?;
-                }
-                _ => bail!("{}\n", "Only `InterpolatorEnum::Interp1D` is allowed."),
-            }
-            if self.get_eff_min_fwd()? < &0. {
-                let x_neg = *self.get_eff_min_fwd()?;
-                match &mut self.eff_interp_achieved {
-                    InterpolatorEnum::Interp1D(interp) => {
-                        interp.data.values.map_inplace(|x| *x -= x_neg);
-                        interp.validate()?;
-                    }
-                    _ => bail!("{}\n", "Only `InterpolatorEnum::Interp1D` is allowed."),
-                }
-            }
-            if self.get_eff_fwd_max()? > &1.0 {
-                return Err(anyhow!(format!(
-                    "`eff_max` ({:.3}) must be no greater than 1.0",
-                    self.get_eff_fwd_max()?
-                )));
-            }
-            let old_min = self.get_eff_min_at_max_input()?;
-            let old_range = self.get_eff_max_bwd()? - old_min;
-            if old_range == 0.0 {
-                return Err(anyhow!(
-                    "`eff_range` is already zero so it cannot be modified."
-                ));
-            }
-
-            //TODO
-            match &mut self.eff_interp_at_max_input {
-                Some(InterpolatorEnum::Interp1D(interp)) => {
-                    interp.data.values = interp
-                        .data
-                        .values
-                        .iter()
-                        .map(|x| eff_max_bwd + (x - eff_max_bwd) * eff_range / old_range)
-                        .collect();
-                }
-                _ => bail!("TODO"),
-            }
-
-            if self.get_eff_min_at_max_input()? < &0.0 {
-                let x_neg = *self.get_eff_min_at_max_input()?;
-                self.eff_interp_at_max_input
-                    .as_mut()
-                    .map(|interpolator| match interpolator {
-                        InterpolatorEnum::Interp1D(interp) => {
-                            interp.data.values.map_inplace(|x| *x -= x_neg);
-                            interp.validate()?;
-                            Ok(())
-                        }
-                        _ => bail!("Only `InterpolatorEnum::Interp1D` is allowed."),
-                    })
-                    .transpose()?;
-            }
-            if self.get_eff_max_bwd()? > &1.0 {
-                return Err(anyhow!(format!(
-                    "`eff_max` ({:.3}) must be no greater than 1.0",
-                    self.get_eff_max_bwd()?
-                )));
-            }
-            Ok(())
-        } else {
-            Err(anyhow!(format!(
+            return Ok(());
+        }
+        if !(0.0..=1.0).contains(&eff_range) {
+            return Err(anyhow!(
                 "`eff_range` ({:.3}) must be between 0.0 and 1.0",
                 eff_range,
-            )))
+            ));
         }
+        let old_min = *self.get_eff_min_fwd()?;
+        let old_range = eff_max - old_min;
+        if old_range == 0.0 {
+            return Err(anyhow!(
+                "`eff_range` is already zero so it cannot be modified."
+            ));
+        }
+        match &mut self.eff_interp {
+            EMEfficiency::Constant(_) => bail!(
+                "`eff_range` cannot be set to a nonzero value for a `Constant` efficiency map."
+            ),
+            EMEfficiency::PwrOutFrac(interp) => {
+                interp.data.values = interp
+                    .data
+                    .values
+                    .iter()
+                    .map(|x| eff_max + (x - eff_max) * eff_range / old_range)
+                    .collect();
+                interp.validate()?;
+            }
+        }
+        if *self.get_eff_min_fwd()? < 0. {
+            let x_neg = *self.get_eff_min_fwd()?;
+            if let EMEfficiency::PwrOutFrac(interp) = &mut self.eff_interp {
+                interp.data.values.map_inplace(|x| *x -= x_neg);
+                interp.validate()?;
+            }
+        }
+        if *self.get_eff_fwd_max()? > 1.0 {
+            return Err(anyhow!(format!(
+                "`eff_max` ({:.3}) must be no greater than 1.0",
+                self.get_eff_fwd_max()?
+            )));
+        }
+        Ok(())
     }
 }
 
@@ -829,11 +714,8 @@ impl ElectricMachine {
 #[cfg_attr(feature = "pyo3", pyclass(module = "fastsim", subclass, eq))]
 /// Builder for [ElectricMachine].  Use this to instantiate EM with minimal parameterization
 pub struct EMBuilder {
-    /// Efficiency interpolator corresponding to achieved output power
-    ///
-    /// Note that the Extrapolate field of this variable is changed in [Self::get_pwr_in_req]
-    #[serde(serialize_with = "serialize_nested")]
-    pub eff_interp_achieved: InterpolatorEnum<f64>,
+    /// Efficiency map
+    pub eff_interp: EMEfficiency,
     /// Electrical input power fraction array at which efficiencies are evaluated.
     /// Calculated during runtime if not provided.
     // /// this will disappear and instead be in eff_interp_bwd

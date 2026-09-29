@@ -1417,6 +1417,7 @@ impl Default for VehicleState {
 pub(crate) mod tests {
     use crate::vehicle::conv::{ConvPowertrainControls, ConvStartStopControl};
     use crate::vehicle::hev::{HEVAuxControls, HEVSimulationParams, HEVStartStopControl};
+    use crate::vehicle::powertrain::electric_machine::EMEfficiency;
     use crate::vehicle::powertrain::reversible_energy_storage::RESEfficiency;
 
     use super::*;
@@ -1705,13 +1706,12 @@ pub(crate) mod tests {
             None,
         )?;
         let em = ElectricMachine::new(
-            InterpolatorEnum::new_1d(
+            EMEfficiency::PwrOutFrac(Interp1D::new(
                 vec![0.0, 1.0].into(),
                 vec![0.95, 0.95].into(),
                 strategy::Linear,
                 Extrapolate::Error,
-            )?, // eff_interp_achieved
-            None,         // eff_interp_at_max_input
+            )?), // eff_interp
             5.0 * uc::KW, // pwr_out_max
             None,         // specific_pwr
             None,         // mass

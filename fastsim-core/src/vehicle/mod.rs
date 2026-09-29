@@ -23,7 +23,7 @@ pub use chassis::Chassis;
 pub use conv::ConventionalVehicle;
 pub use database::*;
 pub use hev::HybridElectricVehicle;
-pub use powertrain::electric_machine::ElectricMachine;
+pub use powertrain::electric_machine::{EMEfficiency, ElectricMachine};
 pub use powertrain::fuel_converter::FuelConverter;
 pub use powertrain::fuel_storage::FuelStorage;
 pub use powertrain::fuel_storage::FuelType;

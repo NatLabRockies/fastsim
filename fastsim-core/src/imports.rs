@@ -11,6 +11,7 @@ pub(crate) use crate::simdrive::TraceMissOptions;
 pub(crate) use crate::traits::*;
 pub(crate) use crate::uc;
 pub(crate) use crate::utils;
+pub(crate) use crate::utils::interp::*;
 pub(crate) use crate::utils::{
     abs_checked_x_val, almost_eq, almost_eq_uom, almost_ge_uom, almost_le_uom,
     check_interp_frac_data, check_monotonicity, is_sorted, InterpRange, DIRECT_SET_ERR,

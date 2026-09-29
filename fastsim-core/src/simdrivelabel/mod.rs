@@ -1135,12 +1135,7 @@ pub fn run_label_simulations(
             min_soc = phev.res.min_soc;
             phev_max_regen = 0.98 * uc::R;
             veh_mass = *veh.state.mass.get_fresh(|| format_dbg!())?;
-            em_peak_eff = *phev
-                .em
-                .eff_interp_achieved
-                .max()
-                .with_context(|| format_dbg!())?
-                * uc::R;
+            em_peak_eff = *phev.em.eff_interp.max().with_context(|| format_dbg!())? * uc::R;
             energy_capacity = phev.res.energy_capacity;
             chg_eff = DEFAULT_CHG_EFF;
             fuel_storage_capacity = phev.fs.energy_capacity;
@@ -1457,12 +1452,7 @@ pub fn get_label_fe_phev(
         min_soc = phev.res.min_soc;
         phev_max_regen = 0.98 * uc::R;
         veh_mass = *veh.state.mass.get_fresh(|| format_dbg!())?;
-        em_peak_eff = *phev
-            .em
-            .eff_interp_achieved
-            .max()
-            .with_context(|| format_dbg!())?
-            * uc::R;
+        em_peak_eff = *phev.em.eff_interp.max().with_context(|| format_dbg!())? * uc::R;
         energy_capacity = phev.res.energy_capacity;
         chg_eff = DEFAULT_CHG_EFF; // Use default charging efficiency
     } else {

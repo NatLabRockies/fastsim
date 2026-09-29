@@ -1,4 +1,5 @@
 use crate::imports::*;
+use ninterp::error::InterpolateError;
 
 pub(crate) trait InterpolatorScanValues {
     fn try_for_each_value<E, F: FnMut(f64) -> Result<(), E>>(&self, f: F) -> Result<(), E>;
@@ -10,7 +11,10 @@ impl InterpolatorScanValues for Interp0D<f64> {
     }
 }
 
-impl InterpolatorScanValues for Interp1D<f64, strategy::enums::Strategy1DEnum<f64>> {
+impl<S> InterpolatorScanValues for Interp1D<f64, S>
+where
+    S: ninterp::strategy::traits::Strategy1D<ndarray::OwnedRepr<f64>> + Clone,
+{
     fn try_for_each_value<E, F: FnMut(f64) -> Result<(), E>>(&self, mut f: F) -> Result<(), E> {
         self.data.values.iter().copied().try_for_each(&mut f)
     }
@@ -42,6 +46,91 @@ impl InterpolatorScanValues for InterpolatorEnum<f64> {
             Self::Interp2D(interp) => interp.try_for_each_value(f),
             Self::Interp3D(interp) => interp.try_for_each_value(f),
             Self::InterpND(interp) => interp.try_for_each_value(f),
+        }
+    }
+}
+
+/// Borrowed view of a `Linear`-strategy 1-D interpolant that answers, on
+/// `interpolate`, the inverse of the ratio `w(x) = x / f(x)` rather than `f(x)`
+/// directly: given `w`, returns `f` at the `x` satisfying `x / f(x) == w`, with
+/// no second interpolator built. Get one via [RatioInverse::ratio_inverse].
+///
+/// `f` is affine on each segment, so `w` is a Mobius transform of `x` there; Mobius
+/// transforms invert to Mobius transforms, giving the closed form `f(w) = a / (1 - b*w)`.
+pub(crate) struct RatioInverseView<'a> {
+    interp: &'a Interp1D<f64, strategy::Linear>,
+    extrapolate: Extrapolate<f64>,
+}
+
+impl RatioInverseView<'_> {
+    pub fn interpolate(&self, point: &[f64]) -> Result<f64, InterpolateError> {
+        let w = *point.first().ok_or_else(|| {
+            InterpolateError::Other("`RatioInverseView::interpolate` needs one point".into())
+        })?;
+
+        let x = &self.interp.data.grid[0];
+        let y = &self.interp.data.values;
+
+        let w_grid: Vec<f64> = x.iter().zip(y).map(|(xi, yi)| xi / yi).collect();
+        let w_min = *w_grid
+            .first()
+            .ok_or_else(|| InterpolateError::Other("`RatioInverse` grid is empty".into()))?;
+        let w_max = *w_grid.last().unwrap();
+
+        if w < w_min || w > w_max {
+            match self.extrapolate {
+                // falls through to the segment solve below, which naturally
+                // extrapolates along the boundary segment's own slope
+                Extrapolate::Enable => {}
+                Extrapolate::Clamp => return Ok(if w < w_min { y[0] } else { y[y.len() - 1] }),
+                Extrapolate::Fill(value) => return Ok(value),
+                Extrapolate::Error => {
+                    return Err(InterpolateError::Other(
+                        format!("`RatioInverse` query w={w} outside domain [{w_min}, {w_max}]")
+                            .into(),
+                    ))
+                }
+                Extrapolate::Wrap => {
+                    return Err(InterpolateError::Other(
+                        "`RatioInverse` does not support `Extrapolate::Wrap`".into(),
+                    ))
+                }
+                // `Extrapolate` is `#[non_exhaustive]`
+                _ => {
+                    return Err(InterpolateError::Other(
+                        "`RatioInverse` does not support this `Extrapolate` variant".into(),
+                    ))
+                }
+            }
+        }
+
+        let lower =
+            strategy::utils::locate_lower_index(ndarray::ArrayView1::from(w_grid.as_slice()), &w);
+        let (x0, y0, x1, y1) = (x[lower], y[lower], x[lower + 1], y[lower + 1]);
+        let b = (y1 - y0) / (x1 - x0); // f(x) = a + b*x on this segment
+        let a = y0 - b * x0;
+
+        let denom = 1.0 - b * w;
+        if denom == 0.0 {
+            return Err(InterpolateError::Other(
+                format!("`RatioInverse` singular at w={w} (segment {lower})").into(),
+            ));
+        }
+        Ok(a / denom)
+    }
+}
+
+pub(crate) trait RatioInverse<T> {
+    /// Borrows `self` as a [RatioInverseView], so `.interpolate(&[w])` answers
+    /// the ratio-inverse query instead of the usual one.
+    fn ratio_inverse(&self, extrapolate: Extrapolate<T>) -> RatioInverseView<'_>;
+}
+
+impl RatioInverse<f64> for Interp1D<f64, strategy::Linear> {
+    fn ratio_inverse(&self, extrapolate: Extrapolate<f64>) -> RatioInverseView<'_> {
+        RatioInverseView {
+            interp: self,
+            extrapolate,
         }
     }
 }

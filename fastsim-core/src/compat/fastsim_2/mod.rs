@@ -235,10 +235,10 @@ impl Vehicle {
             mc_eff_array: Default::default(), // calculated in `set_derived`
             mc_eff_map: self
                 .em()
-                .map(|em| match &em.eff_interp_achieved {
-                    InterpolatorEnum::Interp1D(interp) => Ok(interp.data.values.clone()),
-                    _ => bail!(format_dbg!(
-                        "Only 1-D interpolators can be converted to FASTSim 2"
+                .map(|em| match &em.eff_interp {
+                    EMEfficiency::PwrOutFrac(interp) => Ok(interp.data.values.clone()),
+                    EMEfficiency::Constant(_) => bail!(format_dbg!(
+                        "Only `PwrOutFrac` efficiency maps can be converted to FASTSim 2"
                     )),
                 })
                 .transpose()?
@@ -268,10 +268,10 @@ impl Vehicle {
             // short array that can use xEV when implented.  TODO: fix this when implementing xEV
             mc_pwr_out_perc: self
                 .em()
-                .map(|em| match &em.eff_interp_achieved {
-                    InterpolatorEnum::Interp1D(interp) => Ok(interp.data.grid[0].clone()),
-                    _ => bail!(format_dbg!(
-                        "Only 1-D interpolators can be converted to FASTSim 2"
+                .map(|em| match &em.eff_interp {
+                    EMEfficiency::PwrOutFrac(interp) => Ok(interp.data.grid[0].clone()),
+                    EMEfficiency::Constant(_) => bail!(format_dbg!(
+                        "Only `PwrOutFrac` efficiency maps can be converted to FASTSim 2"
                     )),
                 })
                 .transpose()?
@@ -553,25 +553,13 @@ impl TryFrom<&fastsim_core::vehicle::RustVehicle> for BatteryElectricVehicle {
             res: ReversibleEnergyStorage::try_from(f2veh.clone()).with_context(|| format_dbg!())?,
             em: ElectricMachine {
                 state: Default::default(),
-                eff_interp_achieved: InterpolatorEnum::new_1d(
+                eff_interp: EMEfficiency::PwrOutFrac(Interp1D::new(
                     f2veh.mc_pwr_out_perc.to_vec().into(),
                     f2veh.mc_eff_array.to_vec().into(),
                     strategy::Linear,
                     Extrapolate::Error,
-                )?,
-                eff_interp_at_max_input: Some(InterpolatorEnum::new_1d(
-                    // before adding the interpolator, pwr_in_frac_interp was set as Default::default(), can this
-                    // be transferred over as done here, or does a new defualt need to be defined?
-                    f2veh
-                        .mc_pwr_out_perc
-                        .iter()
-                        .zip(f2veh.mc_eff_array.iter())
-                        .map(|(x, y)| x / y)
-                        .collect(),
-                    f2veh.mc_eff_array.to_vec().into(),
-                    strategy::Linear,
-                    Extrapolate::Error,
                 )?),
+                _eff_interp_at_max_input_legacy: None,
                 pwr_out_max: f2veh.mc_max_kw * uc::KW,
                 specific_pwr: None,
                 mass: None,
@@ -673,12 +661,11 @@ impl TryFrom<fastsim_core::vehicle::RustVehicle> for ElectricMachine {
         f2veh: fastsim_core::vehicle::RustVehicle,
     ) -> Result<ElectricMachine, anyhow::Error> {
         Ok(powertrain::electric_machine::EMBuilder {
-            eff_interp_achieved: {
+            eff_interp: {
                 // fastsim-2's hard-coded short vector of percent of peak power
                 let short_perc_out_vec =
                     vec![0.0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.2, 0.4, 0.6, 0.8, 1.0];
-                // `InterpolatorEnum` for fastsim-3
-                InterpolatorEnum::new_1d(
+                Interp1D::new(
                     short_perc_out_vec.clone().into(),
                     {
                         // convert 101 element f2 array to shorter f2 array and use
@@ -702,6 +689,7 @@ impl TryFrom<fastsim_core::vehicle::RustVehicle> for ElectricMachine {
                     strategy::Linear,
                     Extrapolate::Error,
                 )
+                .map(EMEfficiency::PwrOutFrac)
             }
             .with_context(|| {
                 format!(
