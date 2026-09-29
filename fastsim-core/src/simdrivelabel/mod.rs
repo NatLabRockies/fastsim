@@ -993,8 +993,9 @@ fn run_simdrive_with_init_soc(
     veh: &Vehicle,
     cycle: &str,
     init_soc: si::Ratio,
+    sim_params: Option<SimParams>,
 ) -> anyhow::Result<SimDrive> {
-    let mut sd = SimDrive::new(veh.clone(), Cycle::from_resource(cycle, false)?, None);
+    let mut sd = SimDrive::new(veh.clone(), Cycle::from_resource(cycle, false)?, sim_params);
     let res_mut = sd.veh.res_mut().with_context(|| format_dbg!())?;
     res_mut.state.soc.mark_stale();
     res_mut.state.soc.update(init_soc, || format_dbg!())?;
@@ -1150,8 +1151,10 @@ pub fn run_label_simulations(
 
         // Create SimDrive objects for Charge Sustaining PHEV calculations
         let init_soc = min_soc + 0.01 * uc::R;
-        let cs_udds_sd = run_simdrive_with_init_soc(veh, "udds.csv", init_soc)?;
-        let cs_hwy_sd = run_simdrive_with_init_soc(veh, "hwfet.csv", init_soc)?;
+        let cs_udds_sd =
+            run_simdrive_with_init_soc(veh, "udds.csv", init_soc, sim_params.get("udds").cloned())?;
+        let cs_hwy_sd =
+            run_simdrive_with_init_soc(veh, "hwfet.csv", init_soc, sim_params.get("hwy").cloned())?;
         sd.insert("udds-cs", cs_udds_sd.clone());
         sd.insert("hwy-cs", cs_hwy_sd.clone());
         Ok((
