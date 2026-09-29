@@ -75,6 +75,7 @@ pub struct Vehicle {
     pub(crate) save_interval: Option<usize>,
     /// current state of vehicle
     #[serde(default)]
+    #[is_state]
     pub state: VehicleState,
     /// Vector-like history of [Self::state]
     #[serde(default, skip_serializing_if = "VehicleStateHistoryVec::is_empty")]
@@ -1300,6 +1301,7 @@ impl Vehicle {
 #[non_exhaustive]
 #[serde(default)]
 #[serde(deny_unknown_fields)]
+#[is_state]
 pub struct VehicleState {
     /// time step index
     pub i: TrackedState<usize>,

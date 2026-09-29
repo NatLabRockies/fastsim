@@ -1,4 +1,5 @@
 use crate::imports::*;
+use crate::utilities::TokenStreamIterator;
 
 lazy_static! {
     static ref ENERGY_REGEX: Regex = Regex::new(r"energy_(\w+)").unwrap();
@@ -15,23 +16,29 @@ pub(crate) fn state_methods_derive(input: TokenStream) -> TokenStream {
         abort_call_site!("`StateMethods` works only on Named Field structs.")
     };
 
-    let struct_has_state = fields.iter().any(|x| *x.ident.as_ref().unwrap() == "state");
-    let ident_str = ident.to_string();
-    let struct_is_state = ident_str.contains("State");
+    let struct_is_state = item_struct
+        .attrs
+        .iter()
+        .any(|attr| attr.path().is_ident("is_state"));
     let struct_has_save_interval = fields
         .iter()
         .any(|x| *x.ident.as_ref().unwrap() == "save_interval");
+    // A field is recursed into if it's marked `#[has_state]` (its type *contains* nested
+    // state) or `#[is_state]` (its type itself *is* a state struct). Both are handled
+    // identically today; the distinction is kept explicit to allow future divergence.
     let fields_with_state_vec: Vec<bool> = fields
         .iter()
         .map(|field| {
             field
                 .attrs
                 .iter()
-                .any(|attr| attr.path().is_ident("has_state"))
+                .any(|attr| attr.path().is_ident("has_state") || attr.path().is_ident("is_state"))
         })
         .collect();
 
-    // fields that contain nested `state` fields
+    // fields that participate in nested state-tracking, i.e. fields explicitly marked
+    // `#[has_state]` or `#[is_state]` (this includes the primary `state` field itself,
+    // when present, since it must also carry `#[is_state]`)
     let fields_with_state = fields
         .iter()
         .zip(fields_with_state_vec)
@@ -39,21 +46,29 @@ pub(crate) fn state_methods_derive(input: TokenStream) -> TokenStream {
         .map(|(f, _hsv)| f.ident.as_ref().unwrap())
         .collect::<Vec<_>>();
 
+    // whether this struct owns a primary `state: ...` field, as opposed to merely
+    // containing other has_state/is_state sub-component fields
+    let struct_has_state = fields_with_state.iter().any(|f| *f == "state");
+
+    // Types of fields tagged `#[is_state]` (as opposed to `#[has_state]`). Each such type
+    // is asserted below to implement the `IsState` marker trait, which is only implemented
+    // for structs that themselves derive `#[is_state]`. This turns a field mistagged
+    // `#[is_state]` (whose type isn't actually a state struct) into a compile error
+    // instead of silent drift, since both tags are otherwise handled identically by this
+    // derive. It does not catch the opposite mistake (`#[has_state]` on a field whose type
+    // happens to be a state struct) since that's not observably wrong today.
+    let is_state_field_types: Vec<&syn::Type> = fields
+        .iter()
+        .filter(|f| f.attrs.iter().any(|attr| attr.path().is_ident("is_state")))
+        .map(|f| &f.ty)
+        .collect();
+
     let all_fields = fields
         .iter()
         .map(|f| f.ident.as_ref().unwrap())
         .collect::<Vec<_>>();
 
-    let (self_step, self_reset_step): (TokenStream2, TokenStream2) = if struct_has_state {
-        (
-            quote! {
-                self.state.step(|| format!("{}\n{}", loc(), #ident_str))?;
-            },
-            quote! {
-                self.state.reset_step(|| format!("{}\n{}", loc(), #ident_str))?;
-            },
-        )
-    } else if struct_is_state {
+    let (self_step, self_reset_step): (TokenStream2, TokenStream2) = if struct_is_state {
         (
             quote! {
                 self.i.increment(1, || format_dbg!())?;
@@ -107,27 +122,6 @@ pub(crate) fn state_methods_derive(input: TokenStream) -> TokenStream {
                 }
             }
         });
-    } else if struct_has_state {
-        impl_block.extend::<TokenStream2>(quote! {
-            #[automatically_derived]
-            impl TrackedStateMethods for #ident {
-                fn check_and_reset<F: Fn() -> String>(&mut self, loc: F) -> anyhow::Result<()> {
-                    self.state.check_and_reset(|| format!("{}", loc()))?;
-                    #(
-                        self.#fields_with_state.check_and_reset(|| format!("{}\n    field in `{}` has not been updated", loc(), stringify!(#fields_with_state)))?;
-                    )*
-                    Ok(())
-                }
-
-                fn mark_fresh<F: Fn() -> String>(&mut self, loc: F) -> anyhow::Result<()> {
-                    self.state.mark_fresh(|| format!("{}", loc()))?;
-                    #(
-                        self.#fields_with_state.mark_fresh(|| format!("{}\n    field in `{}` has already been updated", loc(), stringify!(#fields_with_state)))?;
-                    )*
-                    Ok(())
-                }
-            }
-        });
     } else {
         impl_block.extend::<TokenStream2>(quote! {
             #[automatically_derived]
@@ -152,6 +146,31 @@ pub(crate) fn state_methods_derive(input: TokenStream) -> TokenStream {
     impl_block.extend::<TokenStream2>(quote! {
         impl StateMethods for #ident {}
     });
+
+    if struct_is_state {
+        impl_block.extend::<TokenStream2>(quote! {
+            #[automatically_derived]
+            impl IsState for #ident {}
+        });
+    }
+
+    // Compile-time check that every `#[is_state]` field's type actually implements
+    // `IsState` (i.e. that type's own struct derives `StateMethods` with `#[is_state]`
+    // on it). `const _` items are anonymous, so this is safe to emit once per field with
+    // no naming collisions.
+    impl_block.extend::<TokenStream2>(
+        is_state_field_types
+            .iter()
+            .map(|ty| {
+                quote! {
+                    const _: fn() = || {
+                        fn assert_impl_is_state<T: IsState>() {}
+                        assert_impl_is_state::<#ty>();
+                    };
+                }
+            })
+            .concat(),
+    );
 
     if struct_has_save_interval {
         impl_block.extend::<TokenStream2>(quote! {

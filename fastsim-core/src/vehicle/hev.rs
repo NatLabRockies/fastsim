@@ -556,6 +556,7 @@ impl Mass for HybridElectricVehicle {
 )]
 #[non_exhaustive]
 #[serde(deny_unknown_fields)]
+#[is_state]
 pub struct RGWDBState {
     /// time step index
     pub i: TrackedState<usize>,
@@ -902,6 +903,7 @@ pub struct RESGreedyWithDynamicBuffers {
     pub temp_fc_allowed_off: Option<si::Temperature>,
     /// current state of control variables
     #[serde(default)]
+    #[is_state]
     pub state: RGWDBState,
     /// history of current state
     #[serde(default, skip_serializing_if = "RGWDBStateHistoryVec::is_empty")]
@@ -1219,6 +1221,7 @@ for an HEV equipped with thermal models or superfluous otherwise",
 )]
 #[non_exhaustive]
 #[serde(deny_unknown_fields)]
+#[is_state]
 pub struct StartStopState {
     /// time step index
     pub i: TrackedState<usize>,
@@ -1295,6 +1298,7 @@ pub struct HEVStartStopControl {
     pub save_interval: Option<usize>,
     /// current state of control variables
     #[serde(default)]
+    #[is_state]
     pub state: StartStopState,
     /// history of current state
     #[serde(default, skip_serializing_if = "StartStopStateHistoryVec::is_empty")]

@@ -15,16 +15,20 @@ pub(crate) fn cumu_method_derive(input: TokenStream) -> TokenStream {
         abort_call_site!("`SetCumulative` works only on Named Field structs.")
     };
 
-    let struct_has_state = fields.iter().any(|x| *x.ident.as_ref().unwrap() == "state");
-    let ident_str = ident.to_string();
-    let struct_is_state = ident_str.contains("State");
+    let struct_is_state = item_struct
+        .attrs
+        .iter()
+        .any(|attr| attr.path().is_ident("is_state"));
+    // A field is recursed into if it's marked `#[has_state]` (its type *contains* nested
+    // state) or `#[is_state]` (its type itself *is* a state struct). Both are handled
+    // identically today; the distinction is kept explicit to allow future divergence.
     let fields_with_state_vec: Vec<bool> = fields
         .iter()
         .map(|field| {
             field
                 .attrs
                 .iter()
-                .any(|attr| attr.path().is_ident("has_state"))
+                .any(|attr| attr.path().is_ident("has_state") || attr.path().is_ident("is_state"))
         })
         .collect();
 
@@ -102,24 +106,6 @@ pub(crate) fn cumu_method_derive(input: TokenStream) -> TokenStream {
                             || format!("{}\n{}\n{} -> {}", loc(), format_dbg!(), stringify!(#pwr_fields), stringify!(#energy_fields))
                         )?;
                     )*
-                    Ok(())
-                }
-            }
-        });
-    } else if struct_has_state {
-        impl_block.extend::<TokenStream2>(quote! {
-            // this tells the compiler that the `SetCumulative` trait is not manually derived
-            #[automatically_derived]
-            impl SetCumulative for #ident {
-                fn set_cumulative<F: Fn() -> String>(&mut self, dt: si::Time, loc: F) -> anyhow::Result<()> {
-                    self.state.set_cumulative(dt, || format!("{}\n{}", loc(), format_dbg!()))?;
-                    #(self.#fields_with_state.set_cumulative(dt, || format!("{}\n{}", loc(), format_dbg!()))?;)*
-                    Ok(())
-                }
-
-                fn reset_cumulative<F: Fn() -> String>(&mut self, loc: F) -> anyhow::Result<()> {
-                    self.state.reset_cumulative(|| format!("{}\n{}", loc(), format_dbg!()))?;
-                    #(self.#fields_with_state.reset_cumulative(|| format!("{}\n{}", loc(), format_dbg!()))?;)*
                     Ok(())
                 }
             }

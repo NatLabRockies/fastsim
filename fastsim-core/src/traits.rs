@@ -335,6 +335,12 @@ impl<T: Clone + Sub<T, Output = T> + Default> Diff<T> for Vec<T> {
     }
 }
 
+/// Marker trait implemented for leaf state structs (i.e. structs derived with
+/// `#[is_state]`, e.g. `FooState`). Used to give a compile error, rather than silent
+/// drift, when a field tagged `#[is_state]` in `#[derive(StateMethods)]` /
+/// `#[derive(SetCumulative)]` does not actually point at a state struct.
+pub trait IsState {}
+
 /// Super trait to ensure that related traits are implemented together
 pub trait StateMethods: SetCumulative + SaveState + Step + TrackedStateMethods {}
 

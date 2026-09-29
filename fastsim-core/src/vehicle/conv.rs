@@ -23,6 +23,7 @@ pub struct DfcoControls {
     pub save_interval: Option<usize>,
     /// current state of control variables
     #[serde(default)]
+    #[is_state]
     pub state: DfcoState,
     /// history of current state
     #[serde(default, skip_serializing_if = "DfcoStateHistoryVec::is_empty")]
@@ -149,6 +150,7 @@ impl DfcoControls {
 )]
 #[non_exhaustive]
 #[serde(deny_unknown_fields)]
+#[is_state]
 pub struct DfcoState {
     /// time step index
     pub i: TrackedState<usize>,
@@ -612,6 +614,7 @@ pub struct ConvStartStopControl {
     pub save_interval: Option<usize>,
     /// current state of control variables
     #[serde(default)]
+    #[is_state]
     pub state: ConvStartStopState,
     /// history of current state
     #[serde(
@@ -741,6 +744,7 @@ impl ConvStartStopControl {
 )]
 #[non_exhaustive]
 #[serde(deny_unknown_fields)]
+#[is_state]
 pub struct ConvStartStopState {
     /// time step index
     pub i: TrackedState<usize>,

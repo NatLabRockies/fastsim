@@ -39,6 +39,7 @@ pub struct ElectricMachine {
     pub save_interval: Option<usize>,
     /// struct for tracking current state
     #[serde(default)]
+    #[is_state]
     pub state: ElectricMachineState,
     /// Custom vector of [Self::state]
     #[serde(
@@ -873,7 +874,7 @@ impl EMBuilder {
 #[serde(default)]
 #[serde(deny_unknown_fields)]
 #[cfg_attr(feature = "pyo3", pyclass(module = "fastsim", subclass, eq))]
-
+#[is_state]
 pub struct ElectricMachineState {
     /// time step index
     pub i: TrackedState<usize>,

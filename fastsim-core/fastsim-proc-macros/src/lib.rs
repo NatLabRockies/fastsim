@@ -39,16 +39,28 @@ pub fn history_vec_derive(input: TokenStream) -> TokenStream {
     history_vec_derive::history_vec_derive(input)
 }
 
-#[proc_macro_derive(StateMethods, attributes(has_state))]
+#[proc_macro_derive(StateMethods, attributes(has_state, is_state))]
 /// Generates remaining `StateMethods` child traits that work for struct and any
-/// nested fields with the `#[has_state]` attribute.
+/// nested fields marked `#[has_state]` or `#[is_state]`.
+///
+/// - `#[is_state]` on a struct itself marks it as a leaf state struct (e.g.
+///   `FooState`), which changes how that struct's own impls are generated.
+/// - `#[is_state]` on a field marks that the field's type *is* a state struct
+///   (e.g. a `state: FooState` field) and should be recursed into.
+/// - `#[has_state]` on a field marks that the field's type merely *contains*
+///   nested state (e.g. a sub-component like `fc: FuelConverter`) and should
+///   be recursed into.
+///
+/// `#[has_state]` and `#[is_state]` on a field are handled identically today;
+/// the distinction is kept explicit so the two cases can diverge later.
 pub fn state_methods_derive(input: TokenStream) -> TokenStream {
     sm_derive::state_methods_derive(input)
 }
 
-#[proc_macro_derive(SetCumulative, attributes(has_state))]
+#[proc_macro_derive(SetCumulative, attributes(has_state, is_state))]
 /// Generate `SetCumulative` trait impl that work for struct and any nested
-/// fields with the `#[has_state]` attribute.
+/// fields marked `#[has_state]` or `#[is_state]`. See [`state_methods_derive`]
+/// for how these attributes are used.
 pub fn cumu_method_derive(input: TokenStream) -> TokenStream {
     cumu_method_derive::cumu_method_derive(input)
 }

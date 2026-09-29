@@ -32,6 +32,7 @@ pub struct HVACSystemForLumpedCabin {
     pub pwr_aux_for_hvac_max: si::Power,
     /// coefficient of performance of vapor compression cycle
     #[serde(default)]
+    #[is_state]
     pub state: HVACSystemForLumpedCabinState,
     #[serde(
         default,
@@ -507,6 +508,7 @@ impl SerdeAPI for CabinHeatSource {}
 #[cfg_attr(feature = "pyo3", pyclass(module = "fastsim", subclass, eq))]
 #[serde(default)]
 #[serde(deny_unknown_fields)]
+#[is_state]
 pub struct HVACSystemForLumpedCabinState {
     /// time step counter
     pub i: TrackedState<usize>,

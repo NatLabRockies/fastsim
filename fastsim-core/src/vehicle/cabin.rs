@@ -168,6 +168,7 @@ pub struct LumpedCabin {
     /// cabin width, modeled as a flat plate
     pub width: si::Length,
     #[serde(default)]
+    #[is_state]
     pub state: LumpedCabinState,
     #[serde(default, skip_serializing_if = "LumpedCabinStateHistoryVec::is_empty")]
     pub history: LumpedCabinStateHistoryVec,
@@ -327,6 +328,7 @@ impl LumpedCabin {
 )]
 #[cfg_attr(feature = "pyo3", pyclass(module = "fastsim", subclass, eq))]
 #[serde(deny_unknown_fields)]
+#[is_state]
 pub struct LumpedCabinState {
     /// time step counter
     pub i: TrackedState<usize>,

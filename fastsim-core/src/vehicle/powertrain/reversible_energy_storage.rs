@@ -38,6 +38,7 @@ pub struct ReversibleEnergyStorage {
     pub max_soc: si::Ratio,
     /// struct for tracking current state
     #[serde(default)]
+    #[is_state]
     pub state: ReversibleEnergyStorageState,
     /// Custom vector of [Self::state]
     #[serde(
@@ -874,6 +875,7 @@ pub enum SpecificEnergySideEffect {
 #[cfg_attr(feature = "pyo3", pyclass(module = "fastsim", subclass, eq))]
 #[serde(default)]
 /// ReversibleEnergyStorage state variables
+#[is_state]
 pub struct ReversibleEnergyStorageState {
     // limits
     /// max output power for propulsion during positive traction
@@ -1122,6 +1124,7 @@ pub struct RESLumpedThermal {
     pub conductance_to_cab: si::ThermalConductance,
     /// current state
     #[serde(default)]
+    #[is_state]
     pub state: RESLumpedThermalState,
     /// history of state
     #[serde(
@@ -1248,6 +1251,7 @@ impl RESLumpedThermal {
 )]
 #[cfg_attr(feature = "pyo3", pyclass(module = "fastsim", subclass, eq))]
 #[serde(deny_unknown_fields)]
+#[is_state]
 pub struct RESLumpedThermalState {
     /// time step index
     pub i: TrackedState<usize>,

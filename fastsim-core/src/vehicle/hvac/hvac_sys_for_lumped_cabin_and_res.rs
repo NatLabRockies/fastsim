@@ -54,6 +54,7 @@ pub struct HVACSystemForLumpedCabinAndRES {
     pub pwr_aux_for_hvac_res_max: si::Power,
     /// coefficient of performance of vapor compression cycle
     #[serde(default)]
+    #[is_state]
     pub state: HVACSystemForLumpedCabinAndRESState,
     #[serde(
         default,
@@ -1160,6 +1161,7 @@ impl HVACSystemForLumpedCabinAndRES {
 #[serde(default)]
 #[cfg_attr(feature = "pyo3", pyclass(module = "fastsim", subclass, eq))]
 #[serde(deny_unknown_fields)]
+#[is_state]
 pub struct HVACSystemForLumpedCabinAndRESState {
     /// time step counter
     pub i: TrackedState<usize>,
