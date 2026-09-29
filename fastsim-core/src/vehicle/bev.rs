@@ -206,8 +206,11 @@ impl Powertrain for BatteryElectricVehicle {
         self.res
             .set_curr_pwr_out_max(dt, disch_buffer, chrg_buffer)
             .with_context(|| anyhow!(format_dbg!()))?;
+        let aux_supply_eff = match &self.res.aux_supply_eff {
+            AuxSupplyEfficiency::Constant(interp) => interp.interpolate(&[]),
+        }?;
         self.res
-            .set_curr_pwr_prop_max(pwr_aux)
+            .set_curr_pwr_prop_max(pwr_aux / aux_supply_eff)
             .with_context(|| anyhow!(format_dbg!()))?;
         self.em
             .set_curr_pwr_prop_out_max(

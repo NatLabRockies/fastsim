@@ -18,6 +18,8 @@ pt_type:
         Constant: 0.9848857801796105
       min_soc: 0.4
       max_soc: 0.8
+      aux_supply_eff:
+        Constant: 1.0
       state:
         pwr_prop_max_watts: 0.0
         pwr_regen_max_watts: 0.0
@@ -85,6 +87,8 @@ pt_type:
         strategy: Linear
         extrapolate: Error
       pwr_idle_fuel_watts: 0.0
+      aux_supply_eff:
+        Constant: 1.0
       state:
         i: 0
         pwr_out_max_watts: 0.0

@@ -54,7 +54,9 @@ impl Vehicle {
     pub fn to_fastsim2(&self) -> anyhow::Result<fastsim_core::vehicle::RustVehicle> {
         let mut veh = fastsim_core::vehicle::RustVehicle {
             alt_eff: match &self.pt_type {
-                PowertrainType::ConventionalVehicle(conv) => conv.alt_eff.get::<si::ratio>(),
+                PowertrainType::ConventionalVehicle(conv) => match &conv.fc.aux_supply_eff {
+                    AuxSupplyEfficiency::Constant(interp) => interp.interpolate(&[])?,
+                },
                 _ => 1.0,
             },
             alt_eff_doc: None,
@@ -506,6 +508,7 @@ pub const FUEL_LHV_MJ_PER_KG: f64 = 43.2;
 
 impl TryFrom<&fastsim_core::vehicle::RustVehicle> for ConventionalVehicle {
     type Error = anyhow::Error;
+    #[allow(deprecated)]
     fn try_from(f2veh: &fastsim_core::vehicle::RustVehicle) -> anyhow::Result<ConventionalVehicle> {
         let conv = ConventionalVehicle {
             fs: {
@@ -524,7 +527,7 @@ impl TryFrom<&fastsim_core::vehicle::RustVehicle> for ConventionalVehicle {
             pt_cntrl: ConvPowertrainControls::Normal,
             dfco_cntrl: DfcoControls::default(),
             mass: None,
-            alt_eff: f2veh.alt_eff * uc::R,
+            alt_eff: 1.0 * uc::R,
         };
         Ok(conv)
     }
@@ -737,6 +740,7 @@ impl TryFrom<fastsim_core::vehicle::RustVehicle> for FuelConverter {
             pwr_for_peak_eff: uc::KW * f64::NAN, // this gets updated in `init`
             // this means that aux power must include idle fuel
             pwr_idle_fuel: si::Power::ZERO,
+            aux_supply_eff: f2veh.alt_eff.into(),
             save_interval: Some(1),
         }
         .try_into()
@@ -763,6 +767,7 @@ impl TryFrom<fastsim_core::vehicle::RustVehicle> for ReversibleEnergyStorage {
             ),
             min_soc: f2veh.min_soc * uc::R,
             max_soc: f2veh.max_soc * uc::R,
+            aux_supply_eff: Default::default(),
             save_interval: Some(1),
             history: Default::default(),
         };

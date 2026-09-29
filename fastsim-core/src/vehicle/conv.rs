@@ -178,13 +178,25 @@ pub struct ConventionalVehicle {
     /// powertrain mass
     pub(crate) mass: Option<si::Mass>,
     /// Alternator efficiency used to calculate aux mechanical power demand on engine
+    #[serde(default = "default_alt_eff")]
+    #[deprecated(
+        since = "3.1.0",
+        note = "This field will be removed in a future release. Use FuelConverter.aux_eff instead."
+    )]
+    #[serde(skip_serializing)]
     pub alt_eff: si::Ratio,
+}
+
+/// Defaults to 100% for backward compatibility. This field will be removed in a future release.
+fn default_alt_eff() -> si::Ratio {
+    1.0 * uc::R
 }
 
 #[pyo3_api]
 impl ConventionalVehicle {}
 
 impl ConventionalVehicle {
+    #[allow(deprecated)]
     pub fn new(
         fs: FuelStorage,
         fc: FuelConverter,
@@ -210,7 +222,37 @@ impl ConventionalVehicle {
 
 impl SerdeAPI for ConventionalVehicle {}
 impl Init for ConventionalVehicle {
+    #[allow(deprecated)]
     fn init(&mut self) -> Result<(), Error> {
+        let alt_eff = self.alt_eff.get::<si::ratio>();
+        if alt_eff != 1.0 {
+            let AuxSupplyEfficiency::Constant(interp) = &self.fc.aux_supply_eff;
+            if interp.0 == 1.0 {
+                // `fc.aux_supply_eff` was left at its default, so fall back to
+                // the deprecated `alt_eff` to preserve legacy simulation behavior
+                //
+                // Also fires for `fc.aux_supply_eff` explicitly set to 1.0
+                eprintln!(
+                    "Warning: deprecated field `alt_eff` = `{}` is set. Assigning it to `fc.aux_supply_eff` for backward compatibility. This field will be removed in a future release; set `fc.aux_supply_eff` directly instead.",
+                    alt_eff
+                );
+                self.fc.aux_supply_eff = AuxSupplyEfficiency::from(alt_eff);
+            } else if interp.0 != alt_eff {
+                // provided both alt_eff != 1.0 and aux_supply_eff that is not equivalent;
+                // emit warning that aux_supply_eff overrides alt_eff
+                eprintln!(
+                    "Warning: provided deprecated field `alt_eff` = `{}` is being overridden by `fc.aux_supply_eff`. The `alt_eff` field will be removed in a future release.",
+                    alt_eff
+                );
+            } else {
+                // alt_eff != 1.0 but happens to match fc.aux_supply_eff; still flag
+                // the deprecated field since it has no effect but is present
+                eprintln!(
+                    "Warning: deprecated field `alt_eff` = `{}` is set but has no effect, since it matches `fc.aux_supply_eff`. This field will be removed in a future release; remove it from your vehicle file.",
+                    alt_eff
+                );
+            }
+        }
         self.fc
             .init()
             .map_err(|err| Error::InitError(format_dbg!(err)))?;
@@ -252,8 +294,11 @@ impl Powertrain for Box<ConventionalVehicle> {
         self.fc
             .set_curr_pwr_out_max(dt)
             .with_context(|| anyhow!(format_dbg!()))?;
+        let aux_supply_eff = match &self.fc.aux_supply_eff {
+            AuxSupplyEfficiency::Constant(interp) => interp.interpolate(&[]),
+        }?;
         self.fc
-            .set_curr_pwr_prop_max(pwr_aux / self.alt_eff)
+            .set_curr_pwr_prop_max(pwr_aux / aux_supply_eff)
             .with_context(|| anyhow!(format_dbg!()))?;
         self.transmission
             .set_curr_pwr_prop_out_max(

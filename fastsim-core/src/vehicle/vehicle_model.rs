@@ -22,6 +22,14 @@ pub enum AuxSource {
 impl SerdeAPI for AuxSource {}
 impl Init for AuxSource {}
 
+/// Efficiency model for aux load power source
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, IsVariant, TryInto)]
+pub enum AuxSupplyEfficiency {
+    Constant(Interp0D<f64>),
+}
+
+impl_efficiency_enum!(AuxSupplyEfficiency { Constant });
+
 #[serde_api]
 #[cfg_attr(feature = "pyo3", pyclass(module = "fastsim", subclass, eq))]
 #[derive(PartialEq, Clone, Debug, Serialize, Deserialize, StateMethods)]
@@ -1567,6 +1575,7 @@ pub(crate) mod tests {
             )?, // eff_interp_from_pwr_out
             0.4 * 211088.0 * uc::W,           // pwr_for_peak_eff
             0.0 * uc::W,                      // pwr_idle_fuel
+            Default::default(),               // aux_supply_eff
             None,
         )?;
         let tx = Transmission::new(
@@ -1660,6 +1669,7 @@ pub(crate) mod tests {
             RESEfficiency::Constant(Interp0D(0.9)), // eff_interp
             0.0 * uc::R,                            // min_soc
             1.0 * uc::R,                            // max_soc
+            Default::default(),                     // aux_supply_eff
             None,
         )?;
         let fs = FuelStorage::new(
@@ -1702,6 +1712,7 @@ pub(crate) mod tests {
             )?, // eff_interp_from_pwr_out
             0.4 * 211088.0 * uc::W,           // pwr_for_peak_eff
             0.0 * uc::W,                      // pwr_idle_fuel
+            Default::default(),
             None,
         )?;
         let em = ElectricMachine::new(

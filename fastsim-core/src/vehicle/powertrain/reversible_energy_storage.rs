@@ -36,6 +36,11 @@ pub struct ReversibleEnergyStorage {
     pub min_soc: si::Ratio,
     /// Hard limit on maximum SOC, e.g. 0.95
     pub max_soc: si::Ratio,
+
+    /// Efficiency to apply to aux load
+    #[serde(default)]
+    pub aux_supply_eff: AuxSupplyEfficiency,
+
     /// struct for tracking current state
     #[serde(default)]
     pub state: ReversibleEnergyStorageState,
@@ -144,6 +149,7 @@ impl ReversibleEnergyStorage {
         eff_interp: RESEfficiency,
         min_soc: si::Ratio,
         max_soc: si::Ratio,
+        aux_supply_eff: AuxSupplyEfficiency,
         save_interval: Option<usize>,
     ) -> anyhow::Result<Self> {
         let mut reversible_energy_storage = Self {
@@ -155,6 +161,7 @@ impl ReversibleEnergyStorage {
             eff_interp,
             min_soc,
             max_soc,
+            aux_supply_eff,
             state: ReversibleEnergyStorageState::default(),
             history: ReversibleEnergyStorageStateHistoryVec::default(),
             save_interval,
@@ -822,6 +829,9 @@ impl Init for ReversibleEnergyStorage {
             .mass()
             .map_err(|err| Error::InitError(format_dbg!(err)))?;
         self.eff_interp
+            .validate()
+            .map_err(|err| Error::InitError(format_dbg!(err)))?;
+        self.aux_supply_eff
             .validate()
             .map_err(|err| Error::InitError(format_dbg!(err)))?;
         self.state

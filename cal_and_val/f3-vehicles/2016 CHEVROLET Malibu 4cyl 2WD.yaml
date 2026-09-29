@@ -53,6 +53,8 @@ pt_type:
         strategy: Linear
         extrapolate: Error
       pwr_idle_fuel_watts: 0.0
+      aux_supply_eff:
+        Constant: 1.0
       state:
         i: 0
         pwr_out_max_watts: 0.0
@@ -95,7 +97,6 @@ pt_type:
         i: 0
         vehicle_dynamics_prevent_dfco: false
     mass_kilograms: ~
-    alt_eff: 1.0
 chassis:
   drag_coef: 0.3
   frontal_area_square_meters: 2.732
