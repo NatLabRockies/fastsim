@@ -1200,6 +1200,7 @@ pub struct HVACSystemForLumpedCabinAndRESState {
     /// to [ReversibleEnergyStorage::thrml] due to derivative gain
     pub energy_d_res: TrackedState<si::Energy>,
     /// coefficient of performance (i.e. efficiency) of vapor compression cycle
+    #[si_unit(unitless)]
     pub cop: TrackedState<Option<si::Ratio>>,
     /// Reference temperature used to calculate coefficient of performance (i.e.
     /// efficiency) of vapor compression cycle

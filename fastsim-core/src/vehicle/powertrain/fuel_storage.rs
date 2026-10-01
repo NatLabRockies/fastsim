@@ -21,6 +21,7 @@ pub struct FuelStorage {
     #[serde(default)]
     pub fuel_type: Option<FuelType>,
     /// energy capacity
+    #[si_unit(kilowatt_hours)]
     pub energy_capacity: si::Energy,
     /// Fuel and tank specific energy
     pub(crate) specific_energy: Option<si::SpecificEnergy>,

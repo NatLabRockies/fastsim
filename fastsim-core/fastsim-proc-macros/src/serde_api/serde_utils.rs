@@ -362,8 +362,7 @@ pub(crate) fn serde_attrs_for_si_fields(field: &mut syn::Field) -> Option<()> {
 
         // Determine the canonical (serialization) unit and serialize_with path.
         //
-        // With no field-level override: use the first entry from quantity_config,
-        // except Ratio which preserves a legacy bare-name canonical serialization key.
+        // With no field-level override: use the first entry from quantity_config.
         // With `#[si_unit(name)]`: use the specified unit, constructing a serialize_with
         // path of the form `fastsim_core::utils::serde_helpers::{quantity_snake}_as_{unit}`
         // unless the unit is the SI base unit (first entry, no global serialize_with),
@@ -408,10 +407,6 @@ pub(crate) fn serde_attrs_for_si_fields(field: &mut syn::Field) -> Option<()> {
                         (override_name.clone(), serialize_with)
                     }
                 }
-            } else if quantity == "Ratio" {
-                // Legacy escape hatch: keep bare field names canonical for Ratio fields
-                // unless an explicit override is provided.
-                (String::new(), None)
             } else {
                 let canonical = unit_impls
                     .first()
@@ -511,8 +506,12 @@ fn quantity_config(quantity: &str) -> Option<(Vec<(TokenStream2, String)>, Optio
             None,
         )),
         "Energy" => Some((
-            extract_units!(uom::si::energy::joule, uom::si::energy::kilowatt_hour),
-            None,
+            extract_units!(
+                uom::si::energy::kilojoule,
+                uom::si::energy::kilowatt_hour,
+                uom::si::energy::joule
+            ),
+            Some("fastsim_core::utils::serde_helpers::energy_as_kilojoules"),
         )),
         // "EnergyDensity" => Some((
         //     vec![(
@@ -558,33 +557,23 @@ fn quantity_config(quantity: &str) -> Option<(Vec<(TokenStream2, String)>, Optio
             extract_units!(uom::si::moment_of_inertia::kilogram_square_meter),
             None,
         )),
-        // First entry = canonical serialization unit.
-        // To serialize Power in kilowatts, move kilowatt to first and set serialize_with:
-        // "Power" => Some((
-        //     extract_units!(
-        //         uom::si::power::kilowatt,
-        //         uom::si::power::watt,
-        //         uom::si::power::horsepower
-        //     ),
-        //     Some("fastsim_core::utils::serde_helpers::power_as_kilowatts"),
-        // )),
         "Power" => Some((
             extract_units!(
-                uom::si::power::watt,
                 uom::si::power::kilowatt,
+                uom::si::power::watt,
                 uom::si::power::horsepower
             ),
-            None,
+            Some("fastsim_core::utils::serde_helpers::power_as_kilowatts"),
         )),
         "PowerRate" => Some((extract_units!(uom::si::power_rate::watt_per_second), None)),
         "Pressure" => Some((
             extract_units!(
-                uom::si::pressure::pascal,
                 uom::si::pressure::kilopascal,
+                uom::si::pressure::pascal,
                 uom::si::pressure::bar,
                 uom::si::pressure::pound_force_per_square_inch
             ),
-            None,
+            Some("fastsim_core::utils::serde_helpers::pressure_as_kilopascals"),
         )),
         "Ratio" => Some((
             extract_units!(uom::si::ratio::ratio, uom::si::ratio::percent),
@@ -595,44 +584,47 @@ fn quantity_config(quantity: &str) -> Option<(Vec<(TokenStream2, String)>, Optio
             // as custom uom units (not present upstream). extract_custom_units! takes
             // ("path", "name") string literals because the proc-macro binary cannot link
             // against downstream crates to call Unit::plural().
-            let mut units = extract_units!(
-                uom::si::available_energy::joule_per_kilogram,
-                uom::si::available_energy::kilojoule_per_kilogram
-            );
-            units.extend(extract_custom_units!(
-                (
-                    "fastsim_core::si::watt_hour_per_kilogram",
-                    "watt_hours_per_kilogram"
-                ),
+            let mut units = extract_custom_units!(
                 (
                     "fastsim_core::si::kilowatt_hour_per_kilogram",
                     "kilowatt_hours_per_kilogram"
+                ),
+                (
+                    "fastsim_core::si::watt_hour_per_kilogram",
+                    "watt_hours_per_kilogram"
                 )
+            );
+            units.extend(extract_units!(
+                uom::si::available_energy::kilojoule_per_kilogram,
+                uom::si::available_energy::joule_per_kilogram
             ));
-            Some((units, None))
+            Some((
+                units,
+                Some("fastsim_core::utils::serde_helpers::specific_energy_as_kilowatt_hours_per_kilogram"),
+            ))
         }
         "SpecificPower" => Some((
             extract_units!(
-                uom::si::specific_power::watt_per_kilogram,
-                uom::si::specific_power::kilowatt_per_kilogram
+                uom::si::specific_power::kilowatt_per_kilogram,
+                uom::si::specific_power::watt_per_kilogram
             ),
-            None,
+            Some("fastsim_core::utils::serde_helpers::specific_power_as_kilowatts_per_kilogram"),
         )),
         "Temperature" => Some((
             extract_units!(
-                uom::si::thermodynamic_temperature::kelvin,
                 uom::si::thermodynamic_temperature::degree_celsius,
+                uom::si::thermodynamic_temperature::kelvin,
                 uom::si::thermodynamic_temperature::degree_fahrenheit
             ),
-            None,
+            Some("fastsim_core::utils::serde_helpers::temperature_as_degrees_celsius"),
         )),
         "TemperatureInterval" => Some((
             extract_units!(
-                uom::si::temperature_interval::kelvin,
                 uom::si::temperature_interval::degree_celsius,
+                uom::si::temperature_interval::kelvin,
                 uom::si::temperature_interval::degree_fahrenheit
             ),
-            None,
+            Some("fastsim_core::utils::serde_helpers::temperature_interval_as_degrees_celsius"),
         )),
         "ThermalConductance" => Some((
             extract_units!(uom::si::thermal_conductance::watt_per_kelvin),
@@ -784,11 +776,8 @@ pub fn generate_helper_struct(
                         // Field-unit is canonical by default, with bare-field aliasing for the
                         // SI base unit. A field-level `#[si_unit(unitless)]` override switches
                         // canonical naming to bare field for the base unit.
-                        // Legacy escape hatch: unannotated Ratio fields also serialize bare.
-                        let ratio_escape_hatch = si_field.quantity == "Ratio";
-                        let use_bare_as_canonical = (si_field.unitless_canonical
-                            || ratio_escape_hatch)
-                            && idx == base_unit_idx;
+                        let use_bare_as_canonical =
+                            si_field.unitless_canonical && idx == base_unit_idx;
                         let (canonical_name, unit_alias) = if use_bare_as_canonical {
                             (bare_name.clone(), serde_key.clone())
                         } else {

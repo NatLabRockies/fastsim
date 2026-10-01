@@ -27,10 +27,12 @@ impl Init for DriveTypes {}
 /// Struct for simulating vehicle
 pub struct Chassis {
     /// Aerodynamic drag coefficient
+    #[si_unit(unitless)]
     pub drag_coef: si::Ratio,
     /// Projected frontal area for drag calculations
     pub frontal_area: si::Area,
     /// Wheel rolling resistance coefficient for the vehicle (i.e. all wheels included)
+    #[si_unit(unitless)]
     pub wheel_rr_coef: si::Ratio,
     /// Wheel inertia per wheel
     pub wheel_inertia: si::MomentOfInertia,
@@ -45,6 +47,7 @@ pub struct Chassis {
     /// Vehicle center of mass height
     pub cg_height: si::Length,
     /// Wheel coefficient of friction
+    #[si_unit(unitless)]
     pub wheel_fric_coef: si::Ratio,
 
     /// Drive wheel configuration

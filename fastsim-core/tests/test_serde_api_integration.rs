@@ -294,16 +294,16 @@ fn test_serialize_uses_prescribed_units() {
         serde_json::from_str(&serialized).expect("Failed to parse serialized JSON");
 
     assert!(value.get("mass_kilograms").is_some());
-    assert!(value.get("power_watts").is_some());
+    assert!(value.get("power_kilowatts").is_some());
     assert!(value.get("speed_meters_per_second").is_some());
     assert!(value.get("duration_seconds").is_some());
     assert!(value.get("area_square_meters").is_some());
-    assert!(value.get("temperature_kelvin").is_some());
-    assert!(value.get("energy_joules").is_some());
+    assert!(value.get("temperature_degrees_celsius").is_some());
+    assert!(value.get("energy_kilojoules").is_some());
     assert!(value.get("efficiency").is_some()); // Ratio: bare name
-    assert!(value.get("tracked_power_watts").is_some());
+    assert!(value.get("tracked_power_kilowatts").is_some());
     assert!(value.get("tracked_efficiency").is_some()); // Ratio: bare name
-    assert!(value.get("renamed_power_watts").is_some());
+    assert!(value.get("renamed_power_kilowatts").is_some());
 }
 
 #[test]
@@ -330,14 +330,15 @@ fn test_round_trip_conversion_preserves_values() {
     let value: serde_json::Value =
         serde_json::from_str(&serialized).expect("Failed to parse serialized JSON");
 
-    // Values are preserved through round-trip (in primary units)
+    // Values are preserved through round-trip (in canonical serialized units)
     assert_eq!(value["mass_kilograms"], 2000.0);
-    assert_eq!(value["power_watts"], 150.0);
+    assert_eq!(value["power_kilowatts"], 0.15);
     assert_eq!(value["speed_meters_per_second"], 30.0);
     assert_eq!(value["duration_seconds"], 3600.0);
     assert_eq!(value["area_square_meters"], 5.0);
-    assert_eq!(value["temperature_kelvin"], 300.0);
-    assert_eq!(value["energy_joules"], 1000.0);
+    let temp_c = value["temperature_degrees_celsius"].as_f64().unwrap();
+    assert!((temp_c - 26.85).abs() < 1e-9);
+    assert_eq!(value["energy_kilojoules"], 1.0);
     assert_eq!(value["efficiency"], 0.85); // Ratio: bare name
 }
 
@@ -797,8 +798,8 @@ const SE_BASE: &str = r#"{
 }"#;
 
 #[test]
-fn test_specific_energy_serializes_as_joules_per_kilogram() {
-    // Primary serialization key for SpecificEnergy is joules_per_kilogram.
+fn test_specific_energy_serializes_as_kilowatt_hours_per_kilogram() {
+    // Primary serialization key for SpecificEnergy is kilowatt_hours_per_kilogram.
     let json = SE_BASE.replace(
         "}",
         r#", "specific_energy_watt_hours_per_kilogram": 100.0}"#,
@@ -807,14 +808,14 @@ fn test_specific_energy_serializes_as_joules_per_kilogram() {
     let serialized = serde_json::to_string(&device).unwrap();
     let value: serde_json::Value = serde_json::from_str(&serialized).unwrap();
     assert!(
-        value.get("specific_energy_joules_per_kilogram").is_some(),
-        "expected specific_energy_joules_per_kilogram in serialized output; got: {serialized}"
+        value.get("specific_energy_kilowatt_hours_per_kilogram").is_some(),
+        "expected specific_energy_kilowatt_hours_per_kilogram in serialized output; got: {serialized}"
     );
-    // 100 Wh/kg = 360 000 J/kg
-    let stored = value["specific_energy_joules_per_kilogram"]
+    // 100 Wh/kg = 0.1 kWh/kg
+    let stored = value["specific_energy_kilowatt_hours_per_kilogram"]
         .as_f64()
         .unwrap();
-    assert!((stored - 360_000.0).abs() < 1.0);
+    assert!((stored - 0.1).abs() < 1e-12);
 }
 
 #[test]
@@ -908,10 +909,10 @@ fn test_si_unit_unitless_override_changes_ratio_canonical_name() {
     assert!(value.get("alt_eff_ratio").is_none());
     assert!(value.get("cop_ratio").is_none());
 
-    // Ratio escape hatch: unannotated ratio fields also serialize bare.
+    // With Ratio escape hatch disabled, unannotated ratio fields serialize with suffix.
     assert!(
-        value.get("grade").is_some(),
-        "expected bare grade in {json}"
+        value.get("grade_ratio").is_some(),
+        "expected grade_ratio in {json}"
     );
-    assert!(value.get("grade_ratio").is_none());
+    assert!(value.get("grade").is_none());
 }

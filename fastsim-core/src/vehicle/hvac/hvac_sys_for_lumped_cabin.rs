@@ -523,6 +523,7 @@ pub struct HVACSystemForLumpedCabinState {
     /// portion of total HVAC cooling/heating (negative/positive) cumulative energy due to derivative gain
     pub energy_d: TrackedState<si::Energy>,
     /// coefficient of performance (i.e. efficiency) of vapor compression cycle
+    #[si_unit(unitless)]
     pub cop: TrackedState<Option<si::Ratio>>,
     /// Aux power demand from [Vehicle::hvac] system
     pub pwr_aux_for_hvac: TrackedState<si::Power>,

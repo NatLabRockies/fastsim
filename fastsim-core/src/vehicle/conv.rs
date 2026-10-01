@@ -178,6 +178,7 @@ pub struct ConventionalVehicle {
     /// powertrain mass
     pub(crate) mass: Option<si::Mass>,
     /// Alternator efficiency used to calculate aux mechanical power demand on engine
+    #[si_unit(percent)]
     pub alt_eff: si::Ratio,
 }
 

@@ -569,6 +569,7 @@ pub struct FuelConverterState {
     /// max propulsion power fc can produce at current time
     pub pwr_prop_max: TrackedState<si::Power>,
     /// efficiency evaluated at current demand
+    #[si_unit(percent)]
     pub eff: TrackedState<si::Ratio>,
     /// instantaneous power going to drivetrain, not including aux
     pub pwr_prop: TrackedState<si::Power>,
@@ -1154,6 +1155,7 @@ pub struct FuelConverterThermalState {
     /// Cumulative heat transfer energy to ambient
     pub energy_thrml_to_amb: TrackedState<si::Energy>,
     /// Efficency coefficient, used to modify [FuelConverter] effciency based on temperature
+    #[si_unit(percent)]
     pub eff_coeff: TrackedState<si::Ratio>,
     /// Thermal power flowing from fuel converter to cabin
     pub pwr_thrml_fc_to_cab: TrackedState<si::Power>,

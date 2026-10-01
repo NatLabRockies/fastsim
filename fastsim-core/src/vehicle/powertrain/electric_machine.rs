@@ -878,15 +878,18 @@ pub struct ElectricMachineState {
     /// time step index
     pub i: TrackedState<usize>,
     /// Component efficiency based on current power demand.
+    #[si_unit(percent)]
     pub eff: TrackedState<si::Ratio>,
     // Component limits
     /// Maximum possible positive traction power.
     pub pwr_mech_fwd_out_max: TrackedState<si::Power>,
     /// efficiency in forward direction at max possible input power from `FuelConverter` and `ReversibleEnergyStorage`
+    #[si_unit(percent)]
     pub eff_fwd_at_max_input: TrackedState<si::Ratio>,
     /// Maximum possible regeneration power going to ReversibleEnergyStorage.
     pub pwr_mech_regen_max: TrackedState<si::Power>,
     /// efficiency in backward direction at max possible input power from `FuelConverter` and `ReversibleEnergyStorage`
+    #[si_unit(percent)]
     pub eff_at_max_regen: TrackedState<si::Ratio>,
 
     // Current values

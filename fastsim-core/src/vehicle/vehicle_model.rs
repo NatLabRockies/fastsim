@@ -1361,6 +1361,7 @@ pub struct VehicleState {
     /// cumulative distance traveled, integral of [Self::speed_ach]
     pub dist: TrackedState<si::Length>,
     /// current grade
+    #[si_unit(percent)]
     pub grade_curr: TrackedState<si::Ratio>,
     /// current grade
     // will be overridden during simulation anyway

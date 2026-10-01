@@ -226,6 +226,7 @@ pub struct TransmissionState {
     pub pwr_out_regen_max: TrackedState<si::Power>,
 
     /// efficiency at current time step
+    #[si_unit(percent)]
     pub eff: TrackedState<si::Ratio>,
 
     /// Power at output side of transmission.  Positive indicates forward power

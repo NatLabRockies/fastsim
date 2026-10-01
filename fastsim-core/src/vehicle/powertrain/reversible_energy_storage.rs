@@ -27,14 +27,17 @@ pub struct ReversibleEnergyStorage {
     pub pwr_out_max: si::Power,
 
     /// Total energy capacity of battery of full discharge SOC of 0.0 and 1.0
+    #[si_unit(kilowatt_hours)]
     pub energy_capacity: si::Energy,
 
     /// interpolator for calculating [Self] efficiency
     pub eff_interp: RESEfficiency,
 
     /// Hard limit on minimum SOC, e.g. 0.05
+    #[si_unit(percent)]
     pub min_soc: si::Ratio,
     /// Hard limit on maximum SOC, e.g. 0.95
+    #[si_unit(percent)]
     pub max_soc: si::Ratio,
     /// struct for tracking current state
     #[serde(default)]
@@ -889,17 +892,22 @@ pub struct ReversibleEnergyStorageState {
     pub i: TrackedState<usize>,
 
     /// state of charge (SOC)
+    #[si_unit(percent)]
     pub soc: TrackedState<si::Ratio>,
     /// SOC at which [ReversibleEnergyStorage] regen power begins linearly
     /// derating as it approaches maximum SOC
+    #[si_unit(percent)]
     pub soc_regen_buffer: TrackedState<si::Ratio>,
     /// SOC at which [ReversibleEnergyStorage] discharge power begins linearly
     /// derating as it approaches minimum SOC
+    #[si_unit(percent)]
     pub soc_disch_buffer: TrackedState<si::Ratio>,
     /// Chemical <-> Electrical conversion efficiency based on current power demand
+    #[si_unit(percent)]
     pub eff: TrackedState<si::Ratio>,
     /// State of Health (SOH)
-    pub soh: TrackedState<f64>,
+    #[si_unit(percent)]
+    pub soh: TrackedState<si::Ratio>,
 
     // TODO: add `pwr_out_neg_electrical` and `pwr_out_pos_electrical` and corresponding energies
     // powers to separately pin negative- and positive-power operation

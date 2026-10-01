@@ -31,6 +31,7 @@ pub struct Cycle {
     pub dist: Vec<si::Length>,
     /// road grade (expressed as a decimal, not percent)
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    #[si_unit(percent)]
     pub grade: Vec<si::Ratio>,
     // TODO: consider trapezoidal integration scheme
     // TODO: @mokeefe, please check out how elevation is handled
@@ -1623,6 +1624,7 @@ pub struct CycleElement {
     // `dist` is not included here because it is derived in `Init::init`
     /// road grade
     #[serde(alias = "cycGrade")]
+    #[si_unit(percent)]
     pub grade: Option<si::Ratio>,
     // `elev` is not included here because it is derived in `Init::init`
     /// road charging/discharing capacity

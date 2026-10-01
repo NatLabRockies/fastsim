@@ -41,4 +41,36 @@
 #[allow(unused_imports)]
 use crate::si;
 
+crate::impl_si_serialize_as!(energy_as_kilojoules, si::Energy, uom::si::energy::kilojoule);
+crate::impl_si_serialize_as!(
+    energy_as_kilowatt_hours,
+    si::Energy,
+    crate::si::kilowatt_hour
+);
 crate::impl_si_serialize_as!(power_as_kilowatts, si::Power, uom::si::power::kilowatt);
+crate::impl_si_serialize_as!(
+    pressure_as_kilopascals,
+    si::Pressure,
+    uom::si::pressure::kilopascal
+);
+crate::impl_si_serialize_as!(ratio_as_percent, si::Ratio, uom::si::ratio::percent);
+crate::impl_si_serialize_as!(
+    specific_energy_as_kilowatt_hours_per_kilogram,
+    si::SpecificEnergy,
+    crate::si::kilowatt_hour_per_kilogram
+);
+crate::impl_si_serialize_as!(
+    specific_power_as_kilowatts_per_kilogram,
+    si::SpecificPower,
+    crate::si::kilowatt_per_kilogram
+);
+crate::impl_si_serialize_as!(
+    temperature_as_degrees_celsius,
+    si::Temperature,
+    uom::si::thermodynamic_temperature::degree_celsius
+);
+crate::impl_si_serialize_as!(
+    temperature_interval_as_degrees_celsius,
+    si::TemperatureInterval,
+    uom::si::temperature_interval::degree_celsius
+);

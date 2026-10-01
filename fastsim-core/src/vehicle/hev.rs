@@ -575,6 +575,7 @@ pub struct RGWDBState {
     /// SOC is below min buffer so FC is charging RES
     pub charging_for_low_soc: TrackedState<bool>,
     /// buffer at which FC is forced on
+    #[si_unit(percent)]
     pub soc_fc_on_buffer: TrackedState<si::Ratio>,
 }
 impl SerdeAPI for RGWDBState {}
@@ -865,17 +866,20 @@ pub struct RESGreedyWithDynamicBuffers {
     /// vehicle at this speed that triggers ramp down in RES discharge.
     pub speed_soc_disch_buffer: Option<si::Velocity>,
     /// Coefficient for modifying amount of accel buffer
+    #[si_unit(percent)]
     pub speed_soc_disch_buffer_coeff: Option<si::Ratio>,
     /// RES energy delta from minimum SOC corresponding to kinetic energy of
     /// vehicle at this speed that triggers FC to be forced on.
     pub speed_soc_fc_on_buffer: Option<si::Velocity>,
     /// Coefficient for modifying amount of [Self::speed_soc_fc_on_buffer]
+    #[si_unit(percent)]
     pub speed_soc_fc_on_buffer_coeff: Option<si::Ratio>,
     /// RES energy delta from maximum SOC corresponding to kinetic energy of
     /// vehicle at current speed minus kinetic energy of vehicle at this speed
     /// triggers ramp down in RES discharge
     pub speed_soc_regen_buffer: Option<si::Velocity>,
     /// Coefficient for modifying amount of regen buffer
+    #[si_unit(percent)]
     pub speed_soc_regen_buffer_coeff: Option<si::Ratio>,
     /// Minimum time engine must remain on if it was on during the previous
     /// simulation time step.
@@ -1268,6 +1272,7 @@ pub struct HEVStartStopControl {
     pub fc_min_time_on: Option<si::Time>,
     /// The range of usable SOC of the storage system below which the
     /// [FuelConverter] is forced on.
+    #[si_unit(percent)]
     pub soc_fc_forced_on: Option<si::Ratio>,
     /// Force engine, if on, to run at this fraction of power at which peak
     /// efficiency occurs or the required power, whichever is greater. If SOC is
