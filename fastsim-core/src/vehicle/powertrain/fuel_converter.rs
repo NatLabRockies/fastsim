@@ -48,6 +48,7 @@ pub struct FuelConverter {
     )]
     pub history: FuelConverterStateHistoryVec,
     /// time step interval between saves. 1 is a good option. If None, no saving occurs.
+    #[py_get]
     pub save_interval: Option<usize>,
 }
 

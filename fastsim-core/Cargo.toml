@@ -35,8 +35,8 @@ duplicate = "0.4.1"
 nohash-hasher = "0.2.0"
 eng_fmt = "0.1.2"
 pyo3 = { workspace = true, features = [
-    "extension-module",
     "anyhow",
+    "multiple-pymethods",
 ], optional = true }
 serde-this-or-that = "0.4.2"
 project-root = "0.2.2"

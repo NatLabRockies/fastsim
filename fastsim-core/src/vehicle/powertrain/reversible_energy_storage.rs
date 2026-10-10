@@ -46,6 +46,7 @@ pub struct ReversibleEnergyStorage {
     )]
     pub history: ReversibleEnergyStorageStateHistoryVec,
     /// Time step interval at which history is saved
+    #[py_get]
     pub save_interval: Option<usize>,
 }
 

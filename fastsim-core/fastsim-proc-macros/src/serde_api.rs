@@ -54,14 +54,19 @@ pub(crate) fn serde_api(_attr: TokenStream, item: TokenStream) -> TokenStream {
         struct_name.span(),
     );
 
-    // Collect SI field data
+    // Collect SI field data and #[py_get] field data
     let mut si_fields = vec![];
+    let mut py_get_fields = vec![];
 
     let derives_default = struct_derives_default(&struct_ast);
 
     if let syn::Fields::Named(syn::FieldsNamed { named, .. }) = &mut struct_ast.fields {
         // struct with named fields
         for field in named.iter_mut() {
+            // Strip #[py_get] FIRST so it doesn't appear in the emitted struct.
+            if let Some(data) = serde_utils::collect_and_strip_py_get(field) {
+                py_get_fields.push(data);
+            }
             if derives_default && field_has_serde_default_fn(field) {
                 let field_name = field
                     .ident
@@ -106,7 +111,7 @@ pub(crate) fn serde_api(_attr: TokenStream, item: TokenStream) -> TokenStream {
 
     output.extend(struct_ast.to_token_stream());
 
-    // Generate helper struct and TryFrom impl
+    // Generate serde helper struct + TryFrom when there are SI fields.
     if !si_fields.is_empty() {
         let helper_struct =
             serde_utils::generate_helper_struct(&helper_name, &struct_ast, &si_fields);
@@ -118,6 +123,13 @@ pub(crate) fn serde_api(_attr: TokenStream, item: TokenStream) -> TokenStream {
         );
         output.extend(helper_struct);
         output.extend(from_impl);
+    }
+
+    // Generate #[pymethods] getter block when there are SI or #[py_get] fields.
+    if !si_fields.is_empty() || !py_get_fields.is_empty() {
+        let py_getters =
+            serde_utils::generate_py_getters(&struct_name, &struct_ast, &si_fields, &py_get_fields);
+        output.extend(py_getters);
     }
 
     output.into()

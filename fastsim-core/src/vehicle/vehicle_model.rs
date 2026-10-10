@@ -30,6 +30,7 @@ impl Init for AuxSource {}
 /// Struct for simulating vehicle
 pub struct Vehicle {
     /// Vehicle name
+    #[py_get]
     pub name: String,
     /// Minimum FASTSim version required
     #[serde(default = "crate::current_fastsim_version")]

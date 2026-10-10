@@ -1413,6 +1413,254 @@ fn outer_type_path_tokens(ty: &syn::Type) -> Option<TokenStream2> {
     }
 }
 
+/// Generate the return type tokens and body expression for a getter on an SI field,
+/// handling all wrapper combinations (plain T, Option<T>, TrackedState<T>,
+/// TrackedState<Option<T>>, Vec<T>, Vec<TrackedState<T>>, Vec<TrackedState<Option<T>>>).
+fn generate_getter_body(
+    field_ident: &syn::Ident,
+    field_ty: &syn::Type,
+    unit_type: &TokenStream2,
+) -> (TokenStream2, TokenStream2) {
+    match detect_outer_wrapper(field_ty) {
+        WrapperType::None => (
+            quote! { f64 },
+            quote! { self.#field_ident.get::<#unit_type>() },
+        ),
+        WrapperType::Option => (
+            quote! { ::std::option::Option<f64> },
+            quote! { self.#field_ident.map(|v| v.get::<#unit_type>()) },
+        ),
+        WrapperType::TrackedState => {
+            let inner_is_option = extract_type_from_container(field_ty)
+                .map(|inner| detect_outer_wrapper(inner) == WrapperType::Option)
+                .unwrap_or(false);
+            if inner_is_option {
+                (
+                    quote! { ::std::option::Option<f64> },
+                    // inner() returns &Option<T>; dereference to copy the Option<T> (Copy when T: Copy)
+                    quote! { (*self.#field_ident.inner()).map(|v| v.get::<#unit_type>()) },
+                )
+            } else {
+                (
+                    quote! { f64 },
+                    // inner() returns &T; auto-deref for method call
+                    quote! { self.#field_ident.inner().get::<#unit_type>() },
+                )
+            }
+        }
+        WrapperType::Vec => {
+            let inner_ty = extract_type_from_vec(field_ty);
+            let inner_is_tracked = inner_ty
+                .map(|t| detect_outer_wrapper(t) == WrapperType::TrackedState)
+                .unwrap_or(false);
+            if inner_is_tracked {
+                let tracked_inner_is_option = inner_ty
+                    .and_then(extract_type_from_container)
+                    .map(|t| detect_outer_wrapper(t) == WrapperType::Option)
+                    .unwrap_or(false);
+                if tracked_inner_is_option {
+                    (
+                        quote! { ::std::vec::Vec<::std::option::Option<f64>> },
+                        quote! { self.#field_ident.iter().map(|ts| (*ts.inner()).map(|v| v.get::<#unit_type>())).collect() },
+                    )
+                } else {
+                    (
+                        quote! { ::std::vec::Vec<f64> },
+                        quote! { self.#field_ident.iter().map(|ts| ts.inner().get::<#unit_type>()).collect() },
+                    )
+                }
+            } else {
+                (
+                    quote! { ::std::vec::Vec<f64> },
+                    quote! { self.#field_ident.iter().map(|v| v.get::<#unit_type>()).collect() },
+                )
+            }
+        }
+    }
+}
+
+/// Data for a field marked with `#[py_get]`.
+#[derive(Clone, Debug)]
+pub struct PyGetFieldData {
+    pub field_ident: syn::Ident,
+    pub field_ty: syn::Type,
+}
+
+/// Detect and strip `#[py_get]` from a field, returning its data if present.
+/// Must be called before [`serde_attrs_for_si_fields`] so the attribute is
+/// removed before the struct is emitted.
+pub fn collect_and_strip_py_get(field: &mut syn::Field) -> Option<PyGetFieldData> {
+    let field_ident = field.ident.as_ref()?.clone();
+    let mut found = false;
+    field.attrs.retain(|attr| {
+        if attr.path().is_ident("py_get") {
+            found = true;
+            false // strip
+        } else {
+            true
+        }
+    });
+    if found {
+        Some(PyGetFieldData {
+            field_ident,
+            field_ty: field.ty.clone(),
+        })
+    } else {
+        None
+    }
+}
+
+/// Generate `(return_type, body_expr)` for a `#[py_get]` getter.
+///
+/// `TrackedState` wrappers are automatically unwrapped so the inner value is
+/// returned; all other field types are returned as-is via `.clone()`.
+fn generate_py_get_body(
+    field_ident: &syn::Ident,
+    field_ty: &syn::Type,
+) -> (TokenStream2, TokenStream2) {
+    match detect_outer_wrapper(field_ty) {
+        WrapperType::TrackedState => {
+            // TrackedState<T> or TrackedState<Option<T>> → unwrap with .inner()
+            match extract_type_from_container(field_ty) {
+                Some(inner_ty) => (
+                    quote! { #inner_ty },
+                    quote! { self.#field_ident.inner().clone() },
+                ),
+                None => (
+                    quote! { #field_ty },
+                    quote! { self.#field_ident.inner().clone() },
+                ),
+            }
+        }
+        WrapperType::Vec => {
+            match extract_type_from_vec(field_ty).map(|elem| (elem, detect_outer_wrapper(elem))) {
+                Some((elem_ty, WrapperType::TrackedState)) => {
+                    // Vec<TrackedState<T>> → Vec<T>, Vec<TrackedState<Option<T>>> → Vec<Option<T>>
+                    match extract_type_from_container(elem_ty) {
+                        Some(inner_ty) => (
+                            quote! { ::std::vec::Vec<#inner_ty> },
+                            quote! { self.#field_ident.iter().map(|ts| ts.inner().clone()).collect() },
+                        ),
+                        None => (quote! { #field_ty }, quote! { self.#field_ident.clone() }),
+                    }
+                }
+                _ => (quote! { #field_ty }, quote! { self.#field_ident.clone() }),
+            }
+        }
+        // Plain T, Option<T>, Option<TrackedState<T>> — return as-is
+        _ => (quote! { #field_ty }, quote! { self.#field_ident.clone() }),
+    }
+}
+
+/// Returns true if the struct has a `#[pyclass]` or `#[cfg_attr(..., pyclass(...))]` attribute,
+/// meaning it is a PyO3 class and can have `#[pymethods]` blocks.
+fn struct_is_pyclass(struct_ast: &syn::ItemStruct) -> bool {
+    struct_ast.attrs.iter().any(|attr| {
+        // Direct #[pyclass] or #[pyclass(...)]
+        if attr.path().is_ident("pyclass") {
+            return true;
+        }
+        // #[cfg_attr(..., pyclass, ...)] or #[cfg_attr(..., pyclass(...), ...)]
+        if attr.path().is_ident("cfg_attr") {
+            if let syn::Meta::List(list) = &attr.meta {
+                return list.tokens.to_string().contains("pyclass");
+            }
+        }
+        false
+    })
+}
+
+/// Generate a `#[cfg(feature = "pyo3")] #[pymethods] impl StructName { ... }` block
+/// containing:
+///   - one `#[getter("field_unit")]` method per (SI field × unit) combination, and
+///   - one `#[getter("field")]` method per field annotated with `#[py_get]`.
+///
+/// SI getter return types depend on the wrapper:
+/// `T` → `f64`, `Option<T>` → `Option<f64>`, `TrackedState<T>` → `f64`, etc.
+///
+/// `#[py_get]` getters return the field type directly (`.clone()`); `TrackedState`
+/// wrappers are automatically unwrapped.
+pub fn generate_py_getters(
+    struct_name: &syn::Ident,
+    struct_ast: &syn::ItemStruct,
+    si_fields: &[SIFieldData],
+    py_get_fields: &[PyGetFieldData],
+) -> TokenStream2 {
+    // Only emit #[pymethods] for structs that are #[pyclass] (or #[cfg_attr(..., pyclass)]).
+    // Non-pyclass structs with #[serde_api] don't need Python property getters.
+    if !struct_is_pyclass(struct_ast) {
+        return quote! {};
+    }
+
+    let si_field_idents: std::collections::HashSet<_> = si_fields
+        .iter()
+        .map(|f| f.field_ident.to_string())
+        .collect();
+
+    let mut getter_methods: Vec<TokenStream2> = vec![];
+
+    if let syn::Fields::Named(syn::FieldsNamed { named, .. }) = &struct_ast.fields {
+        for field in named {
+            let field_ident = field.ident.as_ref().unwrap();
+            if !si_field_idents.contains(&field_ident.to_string()) {
+                continue;
+            }
+            let si_field = match si_fields
+                .iter()
+                .find(|f| f.field_ident.to_string() == field_ident.to_string())
+            {
+                Some(f) => f,
+                None => continue,
+            };
+
+            let field_ty = &field.ty;
+
+            for (unit_type, unit_name) in &si_field.units {
+                let property_name = format!("{}_{}", field_ident, unit_name);
+                let fn_name = syn::Ident::new(
+                    &format!("get_{}_{}_py", field_ident, unit_name),
+                    field_ident.span(),
+                );
+                let (return_ty, body) = generate_getter_body(field_ident, field_ty, unit_type);
+                getter_methods.push(quote! {
+                    #[getter(#property_name)]
+                    pub fn #fn_name(&self) -> #return_ty {
+                        #body
+                    }
+                });
+            }
+        }
+    }
+
+    // Generate plain clone getters for #[py_get]-annotated fields.
+    for py_field in py_get_fields {
+        let field_ident = &py_field.field_ident;
+        let field_ty = &py_field.field_ty;
+        let property_name = field_ident.to_string();
+        let fn_name = syn::Ident::new(&format!("get_{}_py", field_ident), field_ident.span());
+        let (return_ty, body) = generate_py_get_body(field_ident, field_ty);
+        getter_methods.push(quote! {
+            #[getter(#property_name)]
+            pub fn #fn_name(&self) -> #return_ty {
+                #body
+            }
+        });
+    }
+
+    if getter_methods.is_empty() {
+        return quote! {};
+    }
+
+    quote! {
+        #[allow(non_snake_case)]
+        #[::pyo3::pymethods]
+        #[cfg(feature = "pyo3")]
+        impl #struct_name {
+            #(#getter_methods)*
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

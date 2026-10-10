@@ -3,3 +3,9 @@
 # with many fields (e.g. VehicleState with full SI quantity helper support).
 # 16 MB is sufficient; the default Rust test-thread stack of 8 MB is not.
 RUST_MIN_STACK = "16777216"
+# When testing with --features pyo3, the test binary links against libpython
+# dynamically (because extension-module is not used in fastsim-core).  On macOS
+# with a pixi-managed Python the dylib lives inside the pixi env; add it to the
+# dynamic library search path so `cargo test --features pyo3` works without any
+# manual env var exports.
+DYLD_LIBRARY_PATH = { value = ".pixi/envs/dev/lib", relative = true }
