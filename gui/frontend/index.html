@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>FASTSim Studio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a5fd0'/%3E%3Cpath d='M7 22l5-12 4 8 5-11 4 15' fill='none' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 17h2l2-5h10l2 5h2"></path>
+          <path d="M6.5 17h11"></path>
+          <circle cx="7.5" cy="18.5" r="1.6"></circle>
+          <circle cx="16.5" cy="18.5" r="1.6"></circle>
+          <path d="M9 12V8h6v4"></path>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1 data-i18n="app.title">FASTSim Studio</h1>
+        <p data-i18n="app.subtitle">Vehicle Simulation Workbench</p>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="control">
+        <label class="control-label" for="preset-select" data-i18n="toolbar.preset">Vehicle Preset</label>
+        <select id="preset-select" class="select"></select>
+      </div>
+      <div class="control">
+        <label class="control-label" for="cycle-select" data-i18n="toolbar.cycle">Drive Cycle</label>
+        <select id="cycle-select" class="select"></select>
+      </div>
+
+      <div class="toolbar-actions">
+        <button type="button" id="run-btn" class="btn btn-primary">
+          <span class="spinner" id="run-spinner" hidden aria-hidden="true"></span>
+          <span id="run-label" data-i18n="toolbar.run">Run Simulation</span>
+        </button>
+        <button type="button" id="export-btn" class="btn btn-secondary">
+          <span data-i18n="toolbar.export">Export Python Code</span>
+        </button>
+        <div class="lang-switch" role="group" id="lang-switch" data-i18n-aria-label="toolbar.langLabel" aria-label="Language">
+          <button type="button" class="lang-btn" data-lang="en" title="English" aria-pressed="true">EN</button>
+          <button type="button" class="lang-btn" data-lang="zh-Hant" title="繁體中文" aria-pressed="false">繁體</button>
+          <button type="button" class="lang-btn" data-lang="zh" title="简体中文" aria-pressed="false">简体</button>
+        </div>
+        <button type="button" id="wb-toggle" class="icon-btn only-narrow" data-i18n-title="toolbar.collapse" title="Collapse parameter panel" aria-label="Toggle parameter panel">
+          <span aria-hidden="true">☰</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="banner-slot" id="banner-slot" role="status" aria-live="polite"></div>
+
+  <main class="layout" id="layout">
+
+    <aside class="workbench" id="workbench">
+      <div class="wb-head">
+        <h2 class="wb-title" data-i18n="panel.title">Parameters</h2>
+        <span class="chip chip-count" id="modified-count">0</span>
+        <button type="button" id="wb-collapse" class="icon-btn" data-i18n-title="toolbar.collapse" title="Collapse parameter panel" aria-label="Collapse parameter panel">
+          <span aria-hidden="true">‹</span>
+        </button>
+      </div>
+
+      <div class="wb-tools">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 4 4"></path>
+          </svg>
+          <input id="param-search" class="search-input" type="search" autocomplete="off" spellcheck="false"
+                 data-i18n-placeholder="panel.search" data-i18n-aria-label="panel.search"
+                 placeholder="Search parameters…" aria-label="Search parameters">
+        </div>
+        <div class="wb-tools-row">
+          <label class="switch">
+            <input type="checkbox" id="modified-only">
+            <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            <span class="switch-label" data-i18n="panel.modifiedOnly">Modified only</span>
+          </label>
+          <button type="button" id="reset-all" class="btn btn-ghost btn-sm" data-i18n="panel.resetAll">Reset all</button>
+        </div>
+      </div>
+
+      <div class="wb-body" id="params-root"></div>
+      <div class="wb-empty" id="params-empty" hidden data-i18n="panel.noMatch">No parameters match your filters.</div>
+    </aside>
+
+    <section class="canvas" id="canvas">
+      <div class="canvas-head">
+        <div class="run-status" id="run-status" aria-live="polite"></div>
+        <div class="canvas-head-right">
+          <button type="button" id="stale-chip" class="chip chip-stale" hidden></button>
+          <span class="chip chip-mock" id="mock-chip" hidden data-i18n="mock.badge">MOCK DATA (dev)</span>
+        </div>
+      </div>
+
+      <div class="kpi-row" id="kpi-row" hidden></div>
+
+      <nav class="tabs" id="tabs" role="tablist" hidden>
+        <button type="button" class="tab" role="tab" data-tab="interactive" data-i18n="tab.interactive">Interactive View</button>
+        <button type="button" class="tab" role="tab" data-tab="figure" data-i18n="tab.figure">Matplotlib Figure</button>
+        <button type="button" class="tab" role="tab" data-tab="table" data-i18n="tab.table">Data Table</button>
+      </nav>
+
+      <div class="view" id="view-root">
+
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18"></path><path d="M7 15l3-4 3 2 4-6"></path>
+            </svg>
+          </div>
+          <h3 data-i18n="empty.title">Nothing simulated yet</h3>
+          <p data-i18n="empty.body">Pick a vehicle preset and a drive cycle in the top bar, then press Run Simulation.</p>
+        </div>
+
+        <div class="loading-state" id="loading-state" hidden>
+          <div class="loading-line">
+            <span class="spinner spinner-lg" aria-hidden="true"></span>
+            <div>
+              <h3 data-i18n="loading.title">Running FASTSim…</h3>
+              <p data-i18n="loading.body">Driving the cycle through the powertrain model.</p>
+            </div>
+          </div>
+          <div class="skeleton-kpis">
+            <div class="skel skel-card"></div><div class="skel skel-card"></div>
+            <div class="skel skel-card"></div><div class="skel skel-card"></div>
+          </div>
+          <div class="skel skel-plot"></div>
+        </div>
+
+        <div class="view-pane" id="pane-interactive" hidden>
+          <div class="plot-host" id="plot"></div>
+          <div class="pane-note" id="plot-note" hidden></div>
+        </div>
+
+        <div class="view-pane" id="pane-figure" hidden>
+          <div class="figure-toolbar">
+            <span class="figure-meta" id="figure-meta"></span>
+            <div class="figure-actions">
+              <button type="button" id="dl-png" class="btn btn-secondary btn-sm" data-i18n="figure.downloadPng" data-i18n-title="figure.downloadPngAria" data-i18n-aria-label="figure.downloadPngAria">Download PNG</button>
+              <button type="button" id="dl-svg" class="btn btn-secondary btn-sm" data-i18n="figure.svg" data-i18n-title="figure.svgAria" data-i18n-aria-label="figure.svgAria" hidden>Download SVG</button>
+            </div>
+          </div>
+          <div class="figure-host" id="figure-host"></div>
+          <p class="pane-note" id="svg-note" data-i18n="figure.svgUnavailable" hidden></p>
+        </div>
+
+        <div class="view-pane" id="pane-table" hidden>
+          <div class="table-wrap" id="table-wrap"></div>
+          <p class="pane-note" id="table-note"></p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <header class="modal-head">
+      <div class="modal-head-text">
+        <h2 id="modal-title" data-i18n="export.title">Exported Python</h2>
+        <p class="modal-sub" data-i18n="export.hint">A self-contained script that reproduces this exact configuration.</p>
+      </div>
+      <button type="button" id="modal-close" class="icon-btn" data-i18n-title="export.close" data-i18n-aria-label="export.close" title="Close" aria-label="Close">✕</button>
+    </header>
+    <div class="modal-body" id="modal-body"></div>
+    <footer class="modal-foot">
+      <span class="modal-meta" id="modal-meta"></span>
+      <div class="modal-actions">
+        <button type="button" id="copy-btn" class="btn btn-secondary"><span id="copy-label" data-i18n="export.copy">Copy</span></button>
+        <button type="button" id="download-btn" class="btn btn-primary"><span data-i18n="export.download">Download .py</span></button>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script src="/vendor/plotly.min.js"></script>
+<script src="/hant.js"></script>
+<script src="/i18n.js"></script>
+<script src="/charts.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

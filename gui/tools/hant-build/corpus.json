@@ -1,0 +1,661 @@
+{
+ "count": 164,
+ "strings": [
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].cycles.name_zh",
+   "text": "HWFET（高速）"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "SOC 平衡迭代的允许误差。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].cycles.name_zh",
+   "text": "UDDS（城市）"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "为回收预留余量的 SOC 缓冲车速阈值。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "传动系统"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "传动系统质量。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "传统车用发电机效率。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "允许更多放电的 SOC 缓冲车速阈值。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "允许的最低 SOC（占容量比例）。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "允许的最高 SOC（占容量比例）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "其他"
+  },
+  {
+   "kind": "schema[2026_Chrysler_Pacifica_Select.yaml].parameters.description_zh",
+   "text": "冷却液温度低于此值时强制启动发动机。"
+  },
+  {
+   "kind": "schema[2026_Chrysler_Pacifica_Select.yaml].parameters.description_zh",
+   "text": "冷却液温度高于此值时发动机允许停机。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "判定车辆为静止的车速阈值。"
+  },
+  {
+   "kind": "plots.zh.power_kw",
+   "text": "功率 [kW]"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "功率热最大（W）。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "功率附件最大（W）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.group_zh",
+   "text": "动力总成"
+  },
+  {
+   "kind": "plots.zh.title_power",
+   "text": "动力总成功率分配"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "单个车轮的转动惯量。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "占比。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "厂商。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "发动机"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "发动机功率密度。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "发动机功率爬升滞后时间常数。"
+  },
+  {
+   "kind": "schema[2026_Chrysler_Pacifica_Select.yaml].parameters.description_zh",
+   "text": "发动机启动后必须保持运转的最短时间。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "发动机峰值机械输出功率。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "发动机效率随功率占比变化的插值曲线（只读）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "发动机未完全暖机时可用的输出功率。"
+  },
+  {
+   "kind": "schema[2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml].parameters.subgroup_zh",
+   "text": "发动机热管理"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "发动机质量。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "变速器（传动系统）效率。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "可选的底盘质量直接覆盖值。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "可选的轮胎型号（仅作标识）。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "在工况起止之间平衡电池 SOC（混动）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "型号。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "基础附件功率（常驻负载）。"
+  },
+  {
+   "kind": "schema[2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml].parameters.description_zh",
+   "text": "字段 conductance_from_comb_watts_per_kelvin（W/K）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "字段 extrapolate。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "字段 heat_capacitance_joules_per_kelvin（J/K）。"
+  },
+  {
+   "kind": "schema[2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml].parameters.description_zh",
+   "text": "字段 lag。"
+  },
+  {
+   "kind": "schema[2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml].parameters.description_zh",
+   "text": "字段 length_for_convection_meters（m）。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "字段 length_meters（m）。"
+  },
+  {
+   "kind": "schema[2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml].parameters.description_zh",
+   "text": "字段 minimum。"
+  },
+  {
+   "kind": "schema[2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml].parameters.description_zh",
+   "text": "字段 offset。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "字段 p_cabin_watts_per_kelvin（W/K）。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "字段 p_watts_per_kelvin（W/K）。"
+  },
+  {
+   "kind": "schema[2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml].parameters.description_zh",
+   "text": "字段 radiator_effectiveness。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "字段 strategy。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "字段 width_meters（m）。"
+  },
+  {
+   "kind": "plots.zh.leg_achieved",
+   "text": "实际车速"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "尺寸与质量"
+  },
+  {
+   "kind": "simulate[Conv].kpis.trace_met_pct.label_zh",
+   "text": "工况跟随率"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "常数电池效率（无效率图，只用一个往返效率）。"
+  },
+  {
+   "kind": "simulate[Conv].kpis.avg_speed_mph.label_zh",
+   "text": "平均车速"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "平衡 SOC 时使用的“电能/燃油能”比例限值。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "年款。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.group_zh",
+   "text": "底盘"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.subgroup_zh",
+   "text": "座舱与空调"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "座舱回路空调微分增益。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "座舱回路空调积分增益。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "座舱温度设定值。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "座舱环境（W/(m²·K)）。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "座舱空调可消耗的最大电功率。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "座舱空调积分项输出的上限功率。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "座舱（W/K）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "当前启用的动力总成控制器（只读：切换变体需要其对应参数）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "怠速燃油功率（发动机运转但不输出功率）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "控制与策略"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.group_zh",
+   "text": "整车"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "整车试验质量：车身 + 载荷 + 动力总成。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "断油生效的最低车速。"
+  },
+  {
+   "kind": "plots.zh.no_power",
+   "text": "无动力总成功率通道"
+  },
+  {
+   "kind": "plots.zh.no_energy",
+   "text": "无累积能量通道"
+  },
+  {
+   "kind": "plots.zh.time",
+   "text": "时间 [s]"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "是否启用减速断油（DFCO）。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "是否记录 SOC 平衡迭代历史。"
+  },
+  {
+   "kind": "schema[2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml].parameters.description_zh",
+   "text": "最大占比。"
+  },
+  {
+   "kind": "simulate[Conv].kpis.max_speed_mph.label_zh",
+   "text": "最高车速"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "混动动力总成的附件负载优先策略。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "混动引擎工作点取其最佳效率功率的比例。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "混动控制器下发动机最短运转时间。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "温度发动机（K）。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "温度座舱（K）。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "温度电池（K）。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "温度（K）。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "源。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "滑行体质量（车身与行走系，不含动力总成）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "滚动阻力系数（不随车速变化）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "滚阻与附着"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "满箱燃料的质量。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.group_zh",
+   "text": "热管理"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "燃料比能量（低热值）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "燃料类型（影响能量与排放计量）。"
+  },
+  {
+   "kind": "simulate[Conv].kpis.fuel_consumed_kwh.label_zh",
+   "text": "燃料能量"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "燃油存储"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "燃油存储功率爬升滞后时间常数。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "燃油存储的最大输出功率。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "燃油箱的可用能量容量。"
+  },
+  {
+   "kind": "simulate[Conv].kpis.fuel_economy_mpgge.label_zh",
+   "text": "燃油经济性"
+  },
+  {
+   "kind": "schema[2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml].parameters.description_zh",
+   "text": "环境（W/(m²·K)）。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "环境（W/K）。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.subgroup_zh",
+   "text": "电机"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "电机功率密度。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "电机实际效率图（只读曲线）。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "电机峰值机械输出功率。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "电机满输入功率下的效率图（只读曲线）。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "电机质量。"
+  },
+  {
+   "kind": "plots.zh.leg_battery",
+   "text": "电池"
+  },
+  {
+   "kind": "plots.zh.title_soc",
+   "text": "电池 SOC"
+  },
+  {
+   "kind": "plots.zh.soc_pct",
+   "text": "电池 SOC [%]"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "电池包质量。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "电池可用能量容量。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "电池回路空调微分增益。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "电池回路空调积分增益。"
+  },
+  {
+   "kind": "schema[2020 Chevrolet Bolt EV thrml.yaml].parameters.description_zh",
+   "text": "电池效率随 C-rate 与温度变化的图表（只读）。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "电池最大输出（放电）功率。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "电池比能量。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "电池温度设定值。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "电池源。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.subgroup_zh",
+   "text": "电池热管理"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "电池热管理可消耗的最大电功率。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "电池空调积分项输出的上限功率。"
+  },
+  {
+   "kind": "schema[2022 Tesla Model 3 RWD thrml.yaml].parameters.description_zh",
+   "text": "电池（W/K）。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.subgroup_zh",
+   "text": "电池（储能）"
+  },
+  {
+   "kind": "plots.zh.leg_target",
+   "text": "目标车速"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "稳态时驱动轴所承担的重量占比。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "空气动力学"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "空气阻力系数。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "空调控制器的微分增益。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "空调控制器的积分增益。"
+  },
+  {
+   "kind": "schema[2016 Nissan Leaf 30 kWh thrml.yaml].parameters.description_zh",
+   "text": "空调积分项输出的上限功率。"
+  },
+  {
+   "kind": "plots.zh.leg_cum_fuel",
+   "text": "累积燃料"
+  },
+  {
+   "kind": "plots.zh.title_energy",
+   "text": "累积燃料与能量"
+  },
+  {
+   "kind": "plots.zh.leg_cum_energy",
+   "text": "累积能量"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "维持断油所需的最小（最负）减速度。"
+  },
+  {
+   "kind": "plots.zh.energy_kwh",
+   "text": "能量 [kWh]"
+  },
+  {
+   "kind": "schema[2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml].parameters.description_zh",
+   "text": "节温器开度随温度变化的曲线（只读）。"
+  },
+  {
+   "kind": "simulate[Conv].kpis.distance_mi.label_zh",
+   "text": "行驶距离"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "触发发动机启动的 SOC 缓冲车速阈值。"
+  },
+  {
+   "kind": "schema[2026_Chrysler_Pacifica_Select.yaml].parameters.description_zh",
+   "text": "计入“停车”状态的车速阈值。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "质心高度，决定加速时的轴荷转移。"
+  },
+  {
+   "kind": "plots.zh.distance_mi",
+   "text": "距离 [mi]"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "身份信息"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "车型显示名称。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "车身"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.subgroup_zh",
+   "text": "车轮"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "车轮半径（轮速与驱动力换算用）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "车轮数量（用于轮系惯量缩放）。"
+  },
+  {
+   "kind": "simulate[Conv].kpis.energy_to_wheels_kwh.label_zh",
+   "text": "车轮牵引能量"
+  },
+  {
+   "kind": "schema[2026_Chrysler_Pacifica_Select.yaml].parameters.description_zh",
+   "text": "车辆停下后需延迟多久发动机才能停机。"
+  },
+  {
+   "kind": "plots.zh.title_speed",
+   "text": "车速"
+  },
+  {
+   "kind": "plots.zh.speed_mps",
+   "text": "车速 [m/s]"
+  },
+  {
+   "kind": "plots.zh.speed_mph",
+   "text": "车速 [mph]"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "车速SOC。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "车速SOC发动机。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "车速高于此值时强制启动发动机（混动）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "轮胎-路面附着系数，限制最大驱动力。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "轴距，用于轴荷转移计算。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "载货（乘员与行李）质量。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "迎风面积（空气阻力计算用）。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "配置版本。"
+  },
+  {
+   "kind": "schema[2016_TOYOTA_Prius_Two.yaml].parameters.description_zh",
+   "text": "需求功率超此比例时强制启动发动机。"
+  },
+  {
+   "kind": "schema[2012_Ford_Fusion.yaml].parameters.description_zh",
+   "text": "驱动形式（前驱 / 后驱 / 四驱）。"
+  }
+ ]
+}

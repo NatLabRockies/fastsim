@@ -1,0 +1,1058 @@
+{
+ "preset": "2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml",
+ "presets": [
+  {
+   "id": "2012_Ford_Fusion.yaml",
+   "name": "2012 Ford Fusion",
+   "pt_type": "Conv",
+   "mass_kg": 1644.3
+  },
+  {
+   "id": "2016_TOYOTA_Prius_Two.yaml",
+   "name": "2016 Toyota Prius Two",
+   "pt_type": "HEV",
+   "mass_kg": 1373
+  },
+  {
+   "id": "2016 Nissan Leaf 30 kWh thrml.yaml",
+   "name": "2016 Nissan Leaf 30 kWh",
+   "pt_type": "BEV",
+   "mass_kg": 1511
+  },
+  {
+   "id": "2022 Tesla Model 3 RWD thrml.yaml",
+   "name": "2022 Tesla Model 3 RWD",
+   "pt_type": "BEV",
+   "mass_kg": 1743
+  },
+  {
+   "id": "2022_Renault_Zoe_ZE50_R135.yaml",
+   "name": "2022 Renault Zoe ZE50",
+   "pt_type": "BEV",
+   "mass_kg": 1502
+  },
+  {
+   "id": "2020 Chevrolet Bolt EV thrml.yaml",
+   "name": "2020 Chevrolet Bolt EV",
+   "pt_type": "BEV",
+   "mass_kg": 1616
+  },
+  {
+   "id": "2021_Hyundai_Sonata_Hybrid_Blue_thrml.yaml",
+   "name": "2021 Hyundai Sonata Hybrid Blue",
+   "pt_type": "HEV",
+   "mass_kg": 1589
+  },
+  {
+   "id": "2026_Chrysler_Pacifica_Select.yaml",
+   "name": "2026 Chrysler Pacifica Select",
+   "pt_type": "PHEV",
+   "mass_kg": 2324
+  },
+  {
+   "id": "2026_Chrysler_Pacifica_Select_thrml.yaml",
+   "name": "2026 Chrysler Pacifica Select (thermal)",
+   "pt_type": "PHEV",
+   "mass_kg": 2324
+  }
+ ],
+ "cycles": [
+  {
+   "id": "udds.csv",
+   "name": "UDDS (City)",
+   "name_zh": "UDDS（城市）",
+   "duration_s": 1369
+  },
+  {
+   "id": "hwfet.csv",
+   "name": "HWFET (Highway)",
+   "name_zh": "HWFET（高速）",
+   "duration_s": 766
+  }
+ ],
+ "parameters": [
+  {
+   "path": "mass_kilograms",
+   "name": "mass_kilograms",
+   "group": "Vehicle",
+   "group_zh": "整车",
+   "subgroup": "Body",
+   "subgroup_zh": "车身",
+   "type": "float",
+   "default": 1667,
+   "unit": "kg",
+   "description": "Vehicle test mass.",
+   "description_zh": "整车试验质量。",
+   "editable": true
+  },
+  {
+   "path": "pwr_aux_base_watts",
+   "name": "pwr_aux_base_watts",
+   "group": "Vehicle",
+   "group_zh": "整车",
+   "subgroup": "Body",
+   "subgroup_zh": "车身",
+   "type": "float",
+   "default": 400,
+   "unit": "W",
+   "description": "Base auxiliary electrical load.",
+   "description_zh": "基础辅助电气负载。",
+   "editable": true
+  },
+  {
+   "path": "chassis.drag_coef",
+   "name": "chassis.drag_coef",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Aero",
+   "subgroup_zh": "空气动力学",
+   "type": "float",
+   "default": 0.24,
+   "unit": "-",
+   "description": "Aerodynamic drag coefficient.",
+   "description_zh": "空气阻力系数。",
+   "editable": true
+  },
+  {
+   "path": "chassis.frontal_area_square_meters",
+   "name": "chassis.frontal_area_square_meters",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Aero",
+   "subgroup_zh": "空气动力学",
+   "type": "float",
+   "default": 2.17,
+   "unit": "m²",
+   "description": "Vehicle frontal area.",
+   "description_zh": "整车迎风面积。",
+   "editable": true
+  },
+  {
+   "path": "chassis.wheel_rr_coef",
+   "name": "chassis.wheel_rr_coef",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Rolling & Traction",
+   "subgroup_zh": "滚动与牵引",
+   "type": "float",
+   "default": 0.007,
+   "unit": "-",
+   "description": "Rolling resistance coefficient.",
+   "description_zh": "滚动阻力系数。",
+   "editable": true
+  },
+  {
+   "path": "chassis.wheel_fric_coef",
+   "name": "chassis.wheel_fric_coef",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Rolling & Traction",
+   "subgroup_zh": "滚动与牵引",
+   "type": "float",
+   "default": 0.7,
+   "unit": "-",
+   "description": "Tire-road friction coefficient.",
+   "description_zh": "轮胎与路面附着系数。",
+   "editable": true
+  },
+  {
+   "path": "chassis.wheel_radius_meters",
+   "name": "chassis.wheel_radius_meters",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Wheels",
+   "subgroup_zh": "车轮",
+   "type": "float",
+   "default": 0.3366,
+   "unit": "m",
+   "description": "Wheel radius.",
+   "description_zh": "车轮半径。",
+   "editable": true
+  },
+  {
+   "path": "chassis.wheel_inertia_kilogram_square_meters",
+   "name": "chassis.wheel_inertia_kilogram_square_meters",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Wheels",
+   "subgroup_zh": "车轮",
+   "type": "float",
+   "default": 0.9,
+   "unit": "kg·m²",
+   "description": "Wheel rotational inertia.",
+   "description_zh": "车轮转动惯量。",
+   "editable": true
+  },
+  {
+   "path": "chassis.num_wheels",
+   "name": "chassis.num_wheels",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Wheels",
+   "subgroup_zh": "车轮",
+   "type": "int",
+   "default": 4,
+   "unit": "-",
+   "description": "Number of wheels.",
+   "description_zh": "车轮数量。",
+   "editable": true
+  },
+  {
+   "path": "chassis.tire_code",
+   "name": "chassis.tire_code",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Wheels",
+   "subgroup_zh": "车轮",
+   "type": "str",
+   "default": "P205/65R16",
+   "unit": "-",
+   "description": "Tire specification code.",
+   "description_zh": "轮胎规格代码。",
+   "editable": false
+  },
+  {
+   "path": "chassis.wheel_base_meters",
+   "name": "chassis.wheel_base_meters",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Dimensions & Mass",
+   "subgroup_zh": "尺寸与质量",
+   "type": "float",
+   "default": 2.8,
+   "unit": "m",
+   "description": "Wheel base.",
+   "description_zh": "轴距。",
+   "editable": true
+  },
+  {
+   "path": "chassis.cg_height_meters",
+   "name": "chassis.cg_height_meters",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Dimensions & Mass",
+   "subgroup_zh": "尺寸与质量",
+   "type": "float",
+   "default": 0.53,
+   "unit": "m",
+   "description": "Center of gravity height.",
+   "description_zh": "重心高度。",
+   "editable": true
+  },
+  {
+   "path": "chassis.drive_type",
+   "name": "chassis.drive_type",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Dimensions & Mass",
+   "subgroup_zh": "尺寸与质量",
+   "type": "enum",
+   "default": "FWD",
+   "unit": "-",
+   "description": "Driveline configuration.",
+   "description_zh": "驱动形式。",
+   "editable": true,
+   "enum_options": [
+    "FWD",
+    "RWD",
+    "AWD"
+   ]
+  },
+  {
+   "path": "chassis.glider_mass_kilograms",
+   "name": "chassis.glider_mass_kilograms",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Dimensions & Mass",
+   "subgroup_zh": "尺寸与质量",
+   "type": "float",
+   "default": 1200,
+   "unit": "kg",
+   "description": "Glider mass excluding powertrain.",
+   "description_zh": "不含动力总成的白车身质量。",
+   "editable": true
+  },
+  {
+   "path": "chassis.mass_kilograms",
+   "name": "chassis.mass_kilograms",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Dimensions & Mass",
+   "subgroup_zh": "尺寸与质量",
+   "type": "float",
+   "default": 1667,
+   "unit": "kg",
+   "description": "Chassis-level mass.",
+   "description_zh": "底盘总质量。",
+   "editable": true
+  },
+  {
+   "path": "chassis.cargo_mass_kilograms",
+   "name": "chassis.cargo_mass_kilograms",
+   "group": "Chassis",
+   "group_zh": "底盘",
+   "subgroup": "Dimensions & Mass",
+   "subgroup_zh": "尺寸与质量",
+   "type": "float",
+   "default": 136,
+   "unit": "kg",
+   "description": "Cargo and passenger payload.",
+   "description_zh": "载重与乘员质量。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.fs.max_fuel_stored_joules",
+   "name": "pt_type.HEV.fs.max_fuel_stored_joules",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Storage",
+   "subgroup_zh": "燃料储存",
+   "type": "float",
+   "default": 1660000000,
+   "unit": "J",
+   "description": "Chemical energy capacity of the fuel tank.",
+   "description_zh": "油箱化学能容量。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.fs.fuel_density_kilograms_per_cubic_meter",
+   "name": "pt_type.HEV.fs.fuel_density_kilograms_per_cubic_meter",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Storage",
+   "subgroup_zh": "燃料储存",
+   "type": "float",
+   "default": 745,
+   "unit": "kg/m³",
+   "description": "Fuel density.",
+   "description_zh": "燃料密度。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.fs.fuel_type",
+   "name": "pt_type.HEV.fs.fuel_type",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Storage",
+   "subgroup_zh": "燃料储存",
+   "type": "str",
+   "default": "gasoline",
+   "unit": "-",
+   "description": "Fuel type identifier.",
+   "description_zh": "燃料类型标识。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.fs.mass_kilograms",
+   "name": "pt_type.HEV.fs.mass_kilograms",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Storage",
+   "subgroup_zh": "燃料储存",
+   "type": "float",
+   "default": 12,
+   "unit": "kg",
+   "description": "Fuel storage mass.",
+   "description_zh": "燃料储存系统质量。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.fc.pwr_out_max_watts",
+   "name": "pt_type.HEV.fc.pwr_out_max_watts",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Converter",
+   "subgroup_zh": "燃料转换器",
+   "type": "float",
+   "default": 115000,
+   "unit": "W",
+   "description": "Peak fuel converter output power.",
+   "description_zh": "燃料转换器峰值输出功率。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.fc.pwr_out_frac_interp",
+   "name": "pt_type.HEV.fc.pwr_out_frac_interp",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Converter",
+   "subgroup_zh": "燃料转换器",
+   "type": "curve",
+   "default": {
+    "x": [
+     0,
+     0.05,
+     0.2,
+     1
+    ],
+    "y": [
+     0,
+     0.05,
+     0.2,
+     1
+    ]
+   },
+   "unit": "-",
+   "description": "Normalized output power breakpoints.",
+   "description_zh": "归一化输出功率插值点。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.fc.eff_interp_from_pwr_out",
+   "name": "pt_type.HEV.fc.eff_interp_from_pwr_out",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Converter",
+   "subgroup_zh": "燃料转换器",
+   "type": "curve",
+   "default": {
+    "x": [
+     0,
+     0.3,
+     0.6,
+     1
+    ],
+    "y": [
+     0.18,
+     0.34,
+     0.37,
+     0.33
+    ]
+   },
+   "unit": "-",
+   "description": "Efficiency versus output power.",
+   "description_zh": "效率随输出功率变化曲线。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.fc.eff_interp_from_pwr_out_and_speed",
+   "name": "pt_type.HEV.fc.eff_interp_from_pwr_out_and_speed",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Converter",
+   "subgroup_zh": "燃料转换器",
+   "type": "curve",
+   "default": {
+    "x": [
+     0,
+     200,
+     600
+    ],
+    "y": [
+     0.2,
+     0.36,
+     0.34
+    ],
+    "z": [
+     [
+      0.18,
+      0.22,
+      0.2
+     ],
+     [
+      0.3,
+      0.36,
+      0.35
+     ],
+     [
+      0.28,
+      0.34,
+      0.33
+     ]
+    ]
+   },
+   "unit": "-",
+   "description": "Efficiency map versus power and speed.",
+   "description_zh": "效率随功率与转速变化 MAP。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.fc.pwr_idle_watts",
+   "name": "pt_type.HEV.fc.pwr_idle_watts",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Converter",
+   "subgroup_zh": "燃料转换器",
+   "type": "float",
+   "default": 5000,
+   "unit": "W",
+   "description": "Idle fuel converter power.",
+   "description_zh": "怠速功率。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.fc.mass_kilograms",
+   "name": "pt_type.HEV.fc.mass_kilograms",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Converter",
+   "subgroup_zh": "燃料转换器",
+   "type": "float",
+   "default": 150,
+   "unit": "kg",
+   "description": "Fuel converter mass.",
+   "description_zh": "燃料转换器质量。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.fc.stop_start",
+   "name": "pt_type.HEV.fc.stop_start",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Fuel Converter",
+   "subgroup_zh": "燃料转换器",
+   "type": "bool",
+   "default": true,
+   "unit": "-",
+   "description": "Enable engine stop-start.",
+   "description_zh": "启用发动机启停。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.em.pwr_out_max_watts",
+   "name": "pt_type.HEV.em.pwr_out_max_watts",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Electric Machine",
+   "subgroup_zh": "电机",
+   "type": "float",
+   "default": 38000,
+   "unit": "W",
+   "description": "Peak electric machine power.",
+   "description_zh": "电机峰值功率。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.em.eff_interp_from_pwr_out",
+   "name": "pt_type.HEV.em.eff_interp_from_pwr_out",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Electric Machine",
+   "subgroup_zh": "电机",
+   "type": "curve",
+   "default": {
+    "x": [
+     0,
+     0.5,
+     1
+    ],
+    "y": [
+     0.72,
+     0.91,
+     0.88
+    ]
+   },
+   "unit": "-",
+   "description": "Efficiency versus output power.",
+   "description_zh": "效率随输出功率变化曲线。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.em.eff_interp_from_pwr_out_and_speed",
+   "name": "pt_type.HEV.em.eff_interp_from_pwr_out_and_speed",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Electric Machine",
+   "subgroup_zh": "电机",
+   "type": "curve",
+   "default": {
+    "x": [
+     0,
+     400,
+     1200
+    ],
+    "y": [
+     0.7,
+     0.88,
+     0.9
+    ],
+    "z": [
+     [
+      0.7,
+      0.8,
+      0.78
+     ],
+     [
+      0.86,
+      0.9,
+      0.89
+     ],
+     [
+      0.85,
+      0.88,
+      0.87
+     ]
+    ]
+   },
+   "unit": "-",
+   "description": "Efficiency map versus power and speed.",
+   "description_zh": "效率随功率与转速变化 MAP。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.em.mass_kilograms",
+   "name": "pt_type.HEV.em.mass_kilograms",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Electric Machine",
+   "subgroup_zh": "电机",
+   "type": "float",
+   "default": 45,
+   "unit": "kg",
+   "description": "Electric machine mass.",
+   "description_zh": "电机质量。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.res.max_energy_joules",
+   "name": "pt_type.HEV.res.max_energy_joules",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Battery (ESS)",
+   "subgroup_zh": "电池（储能）",
+   "type": "float",
+   "default": 50400000,
+   "unit": "J",
+   "description": "Battery energy capacity.",
+   "description_zh": "电池能量容量。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.res.max_pwr_out_watts",
+   "name": "pt_type.HEV.res.max_pwr_out_watts",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Battery (ESS)",
+   "subgroup_zh": "电池（储能）",
+   "type": "float",
+   "default": 47000,
+   "unit": "W",
+   "description": "Battery peak discharge power.",
+   "description_zh": "电池峰值放电功率。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.res.pwr_out_frac_interp",
+   "name": "pt_type.HEV.res.pwr_out_frac_interp",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Battery (ESS)",
+   "subgroup_zh": "电池（储能）",
+   "type": "curve",
+   "default": {
+    "x": [
+     0,
+     0.1,
+     1
+    ],
+    "y": [
+     0,
+     0.1,
+     1
+    ]
+   },
+   "unit": "-",
+   "description": "Normalized power breakpoints.",
+   "description_zh": "归一化功率插值点。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.res.soc_interp",
+   "name": "pt_type.HEV.res.soc_interp",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Battery (ESS)",
+   "subgroup_zh": "电池（储能）",
+   "type": "curve",
+   "default": {
+    "x": [
+     0,
+     0.5,
+     1
+    ],
+    "y": [
+     0,
+     0.5,
+     1
+    ]
+   },
+   "unit": "-",
+   "description": "Open-circuit voltage versus SOC.",
+   "description_zh": "开路电压随 SOC 变化曲线。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.res.ess_init_soc",
+   "name": "pt_type.HEV.res.ess_init_soc",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Battery (ESS)",
+   "subgroup_zh": "电池（储能）",
+   "type": "float",
+   "default": 0.62,
+   "unit": "-",
+   "description": "Initial battery state of charge.",
+   "description_zh": "电池初始荷电状态。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.res.ess_min_soc",
+   "name": "pt_type.HEV.res.ess_min_soc",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Battery (ESS)",
+   "subgroup_zh": "电池（储能）",
+   "type": "float",
+   "default": 0.15,
+   "unit": "-",
+   "description": "Lower SOC operating limit.",
+   "description_zh": "SOC 运行下限。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.res.internal_resistance_ohms",
+   "name": "pt_type.HEV.res.internal_resistance_ohms",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Battery (ESS)",
+   "subgroup_zh": "电池（储能）",
+   "type": "float",
+   "default": 0.12,
+   "unit": "-",
+   "description": "Pack internal resistance.",
+   "description_zh": "电池包内阻。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.res.mass_kilograms",
+   "name": "pt_type.HEV.res.mass_kilograms",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Battery (ESS)",
+   "subgroup_zh": "电池（储能）",
+   "type": "float",
+   "default": 40,
+   "unit": "kg",
+   "description": "Battery pack mass.",
+   "description_zh": "电池包质量。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.transmission.num_gears",
+   "name": "pt_type.HEV.transmission.num_gears",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Transmission",
+   "subgroup_zh": "传动系统",
+   "type": "int",
+   "default": 6,
+   "unit": "-",
+   "description": "Number of forward gear ratios.",
+   "description_zh": "前进挡数量。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.transmission.gear_ratios",
+   "name": "pt_type.HEV.transmission.gear_ratios",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Transmission",
+   "subgroup_zh": "传动系统",
+   "type": "object",
+   "default": [
+    3.54,
+    2.02,
+    1.35,
+    1,
+    0.79,
+    0.65
+   ],
+   "unit": "-",
+   "description": "Transmission gear ratios.",
+   "description_zh": "各挡传动比。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.transmission.final_drive_ratio",
+   "name": "pt_type.HEV.transmission.final_drive_ratio",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Transmission",
+   "subgroup_zh": "传动系统",
+   "type": "float",
+   "default": 3.32,
+   "unit": "-",
+   "description": "Final drive ratio.",
+   "description_zh": "主减速比。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.transmission.eff_interp",
+   "name": "pt_type.HEV.transmission.eff_interp",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Transmission",
+   "subgroup_zh": "传动系统",
+   "type": "curve",
+   "default": {
+    "x": [
+     0,
+     0.5,
+     1
+    ],
+    "y": [
+     0.9,
+     0.94,
+     0.92
+    ]
+   },
+   "unit": "-",
+   "description": "Transmission efficiency versus torque.",
+   "description_zh": "传动效率随扭矩变化曲线。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.transmission.mass_kilograms",
+   "name": "pt_type.HEV.transmission.mass_kilograms",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Transmission",
+   "subgroup_zh": "传动系统",
+   "type": "float",
+   "default": 75,
+   "unit": "kg",
+   "description": "Transmission mass.",
+   "description_zh": "传动系统质量。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.transmission.pwr_out_max_watts",
+   "name": "pt_type.HEV.transmission.pwr_out_max_watts",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Transmission",
+   "subgroup_zh": "传动系统",
+   "type": "float",
+   "default": 160000,
+   "unit": "W",
+   "description": "Transmission peak throughput power.",
+   "description_zh": "传动系统峰值通过功率。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.pt_cntrl.type",
+   "name": "pt_type.HEV.pt_cntrl.type",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Controls",
+   "subgroup_zh": "控制参数",
+   "type": "str",
+   "default": "RGWDB",
+   "unit": "-",
+   "description": "Power management controller type.",
+   "description_zh": "能量管理控制器类型。",
+   "editable": false
+  },
+  {
+   "path": "pt_type.HEV.pt_cntrl.max_soc",
+   "name": "pt_type.HEV.pt_cntrl.max_soc",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Controls",
+   "subgroup_zh": "控制参数",
+   "type": "float",
+   "default": 0.72,
+   "unit": "-",
+   "description": "Upper SOC target for the controller.",
+   "description_zh": "控制器 SOC 上限目标。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.pt_cntrl.min_soc",
+   "name": "pt_type.HEV.pt_cntrl.min_soc",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Controls",
+   "subgroup_zh": "控制参数",
+   "type": "float",
+   "default": 0.4,
+   "unit": "-",
+   "description": "Lower SOC target for the controller.",
+   "description_zh": "控制器 SOC 下限目标。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.alt_eff",
+   "name": "pt_type.HEV.alt_eff",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Controls",
+   "subgroup_zh": "控制参数",
+   "type": "float",
+   "default": 0.85,
+   "unit": "-",
+   "description": "Alternator efficiency.",
+   "description_zh": "发电机效率。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.sim_params.dt_seconds",
+   "name": "pt_type.HEV.sim_params.dt_seconds",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Controls",
+   "subgroup_zh": "控制参数",
+   "type": "float",
+   "default": 1,
+   "unit": "s",
+   "description": "Simulation time step.",
+   "description_zh": "仿真时间步长。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.sim_params.integration_method",
+   "name": "pt_type.HEV.sim_params.integration_method",
+   "group": "Powertrain",
+   "group_zh": "动力总成",
+   "subgroup": "Controls",
+   "subgroup_zh": "控制参数",
+   "type": "enum",
+   "default": "Euler",
+   "unit": "-",
+   "description": "Numerical integration scheme.",
+   "description_zh": "数值积分方法。",
+   "editable": true,
+   "enum_options": [
+    "Euler",
+    "RK4",
+    "Adaptive"
+   ]
+  },
+  {
+   "path": "cabin.initial_temp_kelvin",
+   "name": "cabin.initial_temp_kelvin",
+   "group": "Thermal",
+   "group_zh": "热管理",
+   "subgroup": "Cabin & HVAC",
+   "subgroup_zh": "座舱与空调",
+   "type": "float",
+   "default": 293.15,
+   "unit": "K",
+   "description": "Initial cabin air temperature.",
+   "description_zh": "座舱初始空气温度。",
+   "editable": true
+  },
+  {
+   "path": "cabin.volume_cubic_meters",
+   "name": "cabin.volume_cubic_meters",
+   "group": "Thermal",
+   "group_zh": "热管理",
+   "subgroup": "Cabin & HVAC",
+   "subgroup_zh": "座舱与空调",
+   "type": "float",
+   "default": 3.1,
+   "unit": "m³",
+   "description": "Cabin air volume.",
+   "description_zh": "座舱空气体积。",
+   "editable": true
+  },
+  {
+   "path": "hvac.max_cooling_power_watts",
+   "name": "hvac.max_cooling_power_watts",
+   "group": "Thermal",
+   "group_zh": "热管理",
+   "subgroup": "Cabin & HVAC",
+   "subgroup_zh": "座舱与空调",
+   "type": "float",
+   "default": 4500,
+   "unit": "W",
+   "description": "Peak cabin cooling power.",
+   "description_zh": "座舱最大制冷功率。",
+   "editable": true
+  },
+  {
+   "path": "hvac.max_heating_power_watts",
+   "name": "hvac.max_heating_power_watts",
+   "group": "Thermal",
+   "group_zh": "热管理",
+   "subgroup": "Cabin & HVAC",
+   "subgroup_zh": "座舱与空调",
+   "type": "float",
+   "default": 5000,
+   "unit": "W",
+   "description": "Peak cabin heating power.",
+   "description_zh": "座舱最大制热功率。",
+   "editable": true
+  },
+  {
+   "path": "hvac.cop_cooling",
+   "name": "hvac.cop_cooling",
+   "group": "Thermal",
+   "group_zh": "热管理",
+   "subgroup": "Cabin & HVAC",
+   "subgroup_zh": "座舱与空调",
+   "type": "float",
+   "default": 2.6,
+   "unit": "-",
+   "description": "Cooling coefficient of performance.",
+   "description_zh": "制冷性能系数。",
+   "editable": true
+  },
+  {
+   "path": "hvac.cabin_u_watts_per_square_meter_kelvin",
+   "name": "hvac.cabin_u_watts_per_square_meter_kelvin",
+   "group": "Thermal",
+   "group_zh": "热管理",
+   "subgroup": "Cabin & HVAC",
+   "subgroup_zh": "座舱与空调",
+   "type": "float",
+   "default": 5.5,
+   "unit": "W/(m²·K)",
+   "description": "Cabin heat transfer coefficient.",
+   "description_zh": "座舱传热系数。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.res.thrml.max_temp_kelvin",
+   "name": "pt_type.HEV.res.thrml.max_temp_kelvin",
+   "group": "Thermal",
+   "group_zh": "热管理",
+   "subgroup": "Battery Thermal",
+   "subgroup_zh": "电池热管理",
+   "type": "float",
+   "default": 328.15,
+   "unit": "K",
+   "description": "Battery maximum allowed temperature.",
+   "description_zh": "电池允许最高温度。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.res.thrml.init_temp_kelvin",
+   "name": "pt_type.HEV.res.thrml.init_temp_kelvin",
+   "group": "Thermal",
+   "group_zh": "热管理",
+   "subgroup": "Battery Thermal",
+   "subgroup_zh": "电池热管理",
+   "type": "float",
+   "default": 293.15,
+   "unit": "K",
+   "description": "Initial battery temperature.",
+   "description_zh": "电池初始温度。",
+   "editable": true
+  },
+  {
+   "path": "pt_type.HEV.res.thrml.mass_thermal_capacity_joules_per_kelvin",
+   "name": "pt_type.HEV.res.thrml.mass_thermal_capacity_joules_per_kelvin",
+   "group": "Thermal",
+   "group_zh": "热管理",
+   "subgroup": "Battery Thermal",
+   "subgroup_zh": "电池热管理",
+   "type": "float",
+   "default": 60000,
+   "unit": "J/K",
+   "description": "Battery thermal capacity.",
+   "description_zh": "电池热容。",
+   "editable": true
+  }
+ ]
+}
