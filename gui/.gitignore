@@ -1,0 +1,8 @@
+# FASTSim Studio — ignore generated/cache artefacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+verify/_tmp/
+tools/hant-build/_tmp/
+.DS_Store

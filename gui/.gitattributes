@@ -1,0 +1,6 @@
+# Keep line endings stable across platforms for source files.
+* text=auto eol=lf
+*.png binary
+*.ico binary
+*.jpg binary
+*.woff2 binary

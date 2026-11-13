@@ -1,0 +1,56 @@
+{
+ "en": {
+  "distance_mi": {
+   "value": 7.45051,
+   "unit": "mi",
+   "label_en": "Distance",
+   "label_zh": "行驶距离"
+  },
+  "fuel_consumed_kwh": {
+   "value": 7.303313,
+   "unit": "kWh",
+   "label_en": "Fuel Energy",
+   "label_zh": "燃料能量"
+  },
+  "fuel_economy_mpgge": {
+   "value": 34.379216,
+   "unit": "mpgge",
+   "label_en": "Fuel Economy",
+   "label_zh": "燃油经济性"
+  },
+  "energy_to_wheels_kwh": {
+   "value": 0.732342,
+   "unit": "kWh",
+   "label_en": "Energy at Wheels",
+   "label_zh": "车轮牵引能量"
+  },
+  "avg_speed_mph": {
+   "value": 19.592283,
+   "unit": "mph",
+   "label_en": "Average Speed",
+   "label_zh": "平均车速"
+  },
+  "max_speed_mph": {
+   "value": 56.70092,
+   "unit": "mph",
+   "label_en": "Max Speed",
+   "label_zh": "最高车速"
+  },
+  "trace_met_pct": {
+   "value": 100.0,
+   "unit": "%",
+   "label_en": "Cycle Trace Match",
+   "label_zh": "工况跟随率"
+  }
+ },
+ "hant_kpis_keys": [
+  "avg_speed_mph",
+  "distance_mi",
+  "energy_to_wheels_kwh",
+  "fuel_consumed_kwh",
+  "fuel_economy_mpgge",
+  "max_speed_mph",
+  "trace_met_pct"
+ ],
+ "hant_svg_len": 179558
+}

@@ -1,0 +1,342 @@
+app.subtitle
+  车辆仿真工作台
+  車輛模擬工作台
+toolbar.preset
+  车型预设
+  車型預設
+toolbar.cycle
+  行驶工况
+  行駛工況
+toolbar.run
+  运行仿真
+  執行模擬
+toolbar.running
+  仿真中…
+  模擬中…
+toolbar.export
+  导出 Python 代码
+  匯出 Python 程式碼
+toolbar.langLabel
+  语言
+  語言
+toolbar.collapse
+  收起参数面板
+  收起參數面板
+toolbar.expand
+  展开参数面板
+  展開參數面板
+toolbar.zenOn
+  隐藏参数面板
+  隱藏參數面板
+toolbar.zenOff
+  显示参数面板
+  顯示參數面板
+panel.title
+  参数
+  參數
+panel.search
+  搜索参数…
+  搜尋參數…
+panel.modifiedOnly
+  仅已修改
+  僅已修改
+panel.resetAll
+  全部重置
+  全部重設
+panel.resetAllConfirm
+  放弃该预设下的所有参数修改并恢复默认值？
+  放棄該預設下的所有參數修改並恢復預設值？
+panel.modifiedCount
+  {n} 项已修改
+  {n} 項已修改
+panel.changedInGroup
+  本组 {n} 项已修改
+  本組 {n} 項已修改
+panel.noMatch
+  没有符合筛选条件的参数。
+  沒有符合篩選條件的參數。
+panel.loading
+  正在加载参数结构…
+  正在載入參數結構…
+panel.loadFailed
+  参数结构不可用。
+  參數結構不可用。
+field.reset
+  重置为默认值
+  重設為預設值
+field.readonly
+  结构性参数——仅作展示，不可覆盖。
+  結構性參數——僅供顯示，不可覆寫。
+field.default
+  默认 {v}
+  預設 {v}
+field.items
+  [{n} 项]
+  [{n} 項]
+field.keys
+  {{{n} 个键}}
+  {{{n} 個鍵}}
+group.Vehicle
+  整车
+  整車
+group.Chassis
+  底盘
+  底盤
+group.Powertrain
+  动力总成
+  動力總成
+group.Thermal
+  热管理
+  熱管理
+subgroup.Body
+  车身
+  車身
+subgroup.Aero
+  空气动力学
+  空氣動力學
+subgroup.Rolling & Traction
+  滚动与牵引
+  滾動與牽引
+subgroup.Wheels
+  车轮
+  車輪
+subgroup.Dimensions & Mass
+  尺寸与质量
+  尺寸與質量
+subgroup.Fuel Storage
+  燃料储存
+  燃料儲存
+subgroup.Fuel Converter
+  燃料转换器
+  燃料轉換器
+subgroup.Electric Machine
+  电机
+  電機
+subgroup.Battery (ESS)
+  电池（储能）
+  電池（儲能）
+subgroup.Transmission
+  传动系统
+  傳動系統
+subgroup.Controls
+  控制参数
+  控制參數
+subgroup.Cabin & HVAC
+  座舱与空调
+  座艙與空調
+subgroup.Battery Thermal
+  电池热管理
+  電池熱管理
+empty.title
+  尚未运行仿真
+  尚未執行模擬
+empty.body
+  在顶部选择车型预设与行驶工况，然后点击「运行仿真」。
+  在頂部選擇車型預設與行駛工況，然後點選「執行模擬」。
+loading.title
+  正在运行 FASTSim…
+  正在執行 FASTSim…
+loading.body
+  正在将行驶工况输入动力总成模型。
+  正在將行駛工況輸入動力總成模型。
+tab.interactive
+  交互视图
+  互動檢視
+tab.figure
+  Matplotlib 图
+  Matplotlib 圖
+tab.table
+  数据表
+  資料表
+kpi.empty
+  本次运行未返回 KPI 数值。
+  本次執行未回傳 KPI 數值。
+chart.speed
+  车速
+  車速
+chart.power
+  动力总成功率分配
+  動力總成功率分配
+chart.soc
+  电池荷电状态
+  電池電量狀態
+chart.distance
+  累计行驶距离
+  累計行駛距離
+chart.energy
+  累计燃料与能量
+  累計燃料與能量
+chart.na
+  该动力总成无此数据
+  該動力總成無此資料
+chart.renderFailed
+  图表绘制失败：{msg}
+  圖表繪製失敗：{msg}
+chart.plotlyMissing
+  本地 Plotly 库（/vendor/plotly.min.js）加载失败。
+  本地 Plotly 庫（/vendor/plotly.min.js）載入失敗。
+chart.noSeries
+  本次运行未返回时间序列数据。
+  本次執行未回傳時間序列資料。
+axis.time
+  时间 [s]
+  時間 [s]
+axis.speed
+  车速 [m/s]
+  車速 [m/s]
+axis.distance
+  距离 [mi]
+  距離 [mi]
+trace.target
+  目标车速
+  目標車速
+trace.achieved
+  实际车速
+  實際車速
+trace.engine
+  发动机
+  發動機
+trace.motor
+  电机
+  電機
+trace.battery
+  电池
+  電池
+trace.energy
+  总能量
+  總能量
+trace.distance
+  距离
+  距離
+figure.downloadPng
+  下载 PNG
+  下載 PNG
+figure.downloadPngAria
+  将图像下载为高分辨率 PNG
+  將圖像下載為高解析度 PNG
+figure.svg
+  下载 SVG
+  下載 SVG
+figure.svgAria
+  将图像下载为可缩放矢量 SVG
+  將圖像下載為可縮放向量 SVG
+figure.svgUnavailable
+  本次运行仅返回 PNG，无法提供 SVG 导出。
+  本次執行僅回傳 PNG，無法提供 SVG 匯出。
+figure.missing
+  本次运行服务器未返回图像。
+  本次執行伺服器未回傳圖像。
+figure.alt
+  FASTSim 仿真图
+  FASTSim 模擬圖
+figure.metaSvgOnly
+  矢量 SVG
+  向量 SVG
+table.empty
+  本次运行未返回时间序列。
+  本次執行未回傳時間序列。
+table.note
+  共 {n} 个时间步。
+  共 {n} 個時間步。
+table.noteDown
+  为保持流畅，每隔 {k} 步显示 1 步（{n} / {m}）。
+  為保持流暢，每隔 {k} 步顯示 1 步（{n} / {m}）。
+table.column
+  列
+  欄位
+export.title
+  导出的 Python 代码
+  匯出的 Python 程式碼
+export.hint
+  可复现当前配置的独立脚本。
+  可重現此設定的獨立腳本。
+export.copy
+  复制
+  複製
+export.copied
+  已复制
+  已複製
+export.download
+  下载 .py
+  下載 .py
+export.close
+  关闭
+  關閉
+export.loading
+  正在生成代码…
+  正在生成程式碼…
+export.error
+  无法生成代码：{msg}
+  無法生成程式碼：{msg}
+export.empty
+  服务器未返回代码。
+  伺服器未回傳程式碼。
+err.sim
+  仿真失败
+  模擬失敗
+err.export
+  导出失败
+  匯出失敗
+err.schema
+  无法加载参数结构
+  無法載入參數結構
+err.missing
+  请先选择车型预设与行驶工况。
+  請先選擇車型預設與行駛工況。
+err.network
+  无法连接服务器，后端是否已在本源运行？
+  無法連線伺服器，後端是否已在此來源執行？
+err.badJson
+  服务器响应不是有效的 JSON。
+  伺服器回應不是有效的 JSON。
+err.presetMismatch
+  服务器返回的预设（{got}）与请求（{want}）不一致，参数面板未更新。
+  伺服器回傳的預設（{got}）與請求（{want}）不一致，參數面板未更新。
+err.unknownPath
+  服务器拒绝了未知参数路径：{path}。该覆盖已被移除——请重新运行。
+  伺服器拒絕了未知參數路徑：{path}。該覆寫已被移除——請重新執行。
+err.unknownPathGeneric
+  服务器拒绝了未知参数路径，相关覆盖已被移除——请重新运行。
+  伺服器拒絕了未知參數路徑，相關覆寫已被移除——請重新執行。
+err.retry
+  重试
+  重試
+err.dismiss
+  关闭
+  關閉
+err.useMock
+  使用模拟数据
+  使用模擬資料
+status.ready
+  就绪
+  就緒
+status.busy
+  正在运行仿真…
+  正在執行模擬…
+status.done
+  仿真完成
+  模擬完成
+status.overrides
+  已应用 {n} 项参数覆盖
+  已套用 {n} 項參數覆寫
+status.overrideOne
+  已应用 1 项参数覆盖
+  已套用 1 項參數覆寫
+status.noOverrides
+  无参数覆盖
+  無參數覆寫
+status.exporting
+  正在生成 Python 代码…
+  正在生成 Python 程式碼…
+stale.badge
+  结果已过期——请重新运行
+  結果已過期——請重新執行
+mock.badge
+  模拟数据
+  模擬資料
+mock.note
+  模拟模式（?mock=1）：响应来自 mock/*.json，而非后端。
+  模擬模式（?mock=1）：回應來自 mock/*.json，而非後端。
+mock.bannerTitle
+  模拟模式已开启
+  模擬模式已開啟

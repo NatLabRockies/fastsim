@@ -1,0 +1,423 @@
+{
+ "en": {
+  "lang": "en",
+  "htmlLang": "en",
+  "docTitle": "FASTSim Studio",
+  "brand": "FASTSim Studio",
+  "subtitle": "Vehicle Simulation Workbench",
+  "presetLabel": "Vehicle Preset",
+  "cycleLabel": "Drive Cycle",
+  "runLabel": "Run Simulation",
+  "exportLabel": "Export Python Code",
+  "panelTitle": "Parameters",
+  "searchPlaceholder": "Search parameters…",
+  "modifiedOnly": "Modified only",
+  "resetAll": "Reset all",
+  "groups": [
+   "Vehicle",
+   "Chassis",
+   "Powertrain"
+  ],
+  "subgroups": [
+   "Body",
+   "Identity",
+   "Aero",
+   "Rolling & Traction",
+   "Wheels",
+   "Dimensions & Mass",
+   "Fuel Storage",
+   "Fuel Converter",
+   "Transmission",
+   "Controls",
+   "Other"
+  ],
+  "descriptions": [
+   "Total vehicle test mass: glider + cargo + powertrain.",
+   "Constant base auxiliary power draw (accessories).",
+   "Manufacturer.",
+   "Model name.",
+   "Vehicle display name.",
+   "Trim / variant."
+  ],
+  "paramLabels": [
+   "Mass",
+   "Power Aux Base",
+   "Make",
+   "Model",
+   "Name",
+   "Trim",
+   "Year",
+   "drag_coef"
+  ],
+  "tabs": [
+   "Interactive View",
+   "Matplotlib Figure",
+   "Data Table"
+  ],
+  "kpis": [
+   "Distance",
+   "Fuel Energy",
+   "Fuel Economy",
+   "Energy at Wheels",
+   "Average Speed",
+   "Max Speed",
+   "Cycle Trace Match"
+  ],
+  "status": "Simulation complete · 2012 Ford Fusion · UDDS (City) · 1370 steps · 1268 ms · no overrides",
+  "activeButton": "en",
+  "pressed": [
+   "en=true",
+   "zh-Hant=false",
+   "zh=false"
+  ],
+  "tableColumnHeader": null,
+  "allText": "FASTSim Studio \u0001 Vehicle Simulation Workbench \u0001 Vehicle Preset \u0001 Drive Cycle \u0001 Run Simulation \u0001 Export Python Code \u0001 Parameters \u0001 0 modified \u0001 ‹ \u0001 Modified only \u0001 Reset all \u0001 Vehicle \u0001 7 \u0001 Body \u0001 2 \u0001 Mass \u0001 kg \u0001 Total vehicle test mass: glider + cargo + powertrain. \u0001 mass_kilograms \u0001 Power Aux Base \u0001 W \u0001 Constant base auxiliary power draw (accessories). \u0001 pwr_aux_base_watts \u0001 Identity \u0001 5 \u0001 Make \u0001 Manufacturer. \u0001 make \u0001 null \u0001 Model \u0001 Model name. \u0001 model \u0001 null \u0001 Name \u0001 Vehicle display name. \u0001 name \u0001 2012 Ford Fusion \u0001 Trim \u0001 Trim / variant. \u0001 trim \u0001 null \u0001 Year \u0001 Model year. \u0001 year \u0001 2012 \u0001 Chassis \u0001 15 \u0001 Aero \u0001 2 \u0001 drag_coef \u0001 Aerodynamic drag coefficient. \u0001 chassis.drag_coef \u0001 frontal_area_square_meters \u0001 m² \u0001 Frontal reference area for aerodynamic drag. \u0001 chassis.frontal_area_square_meters \u0001 Rolling & Traction \u0001 2 \u0001 wheel_fric_coef \u0001 Tire-road friction coefficient; caps achievable traction. \u0001 chassis.wheel_fric_coef \u0001 wheel_rr_coef \u0001 Rolling resistance coefficient (independent of speed). \u0001 chassis.wheel_rr_coef \u0001 Wheels \u0001 4 \u0001 num_wheels \u0001 Number of wheels (total inertia scaling). \u0001 chassis.num_wheels \u0001 tire_code \u0001 Optional tire identifier (informational). \u0001 chassis.tire_code \u0001 null \u0001 wheel_inertia_kilogram_square_meters \u0001 kg·m² \u0001 Rotational inertia of one wheel. \u0001 chassis.wheel_inertia_kilogram_square_meters \u0001 wheel_radius_meters \u0001 m \u0001 Loaded wheel radius used for wheel speed / force conversion. \u0001 chassis.wheel_radius_meters \u0001 Dimensions & Mass \u0001 7 \u0001 cargo_mass_kilograms \u0001 kg \u0001 Cargo / payload mass. \u0001 chassis.cargo_mass_kilograms \u0001 cg_height_meters \u0001 m \u0001 Center-of-gravity height above ground; drives load transfer under acceleration. \u0001 chassis.cg_height_meters \u0001 drive_axle_weight_frac \u0001 Static fraction of vehicle weight on the driven axle. \u0001 chassis.drive_axle_weight_frac \u0001 drive_type \u0001 Driven axle layout (FWD / RWD / AWD). \u0001 chassis.drive_type \u0001 glider_mass_kilograms \u0001 kg \u0001 Glider mass (body, running gear) excluding the powertrain. \u0001 chassis.glider_mass_kilograms \u0001 mass_kilograms \u0001 kg \u0001 Optional direct chassis mass override. \u0001 chassis.mass_kilograms \u0001 wheel_base_meters \u0001 m \u0001 Wheelbase; used for axle load transfer. \u0001 chassis.wheel_base_meters \u0001 Powertrain \u0001 24 \u0001 Fuel Storage \u0001 6 \u0001 energy_capacity_joules \u0001 J \u0001 Usable energy capacity of the fuel tank. \u0001 pt_type.Conv.fs.energy_capacity_joules \u0001 fuel_type \u0001 Fuel type (affects energy content / emissions bookkeeping). \u0001 pt_type.Conv.fs.fuel_type \u0001 mass_kilograms \u0001 kg \u0001 Mass of the full fuel tank content. \u0001 pt_type.Conv.fs.mass_kilograms \u0001 pwr_out_max_watts \u0001 W \u0001 Maximum power the fuel storage can deliver. \u0001 pt_type.Conv.fs.pwr_out_max_watts \u0001 pwr_ramp_lag_seconds \u0001 s \u0001 Fuel storage power ramp lag time constant. \u0001 pt_type.Conv.fs.pwr_ramp_lag_seconds \u0001 specific_energy_joules_per_kilogram \u0001 J/kg \u0001 Fuel specific energy (lower heating value). \u0001 pt_type.Conv.fs.specific_energy_joules_per_kilogram \u0001 Fuel Converter \u0001 9 \u0001 eff_interp_from_pwr_out \u0001 Engine efficiency curve vs. fraction of peak output power (read-only curve). \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out \u0001 null \u0001 extrapolate \u0001 Extrapolate. \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate \u0001 Error \u0001 strategy \u0001 Strategy. \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.strategy \u0001 Linear \u0001 mass_kilograms \u0001 kg \u0001 Fuel converter mass. \u0001 pt_type.Conv.fc.mass_kilograms \u0001 pwr_idle_fuel_watts \u0001 W \u0001 Fuel power consumed while idling (engine on, no output). \u0001 pt_type.Conv.fc.pwr_idle_fuel_watts \u0001 pwr_out_max_init_watts \u0001 W \u0001 Output power available before the engine is fully warm. \u0001 pt_type.Conv.fc.pwr_out_max_init_watts \u0001 pwr_out_max_watts \u0001 W \u0001 Peak mechanical output power of the fuel converter. \u0001 pt_type.Conv.fc.pwr_out_max_watts \u0001 pwr_ramp_lag_seconds \u0001 s \u0001 Engine power ramp lag time constant. \u0001 pt_type.Conv.fc.pwr_ramp_lag_seconds \u0001 specific_pwr_watts_per_kilogram \u0001 W/kg \u0001 Fuel converter specific power. \u0001 pt_type.Conv.fc.specific_pwr_watts_per_kilogram \u0001 Transmission \u0001 2 \u0001 eff_interp \u0001 Transmission (gearbox) efficiency. \u0001 pt_type.Conv.transmission.eff_interp \u0001 mass_kilograms \u0001 kg \u0001 Transmission mass. \u0001 pt_type.Conv.transmission.mass_kilograms \u0001 Controls \u0001 6 \u0001 alt_eff \u0001 Alternator efficiency for conventional powertrains. \u0001 pt_type.Conv.alt_eff \u0001 dfco_enabled \u0001 Enable deceleration fuel cut-off. \u0001 pt_type.Conv.dfco_cntrl.dfco_enabled \u0001 minimum_dfco_deceleration_meters_per_second_squared \u0001 m/s² \u0001 Minimum (most negative) deceleration required to keep DFCO engaged. \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_deceleration_meters_per_second_squared \u0001 minimum_dfco_speed_meters_per_second \u0001 m/s \u0001 Minimum vehicle speed at which DFCO may engage. \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_speed_meters_per_second \u0001 stopped_speed_threshold_meters_per_second \u0001 m/s \u0001 Speed below which the vehicle is treated as stopped. \u0001 pt_type.Conv.dfco_cntrl.stopped_speed_threshold_meters_per_second \u0001 pt_cntrl \u0001 Active powertrain controller variant (read-only: switching variants needs the variant's own parameters). \u0001 pt_type.Conv.pt_cntrl \u0001 Normal \u0001 Other \u0001 1 \u0001 mass_kilograms \u0001 kg \u0001 Total vehicle test mass: glider + cargo + powertrain. \u0001 pt_type.Conv.mass_kilograms \u0001 Simulation complete · 2012 Ford Fusion · UDDS (City) · 1370 steps · 1268 ms · no overrides \u0001 Distance \u0001 7.451 \u0001 mi \u0001 Fuel Energy \u0001 7.303 \u0001 kWh \u0001 Fuel Economy \u0001 34.38 \u0001 mpgge \u0001 Energy at Wheels \u0001 0.7323 \u0001 kWh \u0001 Average Speed \u0001 19.59 \u0001 mph \u0001 Max Speed \u0001 56.7 \u0001 mph \u0001 Cycle Trace Match \u0001 100 \u0001 % \u0001 Interactive View \u0001 Matplotlib Figure \u0001 Data Table \u0001 0 \u0001 500 \u0001 1000 \u0001 0 \u0001 10 \u0001 20 \u0001 0 \u0001 500 \u0001 1000 \u0001 0 \u0001 10 \u0001 20 \u0001 30 \u0001 40 \u0001 0 \u0001 500 \u0001 1000 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 0 \u0001 500 \u0001 1000 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 Target speed \u0001 Achieved speed \u0001 Engine \u0001 Distance \u0001 Fuel energy \u0001 Total energy \u0001 Time [s] \u0001 Speed [m/s] \u0001 Power [kW] \u0001 Distance [mi] \u0001 Energy [kWh] \u0001 Vehicle Speed \u0001 Powertrain Power Split \u0001 Cumulative Distance \u0001 Cumulative Fuel & Energy",
+  "allAttrs": "Conv · 1644 kg \u0001 HEV · 1635 kg \u0001 BEV · 1636 kg \u0001 BEV · 1752 kg \u0001 BEV · 1600 kg \u0001 BEV · 1626 kg \u0001 HEV · 1508 kg \u0001 Conv · 2398 kg \u0001 Conv · 2398 kg \u0001 1369 s \u0001 766 s \u0001 Language \u0001 Collapse parameter panel \u0001 Collapse parameter panel \u0001 Search parameters… \u0001 Search parameters… \u0001 mass_kilograms\ndefault 1644.3 \u0001 Mass \u0001 pwr_aux_base_watts\ndefault 700 \u0001 Power Aux Base \u0001 Structural value — shown for reference only, it cannot be overridden. \u0001 make\ndefault null \u0001 Structural value — shown for reference only, it cannot be overridden.\nmake \u0001 Structural value — shown for reference only, it cannot be overridden. \u0001 model\ndefault null \u0001 Structural value — shown for reference only, it cannot be overridden.\nmodel \u0001 Structural value — shown for reference only, it cannot be overridden. \u0001 name\ndefault 2012 Ford Fusion \u0001 Structural value — shown for reference only, it cannot be overridden.\nname \u0001 Structural value — shown for reference only, it cannot be overridden. \u0001 trim\ndefault null \u0001 Structural value — shown for reference only, it cannot be overridden.\ntrim \u0001 Structural value — shown for reference only, it cannot be overridden. \u0001 year\ndefault 2012 \u0001 Structural value — shown for reference only, it cannot be overridden.\nyear \u0001 chassis.drag_coef\ndefault 0.393 \u0001 drag_coef \u0001 chassis.frontal_area_square_meters\ndefault 2.12 \u0001 frontal_area_square_meters \u0001 chassis.wheel_fric_coef\ndefault 0.7 \u0001 wheel_fric_coef \u0001 chassis.wheel_rr_coef\ndefault 0.007 \u0001 wheel_rr_coef \u0001 chassis.num_wheels\ndefault 4 \u0001 num_wheels \u0001 Structural value — shown for reference only, it cannot be overridden. \u0001 chassis.tire_code\ndefault null \u0001 Structural value — shown for reference only, it cannot be overridden.\nchassis.tire_code \u0001 chassis.wheel_inertia_kilogram_square_meters\ndefault 0.82 \u0001 wheel_inertia_kilogram_square_meters \u0001 chassis.wheel_radius_meters\ndefault 0.326 \u0001 wheel_radius_meters \u0001 chassis.cargo_mass_kilograms\ndefault 136 \u0001 cargo_mass_kilograms \u0001 chassis.cg_height_meters\ndefault 0.53 \u0001 cg_height_meters \u0001 chassis.drive_axle_weight_frac\ndefault 0.59 \u0001 drive_axle_weight_frac \u0001 chassis.drive_type\ndefault FWD \u0001 drive_type \u0001 chassis.glider_mass_kilograms\ndefault 791.1 \u0001 glider_mass_kilograms \u0001 chassis.mass_kilograms\ndefault null \u0001 mass_kilograms \u0001 chassis.wheel_base_meters\ndefault 2.72 \u0001 wheel_base_meters \u0001 pt_type.Conv.fs.energy_capacity_joules\ndefault 2.12e+9 \u0001 energy_capacity_joules \u0001 pt_type.Conv.fs.fuel_type\ndefault null \u0001 fuel_type \u0001 pt_type.Conv.fs.mass_kilograms\ndefault null \u0001 mass_kilograms \u0001 pt_type.Conv.fs.pwr_out_max_watts\ndefault 1000000 \u0001 pwr_out_max_watts \u0001 pt_type.Conv.fs.pwr_ramp_lag_seconds\ndefault 1 \u0001 pwr_ramp_lag_seconds \u0001 pt_type.Conv.fs.specific_energy_joules_per_kilogram\ndefault 4.32e+7 \u0001 specific_energy_joules_per_kilogram \u0001 Structural value — shown for reference only, it cannot be overridden. \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out\ndefault null \u0001 Structural value — shown for reference only, it cannot be overridden.\npt_type.Conv.fc.eff_interp_from_pwr_out \u0001 Structural value — shown for reference only, it cannot be overridden. \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate\ndefault Error \u0001 Structural value — shown for reference only, it cannot be overridden.\npt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate \u0001 Structural value — shown for reference only, it cannot be overridden. \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.strategy\ndefault Linear \u0001 Structural value — shown for reference only, it cannot be overridden.\npt_type.Conv.fc.eff_interp_from_pwr_out.strategy \u0001 pt_type.Conv.fc.mass_kilograms\ndefault null \u0001 mass_kilograms \u0001 pt_type.Conv.fc.pwr_idle_fuel_watts\ndefault 0 \u0001 pwr_idle_fuel_watts \u0001 pt_type.Conv.fc.pwr_out_max_init_watts\ndefault 21750 \u0001 pwr_out_max_init_watts \u0001 pt_type.Conv.fc.pwr_out_max_watts\ndefault 130500 \u0001 pwr_out_max_watts \u0001 pt_type.Conv.fc.pwr_ramp_lag_seconds\ndefault 6 \u0001 pwr_ramp_lag_seconds \u0001 pt_type.Conv.fc.specific_pwr_watts_per_kilogram\ndefault null \u0001 specific_pwr_watts_per_kilogram \u0001 pt_type.Conv.transmission.eff_interp\ndefault 0.875 \u0001 eff_interp \u0001 pt_type.Conv.transmission.mass_kilograms\ndefault null \u0001 mass_kilograms \u0001 pt_type.Conv.alt_eff\ndefault 1 \u0001 alt_eff \u0001 pt_type.Conv.dfco_cntrl.dfco_enabled\ndefault false \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_deceleration_meters_per_second_squared\ndefault 0 \u0001 minimum_dfco_deceleration_meters_per_second_squared \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_speed_meters_per_second\ndefault 0 \u0001 minimum_dfco_speed_meters_per_second \u0001 pt_type.Conv.dfco_cntrl.stopped_speed_threshold_meters_per_second\ndefault 0.05 \u0001 stopped_speed_threshold_meters_per_second \u0001 Structural value — shown for reference only, it cannot be overridden. \u0001 pt_type.Conv.pt_cntrl\ndefault Normal \u0001 Structural value — shown for reference only, it cannot be overridden.\npt_type.Conv.pt_cntrl \u0001 pt_type.Conv.mass_kilograms\ndefault null \u0001 mass_kilograms"
+ },
+ "enRun": {
+  "lang": "en",
+  "nums": {
+   "distance_mi": 7.45051,
+   "fuel_consumed_kwh": 7.303313,
+   "fuel_economy_mpgge": 34.379216,
+   "energy_to_wheels_kwh": 0.732342,
+   "avg_speed_mph": 19.592283,
+   "max_speed_mph": 56.70092,
+   "trace_met_pct": 100
+  },
+  "kpiLabels": [
+   "Distance",
+   "Fuel Energy",
+   "Fuel Economy",
+   "Energy at Wheels",
+   "Average Speed",
+   "Max Speed",
+   "Cycle Trace Match"
+  ],
+  "pngLen": 265112,
+  "pngHash": 2205656728
+ },
+ "hant": {
+  "lang": "zh-Hant",
+  "htmlLang": "zh-Hant",
+  "docTitle": "FASTSim 工作台",
+  "brand": "FASTSim 工作台",
+  "subtitle": "車輛模擬工作台",
+  "presetLabel": "車型預設",
+  "cycleLabel": "行駛工況",
+  "runLabel": "執行模擬",
+  "exportLabel": "匯出 Python 程式碼",
+  "panelTitle": "參數",
+  "searchPlaceholder": "搜尋參數…",
+  "modifiedOnly": "僅已修改",
+  "resetAll": "全部重設",
+  "groups": [
+   "整車",
+   "底盤",
+   "動力總成"
+  ],
+  "subgroups": [
+   "車身",
+   "身份資訊",
+   "空氣動力學",
+   "滾阻與附著",
+   "車輪",
+   "尺寸與質量",
+   "燃油儲存",
+   "發動機",
+   "傳動系統",
+   "控制與策略",
+   "其他"
+  ],
+  "descriptions": [
+   "整車試驗質量：車身 + 載荷 + 動力總成。",
+   "基礎附件功率（常駐負載）。",
+   "廠商。",
+   "型號。",
+   "車型顯示名稱。",
+   "配置版本。"
+  ],
+  "paramLabels": [
+   "Mass",
+   "Power Aux Base",
+   "Make",
+   "Model",
+   "Name",
+   "Trim",
+   "Year",
+   "drag_coef"
+  ],
+  "tabs": [
+   "互動檢視",
+   "Matplotlib 圖",
+   "資料表"
+  ],
+  "kpis": [
+   "行駛距離",
+   "燃料能量",
+   "燃油經濟性",
+   "車輪牽引能量",
+   "平均車速",
+   "最高車速",
+   "工況跟隨率"
+  ],
+  "status": "模擬完成 · 2012 Ford Fusion · UDDS（城市） · 1370 步 · 1268 ms · 無參數覆寫",
+  "activeButton": "zh-Hant",
+  "pressed": [
+   "en=false",
+   "zh-Hant=true",
+   "zh=false"
+  ],
+  "tableColumnHeader": null,
+  "allText": "FASTSim 工作台 \u0001 車輛模擬工作台 \u0001 車型預設 \u0001 行駛工況 \u0001 執行模擬 \u0001 匯出 Python 程式碼 \u0001 參數 \u0001 1 項已修改 \u0001 ‹ \u0001 僅已修改 \u0001 全部重設 \u0001 整車 \u0001 7 \u0001 車身 \u0001 2 \u0001 Mass \u0001 kg \u0001 整車試驗質量：車身 + 載荷 + 動力總成。 \u0001 mass_kilograms \u0001 Power Aux Base \u0001 W \u0001 基礎附件功率（常駐負載）。 \u0001 pwr_aux_base_watts \u0001 身份資訊 \u0001 5 \u0001 Make \u0001 廠商。 \u0001 make \u0001 null \u0001 Model \u0001 型號。 \u0001 model \u0001 null \u0001 Name \u0001 車型顯示名稱。 \u0001 name \u0001 2012 Ford Fusion \u0001 Trim \u0001 配置版本。 \u0001 trim \u0001 null \u0001 Year \u0001 年款。 \u0001 year \u0001 2012 \u0001 底盤 \u0001 15 \u0001 空氣動力學 \u0001 2 \u0001 drag_coef \u0001 已修改 \u0001 空氣阻力係數。 \u0001 chassis.drag_coef \u0001 ↺ \u0001 frontal_area_square_meters \u0001 m² \u0001 迎風面積（空氣阻力計算用）。 \u0001 chassis.frontal_area_square_meters \u0001 滾阻與附著 \u0001 2 \u0001 wheel_fric_coef \u0001 輪胎-路面附著係數，限制最大驅動力。 \u0001 chassis.wheel_fric_coef \u0001 wheel_rr_coef \u0001 滾動阻力係數（不隨車速變化）。 \u0001 chassis.wheel_rr_coef \u0001 車輪 \u0001 4 \u0001 num_wheels \u0001 車輪數量（用於輪系慣量縮放）。 \u0001 chassis.num_wheels \u0001 tire_code \u0001 可選的輪胎型號（僅作標識）。 \u0001 chassis.tire_code \u0001 null \u0001 wheel_inertia_kilogram_square_meters \u0001 kg·m² \u0001 單個車輪的轉動慣量。 \u0001 chassis.wheel_inertia_kilogram_square_meters \u0001 wheel_radius_meters \u0001 m \u0001 車輪半徑（輪速與驅動力換算用）。 \u0001 chassis.wheel_radius_meters \u0001 尺寸與質量 \u0001 7 \u0001 cargo_mass_kilograms \u0001 kg \u0001 載貨（乘員與行李）質量。 \u0001 chassis.cargo_mass_kilograms \u0001 cg_height_meters \u0001 m \u0001 質心高度，決定加速時的軸荷轉移。 \u0001 chassis.cg_height_meters \u0001 drive_axle_weight_frac \u0001 穩態時驅動軸所承擔的重量佔比。 \u0001 chassis.drive_axle_weight_frac \u0001 drive_type \u0001 驅動形式（前驅 / 後驅 / 四驅）。 \u0001 chassis.drive_type \u0001 glider_mass_kilograms \u0001 kg \u0001 滑行體質量（車身與行走系，不含動力總成）。 \u0001 chassis.glider_mass_kilograms \u0001 mass_kilograms \u0001 kg \u0001 可選的底盤質量直接覆寫值。 \u0001 chassis.mass_kilograms \u0001 wheel_base_meters \u0001 m \u0001 軸距，用於軸荷轉移計算。 \u0001 chassis.wheel_base_meters \u0001 動力總成 \u0001 24 \u0001 燃油儲存 \u0001 6 \u0001 energy_capacity_joules \u0001 J \u0001 燃油箱的可用能量容量。 \u0001 pt_type.Conv.fs.energy_capacity_joules \u0001 fuel_type \u0001 燃料類型（影響能量與排放計量）。 \u0001 pt_type.Conv.fs.fuel_type \u0001 mass_kilograms \u0001 kg \u0001 滿箱燃料的質量。 \u0001 pt_type.Conv.fs.mass_kilograms \u0001 pwr_out_max_watts \u0001 W \u0001 燃油儲存的最大輸出功率。 \u0001 pt_type.Conv.fs.pwr_out_max_watts \u0001 pwr_ramp_lag_seconds \u0001 s \u0001 燃油儲存功率爬升滯後時間常數。 \u0001 pt_type.Conv.fs.pwr_ramp_lag_seconds \u0001 specific_energy_joules_per_kilogram \u0001 J/kg \u0001 燃料比能量（低熱值）。 \u0001 pt_type.Conv.fs.specific_energy_joules_per_kilogram \u0001 發動機 \u0001 9 \u0001 eff_interp_from_pwr_out \u0001 發動機效率隨功率佔比變化的插值曲線（唯讀）。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out \u0001 null \u0001 extrapolate \u0001 欄位 extrapolate。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate \u0001 Error \u0001 strategy \u0001 欄位 strategy。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.strategy \u0001 Linear \u0001 mass_kilograms \u0001 kg \u0001 發動機質量。 \u0001 pt_type.Conv.fc.mass_kilograms \u0001 pwr_idle_fuel_watts \u0001 W \u0001 怠速燃油功率（發動機運轉但不輸出功率）。 \u0001 pt_type.Conv.fc.pwr_idle_fuel_watts \u0001 pwr_out_max_init_watts \u0001 W \u0001 發動機未完全暖機時可用的輸出功率。 \u0001 pt_type.Conv.fc.pwr_out_max_init_watts \u0001 pwr_out_max_watts \u0001 W \u0001 發動機峰值機械輸出功率。 \u0001 pt_type.Conv.fc.pwr_out_max_watts \u0001 pwr_ramp_lag_seconds \u0001 s \u0001 發動機功率爬升滯後時間常數。 \u0001 pt_type.Conv.fc.pwr_ramp_lag_seconds \u0001 specific_pwr_watts_per_kilogram \u0001 W/kg \u0001 發動機功率密度。 \u0001 pt_type.Conv.fc.specific_pwr_watts_per_kilogram \u0001 傳動系統 \u0001 2 \u0001 eff_interp \u0001 變速器（傳動系統）效率。 \u0001 pt_type.Conv.transmission.eff_interp \u0001 mass_kilograms \u0001 kg \u0001 傳動系統質量。 \u0001 pt_type.Conv.transmission.mass_kilograms \u0001 控制與策略 \u0001 6 \u0001 alt_eff \u0001 傳統車用發電機效率。 \u0001 pt_type.Conv.alt_eff \u0001 dfco_enabled \u0001 是否啟用減速斷油（DFCO）。 \u0001 pt_type.Conv.dfco_cntrl.dfco_enabled \u0001 minimum_dfco_deceleration_meters_per_second_squared \u0001 m/s² \u0001 維持斷油所需的最小（最負）減速度。 \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_deceleration_meters_per_second_squared \u0001 minimum_dfco_speed_meters_per_second \u0001 m/s \u0001 斷油生效的最低車速。 \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_speed_meters_per_second \u0001 stopped_speed_threshold_meters_per_second \u0001 m/s \u0001 判定車輛為靜止的車速閾值。 \u0001 pt_type.Conv.dfco_cntrl.stopped_speed_threshold_meters_per_second \u0001 pt_cntrl \u0001 當前啟用的動力總成控制器（唯讀：切換變體需要其對應參數）。 \u0001 pt_type.Conv.pt_cntrl \u0001 Normal \u0001 其他 \u0001 1 \u0001 mass_kilograms \u0001 kg \u0001 整車試驗質量：車身 + 載荷 + 動力總成。 \u0001 pt_type.Conv.mass_kilograms \u0001 模擬完成 · 2012 Ford Fusion · UDDS（城市） · 1370 步 · 1268 ms · 無參數覆寫 \u0001 結果已過期——請重新執行 \u0001 行駛距離 \u0001 7.451 \u0001 mi \u0001 燃料能量 \u0001 7.303 \u0001 kWh \u0001 燃油經濟性 \u0001 34.38 \u0001 mpgge \u0001 車輪牽引能量 \u0001 0.7323 \u0001 kWh \u0001 平均車速 \u0001 19.59 \u0001 mph \u0001 最高車速 \u0001 56.7 \u0001 mph \u0001 工況跟隨率 \u0001 100 \u0001 % \u0001 互動檢視 \u0001 Matplotlib 圖 \u0001 資料表 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 目標車速 \u0001 實際車速 \u0001 發動機 \u0001 距離 \u0001 燃料能量 \u0001 總能量 \u0001 車速 \u0001 動力總成功率分配 \u0001 累計行駛距離 \u0001 累計燃料與能量 \u0001 時間 [s] \u0001 車速 [m/s] \u0001 功率 [kW] \u0001 距離 [mi] \u0001 能量 [kWh]",
+  "allAttrs": "Conv · 1644 kg \u0001 HEV · 1635 kg \u0001 BEV · 1636 kg \u0001 BEV · 1752 kg \u0001 BEV · 1600 kg \u0001 BEV · 1626 kg \u0001 HEV · 1508 kg \u0001 Conv · 2398 kg \u0001 Conv · 2398 kg \u0001 1369 s \u0001 766 s \u0001 語言 \u0001 收起參數面板 \u0001 Collapse parameter panel \u0001 搜尋參數… \u0001 搜尋參數… \u0001 mass_kilograms\n預設 1644.3 \u0001 Mass \u0001 pwr_aux_base_watts\n預設 700 \u0001 Power Aux Base \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 make\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\nmake \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 model\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\nmodel \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 name\n預設 2012 Ford Fusion \u0001 結構性參數——僅供顯示，不可覆寫。\nname \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 trim\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\ntrim \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 year\n預設 2012 \u0001 結構性參數——僅供顯示，不可覆寫。\nyear \u0001 chassis.drag_coef\n預設 0.393 \u0001 drag_coef \u0001 重設為預設值 \u0001 重設為預設值 \u0001 chassis.frontal_area_square_meters\n預設 2.12 \u0001 frontal_area_square_meters \u0001 chassis.wheel_fric_coef\n預設 0.7 \u0001 wheel_fric_coef \u0001 chassis.wheel_rr_coef\n預設 0.007 \u0001 wheel_rr_coef \u0001 chassis.num_wheels\n預設 4 \u0001 num_wheels \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 chassis.tire_code\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\nchassis.tire_code \u0001 chassis.wheel_inertia_kilogram_square_meters\n預設 0.82 \u0001 wheel_inertia_kilogram_square_meters \u0001 chassis.wheel_radius_meters\n預設 0.326 \u0001 wheel_radius_meters \u0001 chassis.cargo_mass_kilograms\n預設 136 \u0001 cargo_mass_kilograms \u0001 chassis.cg_height_meters\n預設 0.53 \u0001 cg_height_meters \u0001 chassis.drive_axle_weight_frac\n預設 0.59 \u0001 drive_axle_weight_frac \u0001 chassis.drive_type\n預設 FWD \u0001 drive_type \u0001 chassis.glider_mass_kilograms\n預設 791.1 \u0001 glider_mass_kilograms \u0001 chassis.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 chassis.wheel_base_meters\n預設 2.72 \u0001 wheel_base_meters \u0001 pt_type.Conv.fs.energy_capacity_joules\n預設 2.12e+9 \u0001 energy_capacity_joules \u0001 pt_type.Conv.fs.fuel_type\n預設 null \u0001 fuel_type \u0001 pt_type.Conv.fs.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 pt_type.Conv.fs.pwr_out_max_watts\n預設 1000000 \u0001 pwr_out_max_watts \u0001 pt_type.Conv.fs.pwr_ramp_lag_seconds\n預設 1 \u0001 pwr_ramp_lag_seconds \u0001 pt_type.Conv.fs.specific_energy_joules_per_kilogram\n預設 4.32e+7 \u0001 specific_energy_joules_per_kilogram \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.fc.eff_interp_from_pwr_out \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate\n預設 Error \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.strategy\n預設 Linear \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.fc.eff_interp_from_pwr_out.strategy \u0001 pt_type.Conv.fc.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 pt_type.Conv.fc.pwr_idle_fuel_watts\n預設 0 \u0001 pwr_idle_fuel_watts \u0001 pt_type.Conv.fc.pwr_out_max_init_watts\n預設 21750 \u0001 pwr_out_max_init_watts \u0001 pt_type.Conv.fc.pwr_out_max_watts\n預設 130500 \u0001 pwr_out_max_watts \u0001 pt_type.Conv.fc.pwr_ramp_lag_seconds\n預設 6 \u0001 pwr_ramp_lag_seconds \u0001 pt_type.Conv.fc.specific_pwr_watts_per_kilogram\n預設 null \u0001 specific_pwr_watts_per_kilogram \u0001 pt_type.Conv.transmission.eff_interp\n預設 0.875 \u0001 eff_interp \u0001 pt_type.Conv.transmission.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 pt_type.Conv.alt_eff\n預設 1 \u0001 alt_eff \u0001 pt_type.Conv.dfco_cntrl.dfco_enabled\n預設 false \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_deceleration_meters_per_second_squared\n預設 0 \u0001 minimum_dfco_deceleration_meters_per_second_squared \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_speed_meters_per_second\n預設 0 \u0001 minimum_dfco_speed_meters_per_second \u0001 pt_type.Conv.dfco_cntrl.stopped_speed_threshold_meters_per_second\n預設 0.05 \u0001 stopped_speed_threshold_meters_per_second \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.pt_cntrl\n預設 Normal \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.pt_cntrl \u0001 pt_type.Conv.mass_kilograms\n預設 null \u0001 mass_kilograms"
+ },
+ "hantModal": {
+  "title": "匯出的 Python 程式碼",
+  "hint": "可重現此設定的獨立腳本。",
+  "copy": "複製",
+  "dl": "下載 .py",
+  "closeTitle": "關閉"
+ },
+ "zh": {
+  "lang": "zh",
+  "htmlLang": "zh-CN",
+  "docTitle": "FASTSim 工作台",
+  "brand": "FASTSim 工作台",
+  "subtitle": "车辆仿真工作台",
+  "presetLabel": "车型预设",
+  "cycleLabel": "行驶工况",
+  "runLabel": "运行仿真",
+  "exportLabel": "导出 Python 代码",
+  "panelTitle": "参数",
+  "searchPlaceholder": "搜索参数…",
+  "modifiedOnly": "仅已修改",
+  "resetAll": "全部重置",
+  "groups": [
+   "整车",
+   "底盘",
+   "动力总成"
+  ],
+  "subgroups": [
+   "车身",
+   "身份信息",
+   "空气动力学",
+   "滚阻与附着",
+   "车轮",
+   "尺寸与质量",
+   "燃油存储",
+   "发动机",
+   "传动系统",
+   "控制与策略",
+   "其他"
+  ],
+  "descriptions": [
+   "整车试验质量：车身 + 载荷 + 动力总成。",
+   "基础附件功率（常驻负载）。",
+   "厂商。",
+   "型号。",
+   "车型显示名称。",
+   "配置版本。"
+  ],
+  "paramLabels": [
+   "Mass",
+   "Power Aux Base",
+   "Make",
+   "Model",
+   "Name",
+   "Trim",
+   "Year",
+   "drag_coef"
+  ],
+  "tabs": [
+   "交互视图",
+   "Matplotlib 图",
+   "数据表"
+  ],
+  "kpis": [
+   "行驶距离",
+   "燃料能量",
+   "燃油经济性",
+   "车轮牵引能量",
+   "平均车速",
+   "最高车速",
+   "工况跟随率"
+  ],
+  "status": "仿真完成 · 2012 Ford Fusion · UDDS（城市） · 1370 步 · 1268 ms · 无参数覆盖",
+  "activeButton": "zh",
+  "pressed": [
+   "en=false",
+   "zh-Hant=false",
+   "zh=true"
+  ],
+  "tableColumnHeader": null,
+  "allText": "FASTSim 工作台 \u0001 车辆仿真工作台 \u0001 车型预设 \u0001 行驶工况 \u0001 运行仿真 \u0001 导出 Python 代码 \u0001 参数 \u0001 1 项已修改 \u0001 ‹ \u0001 仅已修改 \u0001 全部重置 \u0001 整车 \u0001 7 \u0001 车身 \u0001 2 \u0001 Mass \u0001 kg \u0001 整车试验质量：车身 + 载荷 + 动力总成。 \u0001 mass_kilograms \u0001 Power Aux Base \u0001 W \u0001 基础附件功率（常驻负载）。 \u0001 pwr_aux_base_watts \u0001 身份信息 \u0001 5 \u0001 Make \u0001 厂商。 \u0001 make \u0001 null \u0001 Model \u0001 型号。 \u0001 model \u0001 null \u0001 Name \u0001 车型显示名称。 \u0001 name \u0001 2012 Ford Fusion \u0001 Trim \u0001 配置版本。 \u0001 trim \u0001 null \u0001 Year \u0001 年款。 \u0001 year \u0001 2012 \u0001 底盘 \u0001 15 \u0001 空气动力学 \u0001 2 \u0001 drag_coef \u0001 已修改 \u0001 空气阻力系数。 \u0001 chassis.drag_coef \u0001 ↺ \u0001 frontal_area_square_meters \u0001 m² \u0001 迎风面积（空气阻力计算用）。 \u0001 chassis.frontal_area_square_meters \u0001 滚阻与附着 \u0001 2 \u0001 wheel_fric_coef \u0001 轮胎-路面附着系数，限制最大驱动力。 \u0001 chassis.wheel_fric_coef \u0001 wheel_rr_coef \u0001 滚动阻力系数（不随车速变化）。 \u0001 chassis.wheel_rr_coef \u0001 车轮 \u0001 4 \u0001 num_wheels \u0001 车轮数量（用于轮系惯量缩放）。 \u0001 chassis.num_wheels \u0001 tire_code \u0001 可选的轮胎型号（仅作标识）。 \u0001 chassis.tire_code \u0001 null \u0001 wheel_inertia_kilogram_square_meters \u0001 kg·m² \u0001 单个车轮的转动惯量。 \u0001 chassis.wheel_inertia_kilogram_square_meters \u0001 wheel_radius_meters \u0001 m \u0001 车轮半径（轮速与驱动力换算用）。 \u0001 chassis.wheel_radius_meters \u0001 尺寸与质量 \u0001 7 \u0001 cargo_mass_kilograms \u0001 kg \u0001 载货（乘员与行李）质量。 \u0001 chassis.cargo_mass_kilograms \u0001 cg_height_meters \u0001 m \u0001 质心高度，决定加速时的轴荷转移。 \u0001 chassis.cg_height_meters \u0001 drive_axle_weight_frac \u0001 稳态时驱动轴所承担的重量占比。 \u0001 chassis.drive_axle_weight_frac \u0001 drive_type \u0001 驱动形式（前驱 / 后驱 / 四驱）。 \u0001 chassis.drive_type \u0001 glider_mass_kilograms \u0001 kg \u0001 滑行体质量（车身与行走系，不含动力总成）。 \u0001 chassis.glider_mass_kilograms \u0001 mass_kilograms \u0001 kg \u0001 可选的底盘质量直接覆盖值。 \u0001 chassis.mass_kilograms \u0001 wheel_base_meters \u0001 m \u0001 轴距，用于轴荷转移计算。 \u0001 chassis.wheel_base_meters \u0001 动力总成 \u0001 24 \u0001 燃油存储 \u0001 6 \u0001 energy_capacity_joules \u0001 J \u0001 燃油箱的可用能量容量。 \u0001 pt_type.Conv.fs.energy_capacity_joules \u0001 fuel_type \u0001 燃料类型（影响能量与排放计量）。 \u0001 pt_type.Conv.fs.fuel_type \u0001 mass_kilograms \u0001 kg \u0001 满箱燃料的质量。 \u0001 pt_type.Conv.fs.mass_kilograms \u0001 pwr_out_max_watts \u0001 W \u0001 燃油存储的最大输出功率。 \u0001 pt_type.Conv.fs.pwr_out_max_watts \u0001 pwr_ramp_lag_seconds \u0001 s \u0001 燃油存储功率爬升滞后时间常数。 \u0001 pt_type.Conv.fs.pwr_ramp_lag_seconds \u0001 specific_energy_joules_per_kilogram \u0001 J/kg \u0001 燃料比能量（低热值）。 \u0001 pt_type.Conv.fs.specific_energy_joules_per_kilogram \u0001 发动机 \u0001 9 \u0001 eff_interp_from_pwr_out \u0001 发动机效率随功率占比变化的插值曲线（只读）。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out \u0001 null \u0001 extrapolate \u0001 字段 extrapolate。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate \u0001 Error \u0001 strategy \u0001 字段 strategy。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.strategy \u0001 Linear \u0001 mass_kilograms \u0001 kg \u0001 发动机质量。 \u0001 pt_type.Conv.fc.mass_kilograms \u0001 pwr_idle_fuel_watts \u0001 W \u0001 怠速燃油功率（发动机运转但不输出功率）。 \u0001 pt_type.Conv.fc.pwr_idle_fuel_watts \u0001 pwr_out_max_init_watts \u0001 W \u0001 发动机未完全暖机时可用的输出功率。 \u0001 pt_type.Conv.fc.pwr_out_max_init_watts \u0001 pwr_out_max_watts \u0001 W \u0001 发动机峰值机械输出功率。 \u0001 pt_type.Conv.fc.pwr_out_max_watts \u0001 pwr_ramp_lag_seconds \u0001 s \u0001 发动机功率爬升滞后时间常数。 \u0001 pt_type.Conv.fc.pwr_ramp_lag_seconds \u0001 specific_pwr_watts_per_kilogram \u0001 W/kg \u0001 发动机功率密度。 \u0001 pt_type.Conv.fc.specific_pwr_watts_per_kilogram \u0001 传动系统 \u0001 2 \u0001 eff_interp \u0001 变速器（传动系统）效率。 \u0001 pt_type.Conv.transmission.eff_interp \u0001 mass_kilograms \u0001 kg \u0001 传动系统质量。 \u0001 pt_type.Conv.transmission.mass_kilograms \u0001 控制与策略 \u0001 6 \u0001 alt_eff \u0001 传统车用发电机效率。 \u0001 pt_type.Conv.alt_eff \u0001 dfco_enabled \u0001 是否启用减速断油（DFCO）。 \u0001 pt_type.Conv.dfco_cntrl.dfco_enabled \u0001 minimum_dfco_deceleration_meters_per_second_squared \u0001 m/s² \u0001 维持断油所需的最小（最负）减速度。 \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_deceleration_meters_per_second_squared \u0001 minimum_dfco_speed_meters_per_second \u0001 m/s \u0001 断油生效的最低车速。 \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_speed_meters_per_second \u0001 stopped_speed_threshold_meters_per_second \u0001 m/s \u0001 判定车辆为静止的车速阈值。 \u0001 pt_type.Conv.dfco_cntrl.stopped_speed_threshold_meters_per_second \u0001 pt_cntrl \u0001 当前启用的动力总成控制器（只读：切换变体需要其对应参数）。 \u0001 pt_type.Conv.pt_cntrl \u0001 Normal \u0001 其他 \u0001 1 \u0001 mass_kilograms \u0001 kg \u0001 整车试验质量：车身 + 载荷 + 动力总成。 \u0001 pt_type.Conv.mass_kilograms \u0001 仿真完成 · 2012 Ford Fusion · UDDS（城市） · 1370 步 · 1268 ms · 无参数覆盖 \u0001 结果已过期——请重新运行 \u0001 行驶距离 \u0001 7.451 \u0001 mi \u0001 燃料能量 \u0001 7.303 \u0001 kWh \u0001 燃油经济性 \u0001 34.38 \u0001 mpgge \u0001 车轮牵引能量 \u0001 0.7323 \u0001 kWh \u0001 平均车速 \u0001 19.59 \u0001 mph \u0001 最高车速 \u0001 56.7 \u0001 mph \u0001 工况跟随率 \u0001 100 \u0001 % \u0001 交互视图 \u0001 Matplotlib 图 \u0001 数据表 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 目标车速 \u0001 实际车速 \u0001 发动机 \u0001 距离 \u0001 燃料能量 \u0001 总能量 \u0001 车速 \u0001 动力总成功率分配 \u0001 累计行驶距离 \u0001 累计燃料与能量 \u0001 时间 [s] \u0001 车速 [m/s] \u0001 功率 [kW] \u0001 距离 [mi] \u0001 能量 [kWh]",
+  "allAttrs": "Conv · 1644 kg \u0001 HEV · 1635 kg \u0001 BEV · 1636 kg \u0001 BEV · 1752 kg \u0001 BEV · 1600 kg \u0001 BEV · 1626 kg \u0001 HEV · 1508 kg \u0001 Conv · 2398 kg \u0001 Conv · 2398 kg \u0001 1369 s \u0001 766 s \u0001 语言 \u0001 收起参数面板 \u0001 Collapse parameter panel \u0001 搜索参数… \u0001 搜索参数… \u0001 mass_kilograms\n默认 1644.3 \u0001 Mass \u0001 pwr_aux_base_watts\n默认 700 \u0001 Power Aux Base \u0001 结构性参数——仅作展示，不可覆盖。 \u0001 make\n默认 null \u0001 结构性参数——仅作展示，不可覆盖。\nmake \u0001 结构性参数——仅作展示，不可覆盖。 \u0001 model\n默认 null \u0001 结构性参数——仅作展示，不可覆盖。\nmodel \u0001 结构性参数——仅作展示，不可覆盖。 \u0001 name\n默认 2012 Ford Fusion \u0001 结构性参数——仅作展示，不可覆盖。\nname \u0001 结构性参数——仅作展示，不可覆盖。 \u0001 trim\n默认 null \u0001 结构性参数——仅作展示，不可覆盖。\ntrim \u0001 结构性参数——仅作展示，不可覆盖。 \u0001 year\n默认 2012 \u0001 结构性参数——仅作展示，不可覆盖。\nyear \u0001 chassis.drag_coef\n默认 0.393 \u0001 drag_coef \u0001 重置为默认值 \u0001 重置为默认值 \u0001 chassis.frontal_area_square_meters\n默认 2.12 \u0001 frontal_area_square_meters \u0001 chassis.wheel_fric_coef\n默认 0.7 \u0001 wheel_fric_coef \u0001 chassis.wheel_rr_coef\n默认 0.007 \u0001 wheel_rr_coef \u0001 chassis.num_wheels\n默认 4 \u0001 num_wheels \u0001 结构性参数——仅作展示，不可覆盖。 \u0001 chassis.tire_code\n默认 null \u0001 结构性参数——仅作展示，不可覆盖。\nchassis.tire_code \u0001 chassis.wheel_inertia_kilogram_square_meters\n默认 0.82 \u0001 wheel_inertia_kilogram_square_meters \u0001 chassis.wheel_radius_meters\n默认 0.326 \u0001 wheel_radius_meters \u0001 chassis.cargo_mass_kilograms\n默认 136 \u0001 cargo_mass_kilograms \u0001 chassis.cg_height_meters\n默认 0.53 \u0001 cg_height_meters \u0001 chassis.drive_axle_weight_frac\n默认 0.59 \u0001 drive_axle_weight_frac \u0001 chassis.drive_type\n默认 FWD \u0001 drive_type \u0001 chassis.glider_mass_kilograms\n默认 791.1 \u0001 glider_mass_kilograms \u0001 chassis.mass_kilograms\n默认 null \u0001 mass_kilograms \u0001 chassis.wheel_base_meters\n默认 2.72 \u0001 wheel_base_meters \u0001 pt_type.Conv.fs.energy_capacity_joules\n默认 2.12e+9 \u0001 energy_capacity_joules \u0001 pt_type.Conv.fs.fuel_type\n默认 null \u0001 fuel_type \u0001 pt_type.Conv.fs.mass_kilograms\n默认 null \u0001 mass_kilograms \u0001 pt_type.Conv.fs.pwr_out_max_watts\n默认 1000000 \u0001 pwr_out_max_watts \u0001 pt_type.Conv.fs.pwr_ramp_lag_seconds\n默认 1 \u0001 pwr_ramp_lag_seconds \u0001 pt_type.Conv.fs.specific_energy_joules_per_kilogram\n默认 4.32e+7 \u0001 specific_energy_joules_per_kilogram \u0001 结构性参数——仅作展示，不可覆盖。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out\n默认 null \u0001 结构性参数——仅作展示，不可覆盖。\npt_type.Conv.fc.eff_interp_from_pwr_out \u0001 结构性参数——仅作展示，不可覆盖。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate\n默认 Error \u0001 结构性参数——仅作展示，不可覆盖。\npt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate \u0001 结构性参数——仅作展示，不可覆盖。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.strategy\n默认 Linear \u0001 结构性参数——仅作展示，不可覆盖。\npt_type.Conv.fc.eff_interp_from_pwr_out.strategy \u0001 pt_type.Conv.fc.mass_kilograms\n默认 null \u0001 mass_kilograms \u0001 pt_type.Conv.fc.pwr_idle_fuel_watts\n默认 0 \u0001 pwr_idle_fuel_watts \u0001 pt_type.Conv.fc.pwr_out_max_init_watts\n默认 21750 \u0001 pwr_out_max_init_watts \u0001 pt_type.Conv.fc.pwr_out_max_watts\n默认 130500 \u0001 pwr_out_max_watts \u0001 pt_type.Conv.fc.pwr_ramp_lag_seconds\n默认 6 \u0001 pwr_ramp_lag_seconds \u0001 pt_type.Conv.fc.specific_pwr_watts_per_kilogram\n默认 null \u0001 specific_pwr_watts_per_kilogram \u0001 pt_type.Conv.transmission.eff_interp\n默认 0.875 \u0001 eff_interp \u0001 pt_type.Conv.transmission.mass_kilograms\n默认 null \u0001 mass_kilograms \u0001 pt_type.Conv.alt_eff\n默认 1 \u0001 alt_eff \u0001 pt_type.Conv.dfco_cntrl.dfco_enabled\n默认 false \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_deceleration_meters_per_second_squared\n默认 0 \u0001 minimum_dfco_deceleration_meters_per_second_squared \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_speed_meters_per_second\n默认 0 \u0001 minimum_dfco_speed_meters_per_second \u0001 pt_type.Conv.dfco_cntrl.stopped_speed_threshold_meters_per_second\n默认 0.05 \u0001 stopped_speed_threshold_meters_per_second \u0001 结构性参数——仅作展示，不可覆盖。 \u0001 pt_type.Conv.pt_cntrl\n默认 Normal \u0001 结构性参数——仅作展示，不可覆盖。\npt_type.Conv.pt_cntrl \u0001 pt_type.Conv.mass_kilograms\n默认 null \u0001 mass_kilograms"
+ },
+ "back": {
+  "lang": "zh-Hant",
+  "htmlLang": "zh-Hant",
+  "docTitle": "FASTSim 工作台",
+  "brand": "FASTSim 工作台",
+  "subtitle": "車輛模擬工作台",
+  "presetLabel": "車型預設",
+  "cycleLabel": "行駛工況",
+  "runLabel": "執行模擬",
+  "exportLabel": "匯出 Python 程式碼",
+  "panelTitle": "參數",
+  "searchPlaceholder": "搜尋參數…",
+  "modifiedOnly": "僅已修改",
+  "resetAll": "全部重設",
+  "groups": [
+   "整車",
+   "底盤",
+   "動力總成"
+  ],
+  "subgroups": [
+   "車身",
+   "身份資訊",
+   "空氣動力學",
+   "滾阻與附著",
+   "車輪",
+   "尺寸與質量",
+   "燃油儲存",
+   "發動機",
+   "傳動系統",
+   "控制與策略",
+   "其他"
+  ],
+  "descriptions": [
+   "整車試驗質量：車身 + 載荷 + 動力總成。",
+   "基礎附件功率（常駐負載）。",
+   "廠商。",
+   "型號。",
+   "車型顯示名稱。",
+   "配置版本。"
+  ],
+  "paramLabels": [
+   "Mass",
+   "Power Aux Base",
+   "Make",
+   "Model",
+   "Name",
+   "Trim",
+   "Year",
+   "drag_coef"
+  ],
+  "tabs": [
+   "互動檢視",
+   "Matplotlib 圖",
+   "資料表"
+  ],
+  "kpis": [
+   "行駛距離",
+   "燃料能量",
+   "燃油經濟性",
+   "車輪牽引能量",
+   "平均車速",
+   "最高車速",
+   "工況跟隨率"
+  ],
+  "status": "模擬完成 · 2012 Ford Fusion · UDDS（城市） · 1370 步 · 1268 ms · 無參數覆寫",
+  "activeButton": "zh-Hant",
+  "pressed": [
+   "en=false",
+   "zh-Hant=true",
+   "zh=false"
+  ],
+  "tableColumnHeader": null,
+  "allText": "FASTSim 工作台 \u0001 車輛模擬工作台 \u0001 車型預設 \u0001 行駛工況 \u0001 執行模擬 \u0001 匯出 Python 程式碼 \u0001 參數 \u0001 1 項已修改 \u0001 ‹ \u0001 僅已修改 \u0001 全部重設 \u0001 整車 \u0001 7 \u0001 車身 \u0001 2 \u0001 Mass \u0001 kg \u0001 整車試驗質量：車身 + 載荷 + 動力總成。 \u0001 mass_kilograms \u0001 Power Aux Base \u0001 W \u0001 基礎附件功率（常駐負載）。 \u0001 pwr_aux_base_watts \u0001 身份資訊 \u0001 5 \u0001 Make \u0001 廠商。 \u0001 make \u0001 null \u0001 Model \u0001 型號。 \u0001 model \u0001 null \u0001 Name \u0001 車型顯示名稱。 \u0001 name \u0001 2012 Ford Fusion \u0001 Trim \u0001 配置版本。 \u0001 trim \u0001 null \u0001 Year \u0001 年款。 \u0001 year \u0001 2012 \u0001 底盤 \u0001 15 \u0001 空氣動力學 \u0001 2 \u0001 drag_coef \u0001 已修改 \u0001 空氣阻力係數。 \u0001 chassis.drag_coef \u0001 ↺ \u0001 frontal_area_square_meters \u0001 m² \u0001 迎風面積（空氣阻力計算用）。 \u0001 chassis.frontal_area_square_meters \u0001 滾阻與附著 \u0001 2 \u0001 wheel_fric_coef \u0001 輪胎-路面附著係數，限制最大驅動力。 \u0001 chassis.wheel_fric_coef \u0001 wheel_rr_coef \u0001 滾動阻力係數（不隨車速變化）。 \u0001 chassis.wheel_rr_coef \u0001 車輪 \u0001 4 \u0001 num_wheels \u0001 車輪數量（用於輪系慣量縮放）。 \u0001 chassis.num_wheels \u0001 tire_code \u0001 可選的輪胎型號（僅作標識）。 \u0001 chassis.tire_code \u0001 null \u0001 wheel_inertia_kilogram_square_meters \u0001 kg·m² \u0001 單個車輪的轉動慣量。 \u0001 chassis.wheel_inertia_kilogram_square_meters \u0001 wheel_radius_meters \u0001 m \u0001 車輪半徑（輪速與驅動力換算用）。 \u0001 chassis.wheel_radius_meters \u0001 尺寸與質量 \u0001 7 \u0001 cargo_mass_kilograms \u0001 kg \u0001 載貨（乘員與行李）質量。 \u0001 chassis.cargo_mass_kilograms \u0001 cg_height_meters \u0001 m \u0001 質心高度，決定加速時的軸荷轉移。 \u0001 chassis.cg_height_meters \u0001 drive_axle_weight_frac \u0001 穩態時驅動軸所承擔的重量佔比。 \u0001 chassis.drive_axle_weight_frac \u0001 drive_type \u0001 驅動形式（前驅 / 後驅 / 四驅）。 \u0001 chassis.drive_type \u0001 glider_mass_kilograms \u0001 kg \u0001 滑行體質量（車身與行走系，不含動力總成）。 \u0001 chassis.glider_mass_kilograms \u0001 mass_kilograms \u0001 kg \u0001 可選的底盤質量直接覆寫值。 \u0001 chassis.mass_kilograms \u0001 wheel_base_meters \u0001 m \u0001 軸距，用於軸荷轉移計算。 \u0001 chassis.wheel_base_meters \u0001 動力總成 \u0001 24 \u0001 燃油儲存 \u0001 6 \u0001 energy_capacity_joules \u0001 J \u0001 燃油箱的可用能量容量。 \u0001 pt_type.Conv.fs.energy_capacity_joules \u0001 fuel_type \u0001 燃料類型（影響能量與排放計量）。 \u0001 pt_type.Conv.fs.fuel_type \u0001 mass_kilograms \u0001 kg \u0001 滿箱燃料的質量。 \u0001 pt_type.Conv.fs.mass_kilograms \u0001 pwr_out_max_watts \u0001 W \u0001 燃油儲存的最大輸出功率。 \u0001 pt_type.Conv.fs.pwr_out_max_watts \u0001 pwr_ramp_lag_seconds \u0001 s \u0001 燃油儲存功率爬升滯後時間常數。 \u0001 pt_type.Conv.fs.pwr_ramp_lag_seconds \u0001 specific_energy_joules_per_kilogram \u0001 J/kg \u0001 燃料比能量（低熱值）。 \u0001 pt_type.Conv.fs.specific_energy_joules_per_kilogram \u0001 發動機 \u0001 9 \u0001 eff_interp_from_pwr_out \u0001 發動機效率隨功率佔比變化的插值曲線（唯讀）。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out \u0001 null \u0001 extrapolate \u0001 欄位 extrapolate。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate \u0001 Error \u0001 strategy \u0001 欄位 strategy。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.strategy \u0001 Linear \u0001 mass_kilograms \u0001 kg \u0001 發動機質量。 \u0001 pt_type.Conv.fc.mass_kilograms \u0001 pwr_idle_fuel_watts \u0001 W \u0001 怠速燃油功率（發動機運轉但不輸出功率）。 \u0001 pt_type.Conv.fc.pwr_idle_fuel_watts \u0001 pwr_out_max_init_watts \u0001 W \u0001 發動機未完全暖機時可用的輸出功率。 \u0001 pt_type.Conv.fc.pwr_out_max_init_watts \u0001 pwr_out_max_watts \u0001 W \u0001 發動機峰值機械輸出功率。 \u0001 pt_type.Conv.fc.pwr_out_max_watts \u0001 pwr_ramp_lag_seconds \u0001 s \u0001 發動機功率爬升滯後時間常數。 \u0001 pt_type.Conv.fc.pwr_ramp_lag_seconds \u0001 specific_pwr_watts_per_kilogram \u0001 W/kg \u0001 發動機功率密度。 \u0001 pt_type.Conv.fc.specific_pwr_watts_per_kilogram \u0001 傳動系統 \u0001 2 \u0001 eff_interp \u0001 變速器（傳動系統）效率。 \u0001 pt_type.Conv.transmission.eff_interp \u0001 mass_kilograms \u0001 kg \u0001 傳動系統質量。 \u0001 pt_type.Conv.transmission.mass_kilograms \u0001 控制與策略 \u0001 6 \u0001 alt_eff \u0001 傳統車用發電機效率。 \u0001 pt_type.Conv.alt_eff \u0001 dfco_enabled \u0001 是否啟用減速斷油（DFCO）。 \u0001 pt_type.Conv.dfco_cntrl.dfco_enabled \u0001 minimum_dfco_deceleration_meters_per_second_squared \u0001 m/s² \u0001 維持斷油所需的最小（最負）減速度。 \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_deceleration_meters_per_second_squared \u0001 minimum_dfco_speed_meters_per_second \u0001 m/s \u0001 斷油生效的最低車速。 \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_speed_meters_per_second \u0001 stopped_speed_threshold_meters_per_second \u0001 m/s \u0001 判定車輛為靜止的車速閾值。 \u0001 pt_type.Conv.dfco_cntrl.stopped_speed_threshold_meters_per_second \u0001 pt_cntrl \u0001 當前啟用的動力總成控制器（唯讀：切換變體需要其對應參數）。 \u0001 pt_type.Conv.pt_cntrl \u0001 Normal \u0001 其他 \u0001 1 \u0001 mass_kilograms \u0001 kg \u0001 整車試驗質量：車身 + 載荷 + 動力總成。 \u0001 pt_type.Conv.mass_kilograms \u0001 模擬完成 · 2012 Ford Fusion · UDDS（城市） · 1370 步 · 1268 ms · 無參數覆寫 \u0001 結果已過期——請重新執行 \u0001 行駛距離 \u0001 7.451 \u0001 mi \u0001 燃料能量 \u0001 7.303 \u0001 kWh \u0001 燃油經濟性 \u0001 34.38 \u0001 mpgge \u0001 車輪牽引能量 \u0001 0.7323 \u0001 kWh \u0001 平均車速 \u0001 19.59 \u0001 mph \u0001 最高車速 \u0001 56.7 \u0001 mph \u0001 工況跟隨率 \u0001 100 \u0001 % \u0001 互動檢視 \u0001 Matplotlib 圖 \u0001 資料表 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 0 \u0001 2 \u0001 4 \u0001 6 \u0001 −1 \u0001 0 \u0001 1 \u0001 2 \u0001 3 \u0001 4 \u0001 目標車速 \u0001 實際車速 \u0001 發動機 \u0001 距離 \u0001 燃料能量 \u0001 總能量 \u0001 車速 \u0001 動力總成功率分配 \u0001 累計行駛距離 \u0001 累計燃料與能量 \u0001 時間 [s] \u0001 車速 [m/s] \u0001 功率 [kW] \u0001 距離 [mi] \u0001 能量 [kWh]",
+  "allAttrs": "Conv · 1644 kg \u0001 HEV · 1635 kg \u0001 BEV · 1636 kg \u0001 BEV · 1752 kg \u0001 BEV · 1600 kg \u0001 BEV · 1626 kg \u0001 HEV · 1508 kg \u0001 Conv · 2398 kg \u0001 Conv · 2398 kg \u0001 1369 s \u0001 766 s \u0001 語言 \u0001 收起參數面板 \u0001 Collapse parameter panel \u0001 搜尋參數… \u0001 搜尋參數… \u0001 mass_kilograms\n預設 1644.3 \u0001 Mass \u0001 pwr_aux_base_watts\n預設 700 \u0001 Power Aux Base \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 make\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\nmake \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 model\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\nmodel \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 name\n預設 2012 Ford Fusion \u0001 結構性參數——僅供顯示，不可覆寫。\nname \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 trim\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\ntrim \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 year\n預設 2012 \u0001 結構性參數——僅供顯示，不可覆寫。\nyear \u0001 chassis.drag_coef\n預設 0.393 \u0001 drag_coef \u0001 重設為預設值 \u0001 重設為預設值 \u0001 chassis.frontal_area_square_meters\n預設 2.12 \u0001 frontal_area_square_meters \u0001 chassis.wheel_fric_coef\n預設 0.7 \u0001 wheel_fric_coef \u0001 chassis.wheel_rr_coef\n預設 0.007 \u0001 wheel_rr_coef \u0001 chassis.num_wheels\n預設 4 \u0001 num_wheels \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 chassis.tire_code\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\nchassis.tire_code \u0001 chassis.wheel_inertia_kilogram_square_meters\n預設 0.82 \u0001 wheel_inertia_kilogram_square_meters \u0001 chassis.wheel_radius_meters\n預設 0.326 \u0001 wheel_radius_meters \u0001 chassis.cargo_mass_kilograms\n預設 136 \u0001 cargo_mass_kilograms \u0001 chassis.cg_height_meters\n預設 0.53 \u0001 cg_height_meters \u0001 chassis.drive_axle_weight_frac\n預設 0.59 \u0001 drive_axle_weight_frac \u0001 chassis.drive_type\n預設 FWD \u0001 drive_type \u0001 chassis.glider_mass_kilograms\n預設 791.1 \u0001 glider_mass_kilograms \u0001 chassis.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 chassis.wheel_base_meters\n預設 2.72 \u0001 wheel_base_meters \u0001 pt_type.Conv.fs.energy_capacity_joules\n預設 2.12e+9 \u0001 energy_capacity_joules \u0001 pt_type.Conv.fs.fuel_type\n預設 null \u0001 fuel_type \u0001 pt_type.Conv.fs.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 pt_type.Conv.fs.pwr_out_max_watts\n預設 1000000 \u0001 pwr_out_max_watts \u0001 pt_type.Conv.fs.pwr_ramp_lag_seconds\n預設 1 \u0001 pwr_ramp_lag_seconds \u0001 pt_type.Conv.fs.specific_energy_joules_per_kilogram\n預設 4.32e+7 \u0001 specific_energy_joules_per_kilogram \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.fc.eff_interp_from_pwr_out \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate\n預設 Error \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.strategy\n預設 Linear \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.fc.eff_interp_from_pwr_out.strategy \u0001 pt_type.Conv.fc.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 pt_type.Conv.fc.pwr_idle_fuel_watts\n預設 0 \u0001 pwr_idle_fuel_watts \u0001 pt_type.Conv.fc.pwr_out_max_init_watts\n預設 21750 \u0001 pwr_out_max_init_watts \u0001 pt_type.Conv.fc.pwr_out_max_watts\n預設 130500 \u0001 pwr_out_max_watts \u0001 pt_type.Conv.fc.pwr_ramp_lag_seconds\n預設 6 \u0001 pwr_ramp_lag_seconds \u0001 pt_type.Conv.fc.specific_pwr_watts_per_kilogram\n預設 null \u0001 specific_pwr_watts_per_kilogram \u0001 pt_type.Conv.transmission.eff_interp\n預設 0.875 \u0001 eff_interp \u0001 pt_type.Conv.transmission.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 pt_type.Conv.alt_eff\n預設 1 \u0001 alt_eff \u0001 pt_type.Conv.dfco_cntrl.dfco_enabled\n預設 false \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_deceleration_meters_per_second_squared\n預設 0 \u0001 minimum_dfco_deceleration_meters_per_second_squared \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_speed_meters_per_second\n預設 0 \u0001 minimum_dfco_speed_meters_per_second \u0001 pt_type.Conv.dfco_cntrl.stopped_speed_threshold_meters_per_second\n預設 0.05 \u0001 stopped_speed_threshold_meters_per_second \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.pt_cntrl\n預設 Normal \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.pt_cntrl \u0001 pt_type.Conv.mass_kilograms\n預設 null \u0001 mass_kilograms"
+ },
+ "state2": {
+  "edit": 0.42,
+  "hasResult": true,
+  "nums": {
+   "distance_mi": 7.45051,
+   "fuel_consumed_kwh": 7.303313,
+   "fuel_economy_mpgge": 34.379216,
+   "energy_to_wheels_kwh": 0.732342,
+   "avg_speed_mph": 19.592283,
+   "max_speed_mph": 56.70092,
+   "trace_met_pct": 100
+  },
+  "stale": true,
+  "kpiLabels": [
+   "行駛距離",
+   "燃料能量",
+   "燃油經濟性",
+   "車輪牽引能量",
+   "平均車速",
+   "最高車速",
+   "工況跟隨率"
+  ]
+ },
+ "afterReload": {
+  "lang": "zh-Hant",
+  "htmlLang": "zh-Hant",
+  "docTitle": "FASTSim 工作台",
+  "brand": "FASTSim 工作台",
+  "subtitle": "車輛模擬工作台",
+  "presetLabel": "車型預設",
+  "cycleLabel": "行駛工況",
+  "runLabel": "執行模擬",
+  "exportLabel": "匯出 Python 程式碼",
+  "panelTitle": "參數",
+  "searchPlaceholder": "搜尋參數…",
+  "modifiedOnly": "僅已修改",
+  "resetAll": "全部重設",
+  "groups": [
+   "整車",
+   "底盤",
+   "動力總成"
+  ],
+  "subgroups": [
+   "車身",
+   "身份資訊",
+   "空氣動力學",
+   "滾阻與附著",
+   "車輪",
+   "尺寸與質量",
+   "燃油儲存",
+   "發動機",
+   "傳動系統",
+   "控制與策略",
+   "其他"
+  ],
+  "descriptions": [
+   "整車試驗質量：車身 + 載荷 + 動力總成。",
+   "基礎附件功率（常駐負載）。",
+   "廠商。",
+   "型號。",
+   "車型顯示名稱。",
+   "配置版本。"
+  ],
+  "paramLabels": [
+   "Mass",
+   "Power Aux Base",
+   "Make",
+   "Model",
+   "Name",
+   "Trim",
+   "Year",
+   "drag_coef"
+  ],
+  "tabs": [
+   "互動檢視",
+   "Matplotlib 圖",
+   "資料表"
+  ],
+  "kpis": [],
+  "status": "2012 Ford Fusion · UDDS（城市）",
+  "activeButton": "zh-Hant",
+  "pressed": [
+   "en=false",
+   "zh-Hant=true",
+   "zh=false"
+  ],
+  "tableColumnHeader": null,
+  "allText": "FASTSim 工作台 \u0001 車輛模擬工作台 \u0001 車型預設 \u0001 行駛工況 \u0001 執行模擬 \u0001 匯出 Python 程式碼 \u0001 參數 \u0001 0 項已修改 \u0001 ‹ \u0001 僅已修改 \u0001 全部重設 \u0001 整車 \u0001 7 \u0001 車身 \u0001 2 \u0001 Mass \u0001 kg \u0001 整車試驗質量：車身 + 載荷 + 動力總成。 \u0001 mass_kilograms \u0001 Power Aux Base \u0001 W \u0001 基礎附件功率（常駐負載）。 \u0001 pwr_aux_base_watts \u0001 身份資訊 \u0001 5 \u0001 Make \u0001 廠商。 \u0001 make \u0001 null \u0001 Model \u0001 型號。 \u0001 model \u0001 null \u0001 Name \u0001 車型顯示名稱。 \u0001 name \u0001 2012 Ford Fusion \u0001 Trim \u0001 配置版本。 \u0001 trim \u0001 null \u0001 Year \u0001 年款。 \u0001 year \u0001 2012 \u0001 底盤 \u0001 15 \u0001 空氣動力學 \u0001 2 \u0001 drag_coef \u0001 空氣阻力係數。 \u0001 chassis.drag_coef \u0001 frontal_area_square_meters \u0001 m² \u0001 迎風面積（空氣阻力計算用）。 \u0001 chassis.frontal_area_square_meters \u0001 滾阻與附著 \u0001 2 \u0001 wheel_fric_coef \u0001 輪胎-路面附著係數，限制最大驅動力。 \u0001 chassis.wheel_fric_coef \u0001 wheel_rr_coef \u0001 滾動阻力係數（不隨車速變化）。 \u0001 chassis.wheel_rr_coef \u0001 車輪 \u0001 4 \u0001 num_wheels \u0001 車輪數量（用於輪系慣量縮放）。 \u0001 chassis.num_wheels \u0001 tire_code \u0001 可選的輪胎型號（僅作標識）。 \u0001 chassis.tire_code \u0001 null \u0001 wheel_inertia_kilogram_square_meters \u0001 kg·m² \u0001 單個車輪的轉動慣量。 \u0001 chassis.wheel_inertia_kilogram_square_meters \u0001 wheel_radius_meters \u0001 m \u0001 車輪半徑（輪速與驅動力換算用）。 \u0001 chassis.wheel_radius_meters \u0001 尺寸與質量 \u0001 7 \u0001 cargo_mass_kilograms \u0001 kg \u0001 載貨（乘員與行李）質量。 \u0001 chassis.cargo_mass_kilograms \u0001 cg_height_meters \u0001 m \u0001 質心高度，決定加速時的軸荷轉移。 \u0001 chassis.cg_height_meters \u0001 drive_axle_weight_frac \u0001 穩態時驅動軸所承擔的重量佔比。 \u0001 chassis.drive_axle_weight_frac \u0001 drive_type \u0001 驅動形式（前驅 / 後驅 / 四驅）。 \u0001 chassis.drive_type \u0001 glider_mass_kilograms \u0001 kg \u0001 滑行體質量（車身與行走系，不含動力總成）。 \u0001 chassis.glider_mass_kilograms \u0001 mass_kilograms \u0001 kg \u0001 可選的底盤質量直接覆寫值。 \u0001 chassis.mass_kilograms \u0001 wheel_base_meters \u0001 m \u0001 軸距，用於軸荷轉移計算。 \u0001 chassis.wheel_base_meters \u0001 動力總成 \u0001 24 \u0001 燃油儲存 \u0001 6 \u0001 energy_capacity_joules \u0001 J \u0001 燃油箱的可用能量容量。 \u0001 pt_type.Conv.fs.energy_capacity_joules \u0001 fuel_type \u0001 燃料類型（影響能量與排放計量）。 \u0001 pt_type.Conv.fs.fuel_type \u0001 mass_kilograms \u0001 kg \u0001 滿箱燃料的質量。 \u0001 pt_type.Conv.fs.mass_kilograms \u0001 pwr_out_max_watts \u0001 W \u0001 燃油儲存的最大輸出功率。 \u0001 pt_type.Conv.fs.pwr_out_max_watts \u0001 pwr_ramp_lag_seconds \u0001 s \u0001 燃油儲存功率爬升滯後時間常數。 \u0001 pt_type.Conv.fs.pwr_ramp_lag_seconds \u0001 specific_energy_joules_per_kilogram \u0001 J/kg \u0001 燃料比能量（低熱值）。 \u0001 pt_type.Conv.fs.specific_energy_joules_per_kilogram \u0001 發動機 \u0001 9 \u0001 eff_interp_from_pwr_out \u0001 發動機效率隨功率佔比變化的插值曲線（唯讀）。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out \u0001 null \u0001 extrapolate \u0001 欄位 extrapolate。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate \u0001 Error \u0001 strategy \u0001 欄位 strategy。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.strategy \u0001 Linear \u0001 mass_kilograms \u0001 kg \u0001 發動機質量。 \u0001 pt_type.Conv.fc.mass_kilograms \u0001 pwr_idle_fuel_watts \u0001 W \u0001 怠速燃油功率（發動機運轉但不輸出功率）。 \u0001 pt_type.Conv.fc.pwr_idle_fuel_watts \u0001 pwr_out_max_init_watts \u0001 W \u0001 發動機未完全暖機時可用的輸出功率。 \u0001 pt_type.Conv.fc.pwr_out_max_init_watts \u0001 pwr_out_max_watts \u0001 W \u0001 發動機峰值機械輸出功率。 \u0001 pt_type.Conv.fc.pwr_out_max_watts \u0001 pwr_ramp_lag_seconds \u0001 s \u0001 發動機功率爬升滯後時間常數。 \u0001 pt_type.Conv.fc.pwr_ramp_lag_seconds \u0001 specific_pwr_watts_per_kilogram \u0001 W/kg \u0001 發動機功率密度。 \u0001 pt_type.Conv.fc.specific_pwr_watts_per_kilogram \u0001 傳動系統 \u0001 2 \u0001 eff_interp \u0001 變速器（傳動系統）效率。 \u0001 pt_type.Conv.transmission.eff_interp \u0001 mass_kilograms \u0001 kg \u0001 傳動系統質量。 \u0001 pt_type.Conv.transmission.mass_kilograms \u0001 控制與策略 \u0001 6 \u0001 alt_eff \u0001 傳統車用發電機效率。 \u0001 pt_type.Conv.alt_eff \u0001 dfco_enabled \u0001 是否啟用減速斷油（DFCO）。 \u0001 pt_type.Conv.dfco_cntrl.dfco_enabled \u0001 minimum_dfco_deceleration_meters_per_second_squared \u0001 m/s² \u0001 維持斷油所需的最小（最負）減速度。 \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_deceleration_meters_per_second_squared \u0001 minimum_dfco_speed_meters_per_second \u0001 m/s \u0001 斷油生效的最低車速。 \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_speed_meters_per_second \u0001 stopped_speed_threshold_meters_per_second \u0001 m/s \u0001 判定車輛為靜止的車速閾值。 \u0001 pt_type.Conv.dfco_cntrl.stopped_speed_threshold_meters_per_second \u0001 pt_cntrl \u0001 當前啟用的動力總成控制器（唯讀：切換變體需要其對應參數）。 \u0001 pt_type.Conv.pt_cntrl \u0001 Normal \u0001 其他 \u0001 1 \u0001 mass_kilograms \u0001 kg \u0001 整車試驗質量：車身 + 載荷 + 動力總成。 \u0001 pt_type.Conv.mass_kilograms \u0001 2012 Ford Fusion · UDDS（城市） \u0001 尚未執行模擬 \u0001 在頂部選擇車型預設與行駛工況，然後點選「執行模擬」。",
+  "allAttrs": "Conv · 1644 kg \u0001 HEV · 1635 kg \u0001 BEV · 1636 kg \u0001 BEV · 1752 kg \u0001 BEV · 1600 kg \u0001 BEV · 1626 kg \u0001 HEV · 1508 kg \u0001 Conv · 2398 kg \u0001 Conv · 2398 kg \u0001 1369 s \u0001 766 s \u0001 語言 \u0001 收起參數面板 \u0001 Collapse parameter panel \u0001 搜尋參數… \u0001 搜尋參數… \u0001 mass_kilograms\n預設 1644.3 \u0001 Mass \u0001 pwr_aux_base_watts\n預設 700 \u0001 Power Aux Base \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 make\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\nmake \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 model\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\nmodel \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 name\n預設 2012 Ford Fusion \u0001 結構性參數——僅供顯示，不可覆寫。\nname \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 trim\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\ntrim \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 year\n預設 2012 \u0001 結構性參數——僅供顯示，不可覆寫。\nyear \u0001 chassis.drag_coef\n預設 0.393 \u0001 drag_coef \u0001 chassis.frontal_area_square_meters\n預設 2.12 \u0001 frontal_area_square_meters \u0001 chassis.wheel_fric_coef\n預設 0.7 \u0001 wheel_fric_coef \u0001 chassis.wheel_rr_coef\n預設 0.007 \u0001 wheel_rr_coef \u0001 chassis.num_wheels\n預設 4 \u0001 num_wheels \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 chassis.tire_code\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\nchassis.tire_code \u0001 chassis.wheel_inertia_kilogram_square_meters\n預設 0.82 \u0001 wheel_inertia_kilogram_square_meters \u0001 chassis.wheel_radius_meters\n預設 0.326 \u0001 wheel_radius_meters \u0001 chassis.cargo_mass_kilograms\n預設 136 \u0001 cargo_mass_kilograms \u0001 chassis.cg_height_meters\n預設 0.53 \u0001 cg_height_meters \u0001 chassis.drive_axle_weight_frac\n預設 0.59 \u0001 drive_axle_weight_frac \u0001 chassis.drive_type\n預設 FWD \u0001 drive_type \u0001 chassis.glider_mass_kilograms\n預設 791.1 \u0001 glider_mass_kilograms \u0001 chassis.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 chassis.wheel_base_meters\n預設 2.72 \u0001 wheel_base_meters \u0001 pt_type.Conv.fs.energy_capacity_joules\n預設 2.12e+9 \u0001 energy_capacity_joules \u0001 pt_type.Conv.fs.fuel_type\n預設 null \u0001 fuel_type \u0001 pt_type.Conv.fs.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 pt_type.Conv.fs.pwr_out_max_watts\n預設 1000000 \u0001 pwr_out_max_watts \u0001 pt_type.Conv.fs.pwr_ramp_lag_seconds\n預設 1 \u0001 pwr_ramp_lag_seconds \u0001 pt_type.Conv.fs.specific_energy_joules_per_kilogram\n預設 4.32e+7 \u0001 specific_energy_joules_per_kilogram \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out\n預設 null \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.fc.eff_interp_from_pwr_out \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate\n預設 Error \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.fc.eff_interp_from_pwr_out.extrapolate \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.fc.eff_interp_from_pwr_out.strategy\n預設 Linear \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.fc.eff_interp_from_pwr_out.strategy \u0001 pt_type.Conv.fc.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 pt_type.Conv.fc.pwr_idle_fuel_watts\n預設 0 \u0001 pwr_idle_fuel_watts \u0001 pt_type.Conv.fc.pwr_out_max_init_watts\n預設 21750 \u0001 pwr_out_max_init_watts \u0001 pt_type.Conv.fc.pwr_out_max_watts\n預設 130500 \u0001 pwr_out_max_watts \u0001 pt_type.Conv.fc.pwr_ramp_lag_seconds\n預設 6 \u0001 pwr_ramp_lag_seconds \u0001 pt_type.Conv.fc.specific_pwr_watts_per_kilogram\n預設 null \u0001 specific_pwr_watts_per_kilogram \u0001 pt_type.Conv.transmission.eff_interp\n預設 0.875 \u0001 eff_interp \u0001 pt_type.Conv.transmission.mass_kilograms\n預設 null \u0001 mass_kilograms \u0001 pt_type.Conv.alt_eff\n預設 1 \u0001 alt_eff \u0001 pt_type.Conv.dfco_cntrl.dfco_enabled\n預設 false \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_deceleration_meters_per_second_squared\n預設 0 \u0001 minimum_dfco_deceleration_meters_per_second_squared \u0001 pt_type.Conv.dfco_cntrl.minimum_dfco_speed_meters_per_second\n預設 0 \u0001 minimum_dfco_speed_meters_per_second \u0001 pt_type.Conv.dfco_cntrl.stopped_speed_threshold_meters_per_second\n預設 0.05 \u0001 stopped_speed_threshold_meters_per_second \u0001 結構性參數——僅供顯示，不可覆寫。 \u0001 pt_type.Conv.pt_cntrl\n預設 Normal \u0001 結構性參數——僅供顯示，不可覆寫。\npt_type.Conv.pt_cntrl \u0001 pt_type.Conv.mass_kilograms\n預設 null \u0001 mass_kilograms"
+ },
+ "consoleErrors": []
+}
