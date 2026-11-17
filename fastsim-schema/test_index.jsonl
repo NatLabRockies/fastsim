@@ -1,2 +1,0 @@
-{"path":"v1/fastsim-3/conv/ford/fusion/2012/base/r1.yaml","id":"v1/fastsim-3/conv/ford/fusion/2012/base/r1","fastsim_version":3,"powertrain":"conv","make":"ford","model":"fusion","year":"2012","variant":"base","revision":1,"date_added":"2026-01-01T00:00:00Z"}
-{"path":"v1/fastsim-3/bev/tesla/model-3/2020/base/r1.yaml","id":"v1/fastsim-3/bev/tesla/model-3/2020/base/r1","fastsim_version":3,"powertrain":"bev","make":"tesla","model":"model-3","year":"2020","variant":"base","revision":1,"date_added":"2026-02-01T00:00:00Z"}
